@@ -62,32 +62,6 @@ public class Player implements Serializable{
     public void setScore(int score){
         this.score = score;
     }
-    /**
-     * The class that stores the player in at the end of the player-file
-     * when the player is created by the administrator.
-     * @throws java.io.FileNotFoundException
-     */
-    public void savePlayer(String tournament) throws FileNotFoundException, IOException {
-        
-        Player player = new Player(this.id, this.name);
-        
-        // Stores the player at the end of the players.dat in BINARY.
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(tournament + ".dat"));) 
-        {
-            output.writeObject(new java.util.Date());
-        }
-        
-        String playerText = this.id + ";" + this.name;
-        // Stores the player at the end of the players.text in TEXT.
-        try {
-            BufferedWriter outStream = new BufferedWriter(new FileWriter(tournament + ".txt", true));
-            outStream.newLine();
-            outStream.write(playerText);
-            outStream.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
     
     /**
      * Collects the list of players from the file 

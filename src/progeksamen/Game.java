@@ -32,7 +32,6 @@ public class Game implements Serializable{
     }
     
     public Game (Player player1, Player player2, Result result, String[] moves, Date startDate, Date endDate) {
-        
         this.player1 = player1;
         this.player2 = player2;
         this.result = result;

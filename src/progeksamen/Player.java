@@ -31,7 +31,6 @@ public class Player implements Serializable{
     public Player (String name) {
         this.name = name;
         this.id = generateId();
-
     }
     
     /**

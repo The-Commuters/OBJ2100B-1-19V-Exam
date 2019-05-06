@@ -11,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Result {
@@ -42,11 +44,15 @@ public class Result {
         }
         
         // Stores the player at the end of the players.text in TEXT.
-        String gameText = result.toString();
+        String resultText = this.winner.id + ";" + this.loser.id + ";" + this.draw;
  
-        try (BufferedWriter outStream = new BufferedWriter(new FileWriter(tournament + ".txt", true))) {
+        try {
+            BufferedWriter outStream = new BufferedWriter(new FileWriter(tournament + ".txt", true));
             outStream.newLine();
-            outStream.write(gameText);
+            outStream.write(resultText);
+            outStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

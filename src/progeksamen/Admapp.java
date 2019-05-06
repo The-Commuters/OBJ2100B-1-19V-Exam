@@ -4,7 +4,9 @@
 package progeksamen;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,13 +22,16 @@ public class Admapp extends Application implements Constants {
     // And the .txt
     String tournament = "Tournament";
     
+    // The list's used to store data.
+    List<Player> playerList = new ArrayList<Player>();
+    List<Game> gameList = new ArrayList<Game>();
+    List<Result> resultList = new ArrayList<Result>();
+    
     @Override
     public void start(Stage primaryStage) {
-        
-        // The list's used to store data.
-        List<Player> playerList = new ArrayList<Player>();
-        List<Game> gameList = new ArrayList<Game>();
-        List<Result> resultList = new ArrayList<Result>();
+       
+        // The method that collects the data from the Binary file.
+        getTournament(tournament);
         
         //----------------------------------Test of tournment---------------------------------
         // Test-input used when writing into the file.
@@ -47,14 +52,12 @@ public class Admapp extends Application implements Constants {
         saveTournament(playerList, gameList, resultList);
         //----------------------------------/Test of tournment---------------------------------
         
-        
         // Setter her opp scene, for å ha en måte å lukke applikasjonen enklere på.
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, SCREEN_HEIGHT, SCREEN_WIDTH);
         primaryStage.setTitle("Application!");
         primaryStage.setScene(scene);
         primaryStage.show();
-         
     }
     
     // ? Something like this to save the tournment at the end ?
@@ -64,22 +67,19 @@ public class Admapp extends Application implements Constants {
         
         try {
             
-            // Add a string to the file here to seperate blocks?
-            
             // CHANGE TO FULL ARRAYLIST WRITE LATER.
             
+            // Add a string to the file here to seperate blocks?
             for (Player player : players) {
                 player.savePlayer(tournament);
             }
             
             // Add a string to the file here to seperate blocks?
-            
             for (Game game : games) {
                 game.saveGame(tournament);
             }
             
             // Add a string to the file here to seperate blocks?
-            
             for (Result result : results) {
                 result.saveGame(tournament);
             }
@@ -92,6 +92,30 @@ public class Admapp extends Application implements Constants {
         return false;  // The process were unsuccessful.
     }
 
+    /**
+     * The getTorunament is the method that collects the data from the 
+     * binary file where it was stored, and places them 
+     * @param tournament
+     * @return 
+     */
+    public Boolean getTournament(String tournament) {
+        
+        try {
+            // create an ObjectInputStream for the file we created before
+            ObjectInputStream input = new ObjectInputStream(new FileInputStream(tournament + ".dat"));
+
+            // read and print an object and cast it as string
+            System.out.println("" + (String) input.readObject());
+
+            // read and print an object and cast it as string
+            byte[] read = (byte[]) input.readObject();
+            String s2 = new String(read);
+         } catch (Exception ex) {
+            ex.printStackTrace();
+         }
+        return null; 
+    }
+    
     /**
      * @param args the command line arguments
      */

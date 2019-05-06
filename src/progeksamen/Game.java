@@ -30,7 +30,6 @@ public class Game {
         this.player2 = player2;
     }
     
-    
     public Game (Player player1, Player player2, Result result, String[] moves, Date startDate, Date endDate) {
         
         this.player1 = player1;
@@ -58,11 +57,15 @@ public class Game {
         }
         
         // Stores the player at the end of the players.text in TEXT.
-        String gameText = game.toString();
+        String gameText = this.player1.id + ";" + this.player2.id + ";" + this.result + ";" + this.startDate + ";" + this.endDate;
  
-        try (BufferedWriter outStream = new BufferedWriter(new FileWriter(tournament + ".txt", true))) {
+        try {
+            BufferedWriter outStream = new BufferedWriter(new FileWriter(tournament + ".txt", true));
             outStream.newLine();
             outStream.write(gameText);
+            outStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

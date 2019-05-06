@@ -7,4 +7,10 @@ Tournament\.dat
 
 Tournament\.txt
 
-*.html
+build/built-jar\.properties
+
+dist/Progeksamen\.html
+
+dist/Progeksamen\.jar
+
+dist/Progeksamen\.jnlp

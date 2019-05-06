@@ -60,7 +60,7 @@ public class Result implements Serializable {
     public Boolean getDraw() {
         return draw;
     }
-    //
+
     public void setDraw(Boolean draw) {
         this.draw = draw;
     }

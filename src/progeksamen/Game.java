@@ -41,4 +41,12 @@ public class Game implements Serializable{
     } 
     
     
+     @Override
+    public String toString(){
+    
+        return player1.name + " VS " + player2.name;
+    }
 }
+ 
+
+

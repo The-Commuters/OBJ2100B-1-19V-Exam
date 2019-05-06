@@ -57,12 +57,12 @@ public class Player {
      * when the player is created by the administrator.
      * @throws java.io.FileNotFoundException
      */
-    public void savePlayer() throws FileNotFoundException, IOException {
+    public void savePlayer(String tournament) throws FileNotFoundException, IOException {
         
         Player player = new Player(this.id, this.name);
         
         // Stores the player at the end of the players.dat in BINARY.
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("players.dat"));) 
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(tournament + ".dat"));) 
         {
             output.writeObject(new java.util.Date());
         }
@@ -70,7 +70,7 @@ public class Player {
         String playerText = this.id + ";" + this.name;
         // Stores the player at the end of the players.text in TEXT.
         try {
-            BufferedWriter outStream = new BufferedWriter(new FileWriter("players.txt", true));
+            BufferedWriter outStream = new BufferedWriter(new FileWriter(tournament + ".txt", true));
             outStream.newLine();
             outStream.write(playerText);
             outStream.close();

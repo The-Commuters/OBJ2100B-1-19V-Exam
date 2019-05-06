@@ -25,6 +25,11 @@ public class Game {
     Date endDate;
     
     public Game () {}
+    public Game (Player player1, Player player2) {
+        this.player1 = player1;
+        this.player2 = player2;
+    }
+    
     
     public Game (Player player1, Player player2, Result result, String[] moves, Date startDate, Date endDate) {
         
@@ -36,26 +41,26 @@ public class Game {
         this.endDate = endDate;
     }
     
-        /**
+    /**
      * The class that stores the player in at the end of the player-file
      * when the player is created by the administrator.
      * @throws java.io.FileNotFoundException
      */
-    public void saveGame() throws FileNotFoundException, IOException {
+    public void saveGame(String tournament) throws FileNotFoundException, IOException {
         
+        // Creates a object to place.
         Game game = new Game(this.player1, this.player2, this.result, this.moves, this.startDate, this.endDate);
         
         // Stores the player at the end of the players.dat in BINARY.
-        try ( 
-            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("players.dat"));
-        ) {
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(tournament + ".dat"));) 
+        {
             output.writeObject(new java.util.Date());
         }
         
         // Stores the player at the end of the players.text in TEXT.
         String gameText = game.toString();
  
-        try (BufferedWriter outStream = new BufferedWriter(new FileWriter("players.txt", true))) {
+        try (BufferedWriter outStream = new BufferedWriter(new FileWriter(tournament + ".txt", true))) {
             outStream.newLine();
             outStream.write(gameText);
         }

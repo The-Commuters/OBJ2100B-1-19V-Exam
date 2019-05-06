@@ -11,7 +11,7 @@ package progeksamen;
 public interface Constants {
     
     // The width and height of the scene.
-    public int SCREEN_HEIGHT = 600;
+    public int SCREEN_HEIGHT = 1100;
     public int SCREEN_WIDTH  = 800;
 
 }

@@ -4,6 +4,15 @@
  */
 package progeksamen;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Player {
     
     int id;
@@ -21,7 +30,17 @@ public class Player {
     public Player (String name) {
         this.name = name;
         this.id = generateId();
-        savePlayer();
+
+    }
+    
+    /**
+     * Constructor used in saveplayer();
+     * @param id
+     * @param name 
+     */
+    public Player (int id, String name) {
+        this.name = name;
+        this.id = id;
     }
     
     /**
@@ -36,8 +55,35 @@ public class Player {
     /**
      * The class that stores the player in at the end of the player-file
      * when the player is created by the administrator.
+     * @throws java.io.FileNotFoundException
      */
-    private void savePlayer() {
-        // Saves the player in the file with printwriter.
+    public void savePlayer() throws FileNotFoundException, IOException {
+        
+        Player player = new Player(this.id, this.name);
+        
+        // Stores the player at the end of the players.dat in BINARY.
+        try ( 
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("players.dat"));
+        ) {
+            output.writeObject(new java.util.Date());
+        }
+        
+        String playerText = this.id + ";" + this.name;
+        // Stores the player at the end of the players.text in TEXT.
+        try {
+            BufferedWriter outStream = new BufferedWriter(new FileWriter("players.txt", true));
+            outStream.newLine();
+            outStream.write(playerText);
+            outStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * Collects the list of players from the file 
+     */
+    private void getPlayers() {
+    
     }
 }

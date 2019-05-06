@@ -5,7 +5,15 @@
  */
 package progeksamen;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Game {
     
@@ -26,6 +34,34 @@ public class Game {
         this.moves = moves;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+    
+        /**
+     * The class that stores the player in at the end of the player-file
+     * when the player is created by the administrator.
+     * @throws java.io.FileNotFoundException
+     */
+    public void saveGame() throws FileNotFoundException, IOException {
+        
+        Game game = new Game(this.player1, this.player2, this.result, this.moves, this.startDate, this.endDate);
+        
+        // Stores the player at the end of the players.dat in BINARY.
+        try ( 
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("players.dat"));
+        ) {
+            output.writeObject(new java.util.Date());
+        }
+        
+        String gameText = game.toString();
+        // Stores the player at the end of the players.text in TEXT.
+        try {
+            BufferedWriter outStream = new BufferedWriter(new FileWriter("players.txt", true));
+            outStream.newLine();
+            outStream.write(gameText);
+            outStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

@@ -16,9 +16,16 @@ public class Spillerapp extends Application implements Constants {
         
         // Setter her opp scene, for å ha en måte å lukke applikasjonen enklere på.
         BorderPane root = new BorderPane();
-        Scene scene = new Scene(root, SCREEN_HEIGHT, SCREEN_WIDTH);
-        primaryStage.setTitle("Application!");
+        
+        
+        Scene scene = new Scene(root);
+        
+        
+        primaryStage.setTitle("ChessX");
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
+        primaryStage.setMinWidth(600);
+        primaryStage.setMinHeight(400);
         primaryStage.show();
          
     }

@@ -61,8 +61,9 @@ public class Result implements Serializable {
     }
      @Override
     public String toString() {
-        if (draw == true)
+        if (draw == true){
             return "Draw : " + winner.name + " & " + loser.name;
+        }
         return " Winner: " + winner.name + " Loser: " + loser.name + " Draw: " + draw;
     }
     public String getResult(){

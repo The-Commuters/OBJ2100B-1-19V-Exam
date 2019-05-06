@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.WriteAbortedException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -44,15 +44,24 @@ public class Admapp extends Application implements Constants {
         Player player   = new Player("Harry");
         Player player1  = new Player("Ron");
         Player player2  = new Player("Hermoine"); 
-        Game game1      = new Game(player1, player2);
-        Game game2      = new Game(player2, player1);
-        Game game3      = new Game(player, player1);
+        
+        ArrayList<String> gameArraylist = new ArrayList<>();
+        gameArraylist.add("Number1");
+        gameArraylist.add("Number2");
+        gameArraylist.add("Number3");
+        
+        Date date = new Date();
+        
         Result result1  = new Result(player1, player2, true);
         Result result2  = new Result(player2, player1, true);
         Result result3  = new Result(player, player1, false);
         
-        playerList.add(player); playerList.add(player1); playerList.add(player2);
-        gameList.add(game1); gameList.add(game2); gameList.add(game3);
+        Game game1      = new Game(player1, player2, result1, gameArraylist, date, date);
+        Game game2      = new Game(player2, player1, result1, gameArraylist, date, date);
+        Game game3      = new Game(player, player1, result1, gameArraylist, date, date);
+       
+        playerList.add(player);  playerList.add(player1); playerList.add(player2);
+        gameList.add(game1);     gameList.add(game2);     gameList.add(game3);
         resultList.add(result1); resultList.add(result2); resultList.add(result3);
         
         // Test's the method that saves the tournment-data.
@@ -104,13 +113,11 @@ public class Admapp extends Application implements Constants {
             
             // The seperator's that makes it possible to use the while(true) below.
             objectOut.writeObject("/n");
-            
             for (Game game : games) {
                 objectOut.writeObject(game);
             }
             
             objectOut.writeObject("/n");
-            
             for (Result result : results) {
                 objectOut.writeObject(result);
             }
@@ -141,9 +148,7 @@ public class Admapp extends Application implements Constants {
             outStream.close();
             System.out.println("The Objects was succesfully written to a file in text");
             
-        } catch (IOException ex) {
-            Logger.getLogger(Admapp.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (IOException ex) {}
     }
 
     /**
@@ -171,11 +176,7 @@ public class Admapp extends Application implements Constants {
                     playerList.add(player);
                     // Shows it in the console, REMOVE LATER!
                     System.out.println(player.name + " " + player.id);
-                } catch (EOFException e){
-                    break;
-                } catch (WriteAbortedException ex) {
-                    break;
-                } catch (ClassCastException ex) {
+                } catch (EOFException | WriteAbortedException | ClassCastException e){
                     break;
                 }
             }
@@ -186,11 +187,7 @@ public class Admapp extends Application implements Constants {
                     game = (Game) input.readObject();
                     gameList.add(game);
                     System.out.println(game.player1.name + " " + game.result);
-                } catch (EOFException e){
-                    break;
-                } catch (WriteAbortedException ex) {
-                    break;
-                } catch (ClassCastException ex) {
+                } catch (EOFException | WriteAbortedException | ClassCastException e){
                     break;
                 }
             }
@@ -209,8 +206,7 @@ public class Admapp extends Application implements Constants {
                     break;
                 }
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IOException | ClassNotFoundException ex) {
         }
     }
     

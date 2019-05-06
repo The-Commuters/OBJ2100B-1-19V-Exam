@@ -6,6 +6,7 @@
 package progeksamen;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Game implements Serializable{
@@ -13,7 +14,7 @@ public class Game implements Serializable{
     Player player1;
     Player player2;
     Result result;
-    String[] score;
+    ArrayList<String> score;
     Date startDate;
     Date endDate;
     
@@ -23,15 +24,18 @@ public class Game implements Serializable{
         this.player2 = player2;
     }
     
-    public Game (Player player1, Player player2, Result result, String[] moves, Date startDate, Date endDate) {
+    public Game (Player player1, Player player2, Result result, ArrayList<String> moves, Date startDate, Date endDate) {
         this.player1 = player1;
         this.player2 = player2;
         this.result = result;
-        this.score = score;
+        this.score = moves;
         this.startDate = startDate;
         this.endDate = endDate;
     } 
     
+    public void addMove(String move) {
+       this.score.add(move);
+    }
     
      @Override
     public String toString(){

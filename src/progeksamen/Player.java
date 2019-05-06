@@ -55,12 +55,6 @@ public class Player implements Serializable{
         this.score = score;
     }
     
-    /**
-     * Collects the list of players from the file 
-     */
-    private void getPlayers() {
-            
-    }
     @Override
     public String toString(){
     

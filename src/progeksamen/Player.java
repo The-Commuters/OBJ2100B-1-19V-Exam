@@ -21,6 +21,7 @@ public class Player {
     public Player (String name) {
         this.name = name;
         this.id = generateId();
+        savePlayer();
     }
     
     /**
@@ -28,7 +29,15 @@ public class Player {
      * @return the newly generated id. 
      */
     public int generateId () {
-    
+        // Generates a unique ID to the player.
         return 0;
+    }
+    
+    /**
+     * The class that stores the player in at the end of the player-file
+     * when the player is created by the administrator.
+     */
+    private void savePlayer() {
+        // Saves the player in the file with printwriter.
     }
 }

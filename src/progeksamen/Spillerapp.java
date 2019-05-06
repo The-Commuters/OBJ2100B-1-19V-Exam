@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 
 public class Spillerapp extends Application implements Constants {
     
-    /**
-     */
     @Override
     public void start(Stage primaryStage) {
         

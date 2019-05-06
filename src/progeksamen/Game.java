@@ -7,8 +7,6 @@ package progeksamen;
 
 import java.util.Date;
 
-    
-
 public class Game {
     
     Player player1;
@@ -19,6 +17,7 @@ public class Game {
     Date endDate;
     
     public Game () {}
+    
     public Game (Player player1, Player player2, Result result, String[] moves, Date startDate, Date endDate) {
         
         this.player1 = player1;

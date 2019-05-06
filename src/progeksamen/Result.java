@@ -8,11 +8,11 @@ package progeksamen;
 
 public class Result {
     
-    Winner winner;
-    Loser loser;
+    Player winner;
+    Player loser;
     Boolean draw;
     
-    public Result(Winner winner, Loser loser, Boolean draw) {
+    public Result(Player winner, Player loser, Boolean draw) {
         this.winner = winner;
         this.loser = loser;
         this.draw = draw;

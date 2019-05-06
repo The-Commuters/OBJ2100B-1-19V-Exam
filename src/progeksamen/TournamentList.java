@@ -5,11 +5,11 @@
  */
 package progeksamen;
 
-
-class Winner {
+public class TournamentList {
     
-    public Winner () {
+    Tournament[] tournaments;
     
+    public TournamentList() {
+        
     }
-    
 }

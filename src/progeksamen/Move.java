@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package progeksamen;
 
@@ -11,11 +9,21 @@ package progeksamen;
  */
 public class Move {
     
-    Enum Comment;
+    enum Comment { 
+        VERY_GOOD, GOOD, INTERESTING, 
+        DOUBTFUL, BAD, VERY_BAD; 
+    } 
+
     String move;
-   //Comment comment;
+    Comment comment;
     
-    public Move() {
+    public Move(String move) {
+        this.move = move;
+    }
+    
+    public Move(String move, Comment comment) {
+        this.move = move;
+        this.comment = comment;
     }
     
 

@@ -6,3 +6,5 @@ dist/web-files/
 Tournament\.dat
 
 Tournament\.txt
+
+*.html

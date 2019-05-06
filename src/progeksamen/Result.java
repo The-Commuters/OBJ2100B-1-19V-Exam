@@ -11,15 +11,18 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-public class Result {
+public class Result implements Serializable {
     
     Player winner;
     Player loser;
     Boolean draw;
+    
+    public Result() {
+    }
     
     public Result(Player winner, Player loser, Boolean draw) {
         this.winner = winner;

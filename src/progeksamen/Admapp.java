@@ -30,11 +30,6 @@ public class Admapp extends Application implements Constants {
     // Current string for the Tournament, needed to find/create the .dat to store binary And the .txt.
     public static String tournament = "Tournament";
     
-    // The list's used to store data.
-    public static ArrayList<Player> playerList    = new ArrayList<Player>();
-    public static ArrayList<Game> gameList        = new ArrayList<Game>();
-    public static ArrayList<Result> resultList    = new ArrayList<Result>();
-    
     BorderPane root = new BorderPane();
     
     /** Metodeforklaringer -- MÅ SLETTES SENERE --
@@ -144,6 +139,8 @@ public class Admapp extends Application implements Constants {
             objectOut.close();
             System.out.println("The Objects was succesfully written to a file in binary");
             
+            //------------------------ Start of backup ---------------------
+            
             // ...Then it creates the backup in clear text.
             BufferedWriter outStream = new BufferedWriter(new FileWriter(tournament + ".txt", true));
             
@@ -189,7 +186,11 @@ public class Admapp extends Application implements Constants {
             // Gathers the player-objects.
             while(true){
                 try{
+                    // places the retrieved object in player.
                     player = (Player) input.readObject();
+                    // Places player in the player-list.
+                    playerList.add(player);
+                    // Shows it in the console, REMOVE LATER!
                     System.out.println(player.name + " " + player.id);
                 } catch (EOFException e){
                     break;
@@ -204,6 +205,7 @@ public class Admapp extends Application implements Constants {
             while(true){
                 try{
                     game = (Game) input.readObject();
+                    gameList.add(game);
                     System.out.println(game.player1.name + " " + game.result);
                 } catch (EOFException e){
                     break;
@@ -218,6 +220,7 @@ public class Admapp extends Application implements Constants {
             while(true){
                 try{
                     result = (Result) input.readObject();
+                    resultList.add(result);
                     System.out.println(result.draw + " " + result.winner.name);
                 } catch (EOFException e){
                     break;

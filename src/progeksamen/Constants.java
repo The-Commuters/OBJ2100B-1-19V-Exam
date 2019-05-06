@@ -5,7 +5,7 @@
  */
 package progeksamen;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * 
@@ -15,5 +15,10 @@ public interface Constants {
     // The width and height of the scene.
     public int SCREEN_HEIGHT = 1100;
     public int SCREEN_WIDTH  = 800;
+    
+    // The list's used to store data.
+    public static ArrayList<Player> playerList    = new ArrayList<Player>();
+    public static ArrayList<Game> gameList        = new ArrayList<Game>();
+    public static ArrayList<Result> resultList    = new ArrayList<Result>();
 
 }

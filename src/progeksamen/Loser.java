@@ -8,4 +8,8 @@ package progeksamen;
 
 class Loser {
     
+    public Loser () {
+    
+    }
+    
 }

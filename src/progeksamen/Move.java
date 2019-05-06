@@ -5,11 +5,18 @@
  */
 package progeksamen;
 
-
-class Winner {
+/**
+ *
+ * @author voje
+ */
+public class Move {
     
-    public Winner () {
+    Enum Comment;
+    String move;
+   //Comment comment;
     
+    public Move() {
     }
     
+
 }

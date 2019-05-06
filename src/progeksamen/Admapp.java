@@ -11,13 +11,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.WriteAbortedException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -105,22 +109,16 @@ public class Admapp extends Application implements Constants {
             // First the objects is written to the file that holds the binary data...
             FileOutputStream fileOut = new FileOutputStream(tournament + ".dat");
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+ 
+
+            objectOut.writeObject(playerList);
+
             
-            // Stores the player-objects in the file.
-            for (Player player : players) {
-                objectOut.writeObject(player);
-            }
+            objectOut.writeObject(gameList);
             
-            // The seperator's that makes it possible to use the while(true) below.
-            objectOut.writeObject("/n");
-            for (Game game : games) {
-                objectOut.writeObject(game);
-            }
-            
-            objectOut.writeObject("/n");
-            for (Result result : results) {
-                objectOut.writeObject(result);
-            }
+           
+            objectOut.writeObject(resultList);
+
             
             objectOut.close();
             System.out.println("The Objects was succesfully written to a file in binary");
@@ -128,18 +126,25 @@ public class Admapp extends Application implements Constants {
             //------------------------ Start of backup ---------------------
             
             // ...Then it creates the backup in clear text.
-            BufferedWriter outStream = new BufferedWriter(new FileWriter(tournament + ".txt", true));
+            BufferedWriter outStream = new BufferedWriter(new FileWriter(tournament + ".txt"));
             
+            outStream.write("The Players of the tournament:");
             for (Player player : players) {
                 outStream.newLine();
                 outStream.write(player.toString());
             }
 
+            outStream.newLine();
+            outStream.newLine();
+            outStream.write("The Games of the tournament:");
             for (Game game : games) {
                 outStream.newLine();
                 outStream.write(game.toString());
             }
-            
+
+            outStream.newLine();            
+            outStream.newLine();
+            outStream.write("The Results of the tournament:");
             for (Result result : results) {
                 outStream.newLine();
                 outStream.write(result.toString());
@@ -162,52 +167,43 @@ public class Admapp extends Application implements Constants {
             // create an ObjectInputStream for the file we created before
             ObjectInputStream input = new ObjectInputStream(new FileInputStream(tournament + ".dat"));
             
-            // Objects to use when collecting the objects from the binary file.
-            Player player = new Player();
-            Game game = new Game();
-            Result result = new Result();
-            
-            // Gathers the player-objects.
-            while(true){
-                try{
-                    // places the retrieved object in player.
-                    player = (Player) input.readObject();
-                    // Places player in the player-list.
-                    playerList.add(player);
-                    // Shows it in the console, REMOVE LATER!
-                    System.out.println(player.name + " " + player.id);
-                } catch (EOFException | WriteAbortedException | ClassCastException e){
-                    break;
+            // Collects the player's from the storage-file.
+            try{
+                ArrayList<Player> playerList = (ArrayList<Player>) input.readObject();
+  
+                // Shows it in the console, REMOVE LATER!
+                for (Player player : playerList) {
+                    System.out.println(player.toString());
                 }
+            } catch (EOFException | WriteAbortedException | ClassCastException e){
+   
             }
             
-            // Gathers the game-objects.
-            while(true){
-                try{
-                    game = (Game) input.readObject();
-                    gameList.add(game);
-                    System.out.println(game.player1.name + " " + game.result);
-                } catch (EOFException | WriteAbortedException | ClassCastException e){
-                    break;
+            // Collects the game's from the storage-file.
+            try{
+                ArrayList<Game> gameList = (ArrayList<Game>) input.readObject();
+
+                // Shows it in the console, REMOVE LATER!
+                for (Game game : gameList) {
+                    System.out.println(game.toString());
                 }
+            } catch (EOFException | WriteAbortedException | ClassCastException e){
+
             }
-            
-            // Gathers the result-objects.
-            while(true){
-                try{
-                    result = (Result) input.readObject();
-                    resultList.add(result);
-                    System.out.println(result.draw + " " + result.winner.name);
-                } catch (EOFException e){
-                    break;
-                } catch (WriteAbortedException ex) {
-                    break;
-                } catch (ClassCastException ex) {
-                    break;
+
+            // Collects the result's from the storage-file.
+            try{
+                ArrayList<Result> resultList = (ArrayList<Result>) input.readObject();
+
+                // Shows it in the console, REMOVE LATER!
+                for (Result result : resultList) {
+                    System.out.println(result.toString());
                 }
+            } catch (EOFException | WriteAbortedException | ClassCastException e){
+
             }
-        } catch (IOException | ClassNotFoundException ex) {
-        }
+           
+        } catch (IOException | ClassNotFoundException ex) {}
     }
     
     /**

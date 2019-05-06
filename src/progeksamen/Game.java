@@ -11,16 +11,17 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Game {
+public class Game implements Serializable{
     
     Player player1;
     Player player2;
     Result result;
-    String[] moves;
+    String[] score;
     Date startDate;
     Date endDate;
     
@@ -30,13 +31,11 @@ public class Game {
         this.player2 = player2;
     }
     
-    
     public Game (Player player1, Player player2, Result result, String[] moves, Date startDate, Date endDate) {
-        
         this.player1 = player1;
         this.player2 = player2;
         this.result = result;
-        this.moves = moves;
+        this.score = score;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -49,7 +48,7 @@ public class Game {
     public void saveGame(String tournament) throws FileNotFoundException, IOException {
         
         // Creates a object to place.
-        Game game = new Game(this.player1, this.player2, this.result, this.moves, this.startDate, this.endDate);
+        Game game = new Game(this.player1, this.player2, this.result, this.score, this.startDate, this.endDate);
         
         // Stores the player at the end of the players.dat in BINARY.
         try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(tournament + ".dat"));) 
@@ -58,11 +57,15 @@ public class Game {
         }
         
         // Stores the player at the end of the players.text in TEXT.
-        String gameText = game.toString();
+        String gameText = this.player1.id + ";" + this.player2.id + ";" + this.result + ";" + this.startDate + ";" + this.endDate;
  
-        try (BufferedWriter outStream = new BufferedWriter(new FileWriter(tournament + ".txt", true))) {
+        try {
+            BufferedWriter outStream = new BufferedWriter(new FileWriter(tournament + ".txt", true));
             outStream.newLine();
             outStream.write(gameText);
+            outStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     @Override

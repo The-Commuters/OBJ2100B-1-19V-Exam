@@ -48,5 +48,39 @@ public class Result {
             outStream.newLine();
             outStream.write(gameText);
         }
+       
+    }
+     @Override
+    public String toString() {
+        if (draw == true)
+            return "Draw : " + winner.name + " & " + loser.name;
+        return " Winner: " + winner.name + " Loser: " + loser.name + " Draw: " + draw;
+    }
+    public String getResult(){
+      return winner.getPlayer() + " & " + loser.getPlayer();
+    }
+    
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
+    public Player getLoser() {
+        return loser;
+    }
+
+    public void setLoser(Player loser) {
+        this.loser = loser;
+    }
+
+    public Boolean getDraw() {
+        return draw;
+    }
+
+    public void setDraw(Boolean draw) {
+        this.draw = draw;
     }
 }

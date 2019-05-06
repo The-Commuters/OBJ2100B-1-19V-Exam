@@ -65,4 +65,9 @@ public class Game {
             outStream.write(gameText);
         }
     }
+    @Override
+    public String toString(){
+    
+        return player1.name + " VS " + player2.name;
+    }
 }

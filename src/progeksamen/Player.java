@@ -17,6 +17,7 @@ public class Player {
     
     int id;
     String name;
+    int score;
     
     /**
      * Constructor when the object is created.
@@ -30,6 +31,7 @@ public class Player {
     public Player (String name) {
         this.name = name;
         this.id = generateId();
+        this.score = 0;
 
     }
     
@@ -52,6 +54,13 @@ public class Player {
         return 0;
     }
     
+    public String getPlayer(){
+       return this.id + this.name + this.score;
+    }
+    
+    public void setScore(int score){
+        this.score = score;
+    }
     /**
      * The class that stores the player in at the end of the player-file
      * when the player is created by the administrator.
@@ -83,6 +92,19 @@ public class Player {
      * Collects the list of players from the file 
      */
     private void getPlayers() {
+            
+    }
+    @Override
+    public String toString(){
     
+        return id + " " + name + " " + score; 
+    }
+    
+    public String getWinner(Player p) {
+        
+        if (this.score > p.score)
+          return p.name;
+        return this.name;
+         
     }
 }

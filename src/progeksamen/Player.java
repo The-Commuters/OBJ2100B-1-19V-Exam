@@ -62,9 +62,8 @@ public class Player {
         Player player = new Player(this.id, this.name);
         
         // Stores the player at the end of the players.dat in BINARY.
-        try ( 
-            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("players.dat"));
-        ) {
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("players.dat"));) 
+        {
             output.writeObject(new java.util.Date());
         }
         

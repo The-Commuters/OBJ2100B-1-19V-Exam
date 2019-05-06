@@ -1,5 +1,5 @@
 /*
- * Main
+ * Main for the Admin application.
  */
 package progeksamen;
 
@@ -13,8 +13,6 @@ import javafx.stage.Stage;
 
 public class Admapp extends Application implements Constants {
     
-    /**
-     */
     @Override
     public void start(Stage primaryStage) {
         
@@ -30,6 +28,8 @@ public class Admapp extends Application implements Constants {
     }
     
     // ? Something like this to save the tournment at the end ?
+    // Collects the object-arrays that have been added to after being
+    // Collected at the start of the 'Session'.
     public Boolean saveTournament(Player[] players, Game[] games) {
         
         try {
@@ -48,12 +48,12 @@ public class Admapp extends Application implements Constants {
                 game.saveGame();
             }
             
-            return true;
+            return true;    // The process were successful.
         } catch (IOException ex) {
             Logger.getLogger(Admapp.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return false;  
+        return false;  // The process were unsuccessful.
     }
 
     /**

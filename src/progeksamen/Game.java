@@ -52,16 +52,12 @@ public class Game {
             output.writeObject(new java.util.Date());
         }
         
-        String gameText = game.toString();
         // Stores the player at the end of the players.text in TEXT.
-        try {
-            BufferedWriter outStream = new BufferedWriter(new FileWriter("players.txt", true));
+        String gameText = game.toString();
+ 
+        try (BufferedWriter outStream = new BufferedWriter(new FileWriter("players.txt", true))) {
             outStream.newLine();
             outStream.write(gameText);
-            outStream.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 }

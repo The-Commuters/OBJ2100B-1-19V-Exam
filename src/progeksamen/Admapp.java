@@ -12,16 +12,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.WriteAbortedException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -64,29 +60,13 @@ public class Admapp extends Application implements Constants {
         
         //----------------------------------/Test of tournment---------------------------------
         
-        /* --------- Example of button with actionlistener ----------
         Button saveBtn = new Button();
         saveBtn.setText("Save");
         saveBtn.setOnAction(( event) -> {
             System.out.println("Your progress is saved with the save-button.");
             saveTournament(playerList, gameList, resultList);
         });
-        root.getChildren().add(saveBtn);
-        */
-        
-        // Creating the menu-bar and places it on the top of root.
-        MenuBar menuBar = new MenuBar();
-        Menu menu = new Menu("Menu");
-        MenuItem menuSave = new MenuItem("Save");
-        menu.getItems().addAll(menuSave);
-        menuBar.getMenus().addAll(menu);
-        root.setTop(menuBar);
-        
-        // Saves the lists when the save-button in the Menubar is pressed.
-        menuSave.setOnAction(( ActionEvent event) -> {
-            System.out.println("Your progress is saved with the save-button.");
-            saveTournament(playerList, gameList, resultList);
-        });
+        root.setTop(saveBtn);
         
         // Saves the lists on exit.
         primaryStage.setOnHiding( event -> {
@@ -99,7 +79,6 @@ public class Admapp extends Application implements Constants {
         primaryStage.setTitle("Application!");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
         
     }
     

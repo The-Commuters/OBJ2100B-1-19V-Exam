@@ -15,8 +15,9 @@ public class Piece {
     int numberPos; // numbers decend along the Y-axis, starting at 0/8 ending at 7/1
     static String myType = "Piece"; // this is changed in every construktor, but can be edited if locaisation somehow later is added
     
-    protected static final int[] NUMBERS = {8, 7, 6, 5, 4, 3, 2, 1};
     protected static final char[] LETTERS = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+    protected static final int[] NUMBERS = {8, 7, 6, 5, 4, 3, 2, 1};
+    
 
     public Piece(boolean white, int letterPos, int numberPos) {
         this.white = white;
@@ -57,4 +58,24 @@ public class Piece {
         return valid;
     }
     
+    protected boolean validHorisontal(int newNumberPos){
+        if (newNumberPos == numberPos){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean areYouThis(String type){
+        if (type == myType){
+            return true;
+        }
+        return false;
+    }
+    
+    protected boolean validVertical(int newLetterPos){
+        if (newLetterPos == letterPos){
+            return true;
+        }
+        return false;
+    }
 }

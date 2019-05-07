@@ -45,7 +45,7 @@ public class Spillerapp extends Application {
     public static ArrayList<Player> playerList    = new ArrayList<Player>();
     public static ArrayList<Game> gameList        = new ArrayList<Game>();
     public static ArrayList<Result> resultList    = new ArrayList<Result>();
-     public static ArrayList<Tournament> tournamentList    = new ArrayList<Tournament>();
+    public static ArrayList<Tournament> tournamentList    = new ArrayList<Tournament>();
     
     
     @Override
@@ -56,7 +56,6 @@ public class Spillerapp extends Application {
         
         // The first page
         Page tournamentPage = tournament();
-        
         
         ////////////////////////////////////////////////////////////////
         // Root & Home page
@@ -87,7 +86,11 @@ public class Spillerapp extends Application {
   
         BorderPane header = new BorderPane(menu, title, null, null, null);
         body.setTop(header);
-        // List
+        
+        ////////////////////////////////////////////////////////////////
+        // Main
+        
+        // LIST INPUT
         ObservableList<Tournament> listItems = FXCollections.<Tournament>observableArrayList(getList());
         
         // LIST
@@ -102,6 +105,61 @@ public class Spillerapp extends Application {
         
         StackPane main = new StackPane(list);
         body.setCenter(main);
+        
+        return new Page(body);
+    }
+    
+    public Page lobby(Tournament tournament) {
+        Body body = new Body(tournament.getName());
+        
+        ////////////////////////////////////////////////////////////////
+        // Header
+        Title title = new Title(new Text(body.getName()));
+        Crumb crumb = new Crumb("Tournament", "Lobby");
+        Tools tools = new Tools();
+        Menu menu = new Menu(crumb, tools);
+  
+        BorderPane header = new BorderPane(menu, title, null, null, null);
+        body.setTop(header);
+        
+        ////////////////////////////////////////////////////////////////
+        // Main
+        
+        // LIST INPUT
+        ObservableList<Game> listItems = FXCollections.<Game>observableArrayList(tournament.getGames());
+        
+        
+        // LIST
+        ListView<Game> list = new ListView<>(listItems);
+        list.getItems().addAll();
+        list.setCellFactory(new GameCellFactory());
+        list.setOrientation(Orientation.VERTICAL);
+        list.setFocusTraversable(false);
+        list.getSelectionModel().selectedItemProperty().addListener(this::chooseGame);
+        list.getStyleClass().add("list");
+        // LIST
+        
+        StackPane main = new StackPane(list);
+        body.setCenter(main);
+        
+        return new Page(body);
+    }
+    
+    public Page game(Game game) {
+        Body body = new Body("DANIEL VS David");
+        
+        ////////////////////////////////////////////////////////////////
+        // Header
+        Title title = new Title(new Text(body.getName()));
+        Crumb crumb = new Crumb("Tournament", "Lobby", "Game");
+        Tools tools = new Tools();
+        Menu menu = new Menu(crumb, tools);
+  
+        BorderPane header = new BorderPane(menu, title, null, null, null);
+        body.setTop(header);
+        
+        ////////////////////////////////////////////////////////////////
+        // Main
         
         return new Page(body);
     }
@@ -134,11 +192,17 @@ public class Spillerapp extends Application {
         } catch (IOException ex) {}
     }
     
-     public List<Tournament> getList(){
-      return tournamentList;
-  }
-    public void chooseTournament(ObservableValue<? extends Tournament> observable, Tournament oldLobby, Tournament newLobby) {
-        System.out.println("Moved from " + oldLobby + "page, to " + newLobby + "page");
-        container.put(tournament());
+    public List<Tournament> getList(){
+        return tournamentList;
+    }
+    
+    public void chooseTournament(ObservableValue<? extends Tournament> observable, Tournament previousTournament, Tournament currentTournament) {
+        System.out.println("Moved from " + previousTournament + "page, to " + currentTournament + "page");
+        container.put(lobby(currentTournament));
+    }
+    
+    public void chooseGame(ObservableValue<? extends Game> observable, Game previousGame, Game currentGame) {
+        System.out.println("Moved from " + previousGame + "page, to " + currentGame + "page");
+        container.put(game(currentGame));
     }
 }

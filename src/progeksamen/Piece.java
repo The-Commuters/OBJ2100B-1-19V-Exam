@@ -57,7 +57,7 @@ public abstract class Piece {
         return newNumberPos == numberPos;
     }
     
-    // takes inn adjustments from letterPos and numberPos
+    // takes inn adjustments from letterPos and numberPos, cheks if a set of cordinates are corekt relative to the piece that uses it
     protected boolean validRelativeToSelf(int verticalTarget, int horisontalTarget, int verticalAdjustment, int horisontalAdjustment){
         return ( (verticalTarget == letterPos + verticalAdjustment) && (horisontalTarget == numberPos + horisontalAdjustment) );
     }
@@ -96,7 +96,19 @@ public abstract class Piece {
             
         return validTarget;
     }
+    
+    // recives a target and a list of places to chek 
+    protected boolean validList(int verticalTarget, int horisontalTarget, int[] verticalAdjustment, int[] horisontalAdjustment){
+        for (int i = 0; i < verticalAdjustment.length; i++){
+            if (validRelativeToSelf(verticalTarget, horisontalTarget, verticalAdjustment[i], horisontalAdjustment[i])){
+                return true;
+            }
+            System.out.println(" curent target: " + LETTERS[verticalTarget] + " " + NUMBERS[horisontalTarget] + " seartching at: " + verticalAdjustment[i] + " " + horisontalAdjustment[i]);
+        }
+        return false;
+    }
             
+    //for (int x=0; x<5; x++)
     
     
     protected boolean validVertical(int newLetterPos){

@@ -42,10 +42,6 @@ public class Spillerapp extends Application {
     public static String tournament = "Tournament";
     
     // The list's used to store data.
-    public static ArrayList<Player> playerList    = new ArrayList<Player>();
-    public static ArrayList<Game> gameList        = new ArrayList<Game>();
-    public static ArrayList<Result> resultList    = new ArrayList<Result>();
-    public static ArrayList<Tournament> tournamentList    = new ArrayList<Tournament>();
     
     
     @Override

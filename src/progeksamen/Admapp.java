@@ -36,6 +36,8 @@ public class Admapp extends Application implements Constants {
     
     BorderPane root = new BorderPane();
     
+     ComboBox<Player> playerMenu ;
+    
     // The list's used to store data.
     public static ArrayList<Player> playerList    = new ArrayList<Player>();
     public static ArrayList<Game> gameList        = new ArrayList<Game>();
@@ -143,18 +145,25 @@ public class Admapp extends Application implements Constants {
            
         });
         
-        ComboBox<Player> playerMenu 
-    = new ComboBox<>();
+        playerMenu = new ComboBox<>();
         
-       ObservableList playerComboList = FXCollections.observableList(getList());
+        ObservableList playerComboList = FXCollections.observableList(getList());
         
         playerMenu.setItems(playerComboList);
-       
+         
+                 
+        playerMenu.setOnAction(e -> {
+               Player player_int = playerMenu.getSelectionModel().getSelectedItem();
+        
+               System.out.println(player_int);
+        });
+           
+      
         HBox hbox = new HBox();
         hbox.getChildren().addAll(playerMenu, newPlayerBtn, newBtn, editResultBtn, saveBtn);
+        
+        
    
-    
-       
         //root.setTop(playerMenu);
       root.setTop(hbox);
         
@@ -265,6 +274,8 @@ public class Admapp extends Application implements Constants {
    public List<Player> getList(){
       return playerList;
   }
+   
+   
     /**
      * @param args the command line arguments
      */

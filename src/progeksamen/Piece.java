@@ -74,6 +74,28 @@ public abstract class Piece {
         }
         return false;
     }
+    
+    protected boolean validLine(int newLetterPos, int newNumberPos){
+        boolean validTarget = false;
+        
+        // if you are vertical not horisontal
+            if (!validHorisontal(newNumberPos) && validVertical(newLetterPos)){
+                validTarget = true;
+            }
+
+            // if you are horisontal not vertical
+            if (validHorisontal(newNumberPos) && !validVertical(newLetterPos)){
+                validTarget = true;
+            }
+
+            // if both direktions are true the target is the curent position
+            if (validHorisontal(newNumberPos) && validVertical(newLetterPos)){
+                validTarget = false;
+            }
+            
+            
+        return validTarget;
+    }
             
     
     

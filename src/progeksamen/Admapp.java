@@ -37,6 +37,7 @@ public class Admapp extends Application implements Constants {
     public static ArrayList<Player> playerList    = new ArrayList<Player>();
     public static ArrayList<Game> gameList        = new ArrayList<Game>();
     public static ArrayList<Result> resultList    = new ArrayList<Result>();
+    public static ArrayList<Tournament> tournamentList    = new ArrayList<Tournament>();
     
     /** Metodeforklaringer -- MÅ SLETTES SENERE --
      * getTournament() collects the data from the "database"-file.
@@ -46,8 +47,8 @@ public class Admapp extends Application implements Constants {
     @Override
     public void start(Stage primaryStage) {
         
-        // The method that collects the data from the Binary file.
-        getTournament();
+        // The method that collects the tournaments-arraylist.
+        getTournaments();
         
         //----------------------------------Test of tournment---------------------------------
         // Test-input used when writing into the file.
@@ -74,27 +75,35 @@ public class Admapp extends Application implements Constants {
         gameList.add(game1);     gameList.add(game2);     gameList.add(game3);
         resultList.add(result1); resultList.add(result2); resultList.add(result3);
         
+        Tournament tournament1 = new Tournament("Team Nado: Vers 2", playerList, gameList);
+        Tournament tournament2 = new Tournament("Team Nado: Vers 3", playerList, gameList);
+        Tournament tournament3 = new Tournament("Team Nado: Vers 4", playerList, gameList);
+        
+        tournamentList.add(tournament1); tournamentList.add(tournament2); tournamentList.add(tournament3);
+        
         // Test's the method that saves the tournment-data.
         // SaveTournament(playerList, gameList, resultList);
        
-        
-        
         //----------------------------------/Test of tournment---------------------------------
         
         //---- Save Button ----
         Button saveBtn = new Button();
         saveBtn.setText("Save");
+        
+        // Event that sav
         saveBtn.setOnAction(( event) -> {
             System.out.println("Your progress is saved with the save-button.");
-            saveTournament(playerList, gameList, resultList);
+            saveTournaments(tournamentList);
         });
         root.setTop(saveBtn);
         //---- Edit result Button ----
+        
             //---To be removed---
             Player playerTest1   = new Player("Harry");
             Player playerTest2  = new Player("Ron");
             Game gameTest      = new Game(playerTest1, playerTest2, result1, gameArraylist, date, date);
             //-------------------
+            
         Button editResultBtn = new Button();
         editResultBtn.setText("Edit Result");
         editResultBtn.setOnAction(( event) -> {
@@ -110,8 +119,8 @@ public class Admapp extends Application implements Constants {
             
             tournamentNameIn = TextDialog("Enter tournament name", "Tournament Name", "Name can not be empty");
             
-                 Tournament test = new Tournament(tournamentNameIn, playerList, gameList, resultList);
-          
+            Tournament test = new Tournament(tournamentNameIn, playerList, gameList);
+                 
             
 
             System.out.println(test.toString());
@@ -121,7 +130,7 @@ public class Admapp extends Application implements Constants {
         // Saves the lists on exit.
         primaryStage.setOnHiding( event -> {
             System.out.println("Your progress have been saved on exit.");
-            saveTournament(playerList, gameList, resultList);
+            saveTournaments(tournamentList);
         });
  
         // Setter her opp scene, for å ha en måte å lukke applikasjonen enklere på.
@@ -134,12 +143,10 @@ public class Admapp extends Application implements Constants {
     
     /**
      * This method is the one that saves the Arraylist's into the file
-     * to store them.
-     * @param players is the ArrayList of player-objects.
-     * @param games is the ArrayList of game-objects.
-     * @param results is the ArrayList of result-objects. 
+     * to store them. 
+     * @param tournamentList
      */
-    public void saveTournament(ArrayList<Player> players, ArrayList<Game> games, ArrayList<Result> results) {
+    public void saveTournaments(ArrayList<Tournament> tournaments) {
         
         try {
             
@@ -148,32 +155,16 @@ public class Admapp extends Application implements Constants {
             
             // Places the object-array's in the binary-file.
             try (ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
-                // Places the object-array's in the binary-file.
-                objectOut.writeObject(players);
-                objectOut.writeObject(games);
-                objectOut.writeObject(results);
+                objectOut.writeObject(tournaments);
+                System.out.println("The Objects was succesfully written to a file in binary");
             }
-            
-            System.out.println("The Objects was succesfully written to a file in binary");
-            
-            //------------------------ Start of backup ---------------------
             
             // ...Then it creates the backup in clear text.
             BufferedWriter outStream = new BufferedWriter(new FileWriter(tournament + ".txt"));
             
-            outStream.write("The Players of the tournament:");
-            for (Player player : players) {
+            for (Tournament tournament : tournaments) {
                 outStream.newLine();
-                outStream.write(player.toString());
-            }
-
-            // Places the list of games.
-            outStream.newLine();
-            outStream.newLine();
-            outStream.write("The Games of the tournament:");
-            for (Game game : games) {
-                outStream.newLine();
-                outStream.write(game.toString());
+                outStream.write(tournament.name);
             }
             
             outStream.close();
@@ -187,22 +178,21 @@ public class Admapp extends Application implements Constants {
      * binary file where it was stored, and places them into the list
      * that they should be in before the application really starts. 
      */
-    public void getTournament() {
-        
+    public void getTournaments() {
+
         try {
             // create an ObjectInputStream for the file we created before
             ObjectInputStream input = new ObjectInputStream(new FileInputStream(tournament + ".dat"));
             
             // Collects the player's from the storage-file.
             try{
-                
-                playerList = (ArrayList<Player>) input.readObject();
-                gameList = (ArrayList<Game>) input.readObject();
-                resultList = (ArrayList<Result>) input.readObject();
+                tournamentList = (ArrayList<Tournament>) input.readObject();
+                System.out.println("The list of tournaments have been collected fron the binary-file");
                 
             } catch (ClassCastException | ClassNotFoundException e){
             }
-        } catch (IOException ex) {}
+        } catch (IOException ex) {
+        }
     }
     
     public String TextDialog(String HeaderTxt, String tittle, String warning) {

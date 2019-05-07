@@ -48,14 +48,10 @@ public class Tournament implements Serializable {
     public void setGames(ArrayList<Game> games) {
         this.games = games;
     }
-
-    public void setResults(List<Result> results) {
-        this.results = results;
-    }
     
     // Methods
     public String getDetails() {
-        return "Name : " + this.name + " " + this.players + " Games : " + this.games + " Winners : " + this.results;
+        return "Name : " + this.name + " " + this.players + " Games : " + this.games;
     }
     
 

@@ -45,7 +45,7 @@ public class Spillerapp extends Application {
     public static ArrayList<Player> playerList    = new ArrayList<Player>();
     public static ArrayList<Game> gameList        = new ArrayList<Game>();
     public static ArrayList<Result> resultList    = new ArrayList<Result>();
-     public static ArrayList<Tournament> tournamentListA    = new ArrayList<Tournament>();
+     public static ArrayList<Tournament> tournamentList    = new ArrayList<Tournament>();
     
     
     @Override
@@ -90,10 +90,6 @@ public class Spillerapp extends Application {
         // List
         ObservableList<Tournament> listItems = FXCollections.<Tournament>observableArrayList(getList());
         
-        ////////////////////////////////////////////////////////////////
-        // Main
-        ObservableList<Tournament> listItems = FXCollections.<Tournament>observableArrayList(new Tournament("Pokemon PVP: Killfuck"), new Tournament("League of Factoria: PVP"));
-        
         // LIST
         ListView<Tournament> list = new ListView<>(listItems);
         list.getItems().addAll();
@@ -131,7 +127,7 @@ public class Spillerapp extends Application {
             
             // Collects the player's from the storage-file.
             try{
-                 tournamentListA = (ArrayList<Tournament>) input.readObject();
+                 tournamentList = (ArrayList<Tournament>) input.readObject();
                 
             } catch (ClassCastException | ClassNotFoundException e){
             }
@@ -139,10 +135,10 @@ public class Spillerapp extends Application {
     }
     
      public List<Tournament> getList(){
-      return tournamentListA;
+      return tournamentList;
   }
-    public void chooseTournament(ObservableValue<? extends Tournament> observable, Tournament oldValue, Tournament newValue) {
-        System.out.println("Moved from " + oldValue + "page, to " + newValue + "page");
+    public void chooseTournament(ObservableValue<? extends Tournament> observable, Tournament oldLobby, Tournament newLobby) {
+        System.out.println("Moved from " + oldLobby + "page, to " + newLobby + "page");
         container.put(tournament());
     }
 }

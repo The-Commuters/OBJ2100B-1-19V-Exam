@@ -14,15 +14,13 @@ public class Result implements Serializable {
     Player loser;
     Boolean draw;
     
-  
-    
     public Result(Player winner, Player loser, Boolean draw) {
         this.winner = winner;
         this.loser = loser;
         this.draw = draw;
         
+        // The method that 
         addPointsToPlayers();
-
     }
     
     /**

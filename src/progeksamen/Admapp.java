@@ -22,10 +22,18 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Admapp extends Application implements Constants {
     
@@ -99,7 +107,6 @@ public class Admapp extends Application implements Constants {
         primaryStage.setTitle("Application!");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
     }
     
     /**
@@ -173,6 +180,18 @@ public class Admapp extends Application implements Constants {
             } catch (ClassCastException | ClassNotFoundException e){
             }
         } catch (IOException ex) {}
+    }
+    
+    public void alert( String title, String message) {
+        
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+
+        // alert.setHeaderText("Results:");
+        alert.setContentText(message);
+        alert.setGraphic(null);
+        alert.showAndWait();
+
     }
     
     /**

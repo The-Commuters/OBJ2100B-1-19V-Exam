@@ -49,9 +49,19 @@ public class Tournament implements Serializable {
         this.games = games;
     }
 
+    public void setResults(List<Result> results) {
+        this.results = results;
+    }
+    
+    // Methods
+    public String getDetails() {
+        return "Name : " + this.name + " " + this.players + " Games : " + this.games + " Winners : " + this.results;
+    }
+    
+
     @Override
     public String toString() {
-        return "Name : " + this.name + " " + this.players + " Games : " + this.games;
+        return this.name;
     }
 
 }

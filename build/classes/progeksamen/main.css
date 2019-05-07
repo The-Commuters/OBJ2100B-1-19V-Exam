@@ -36,6 +36,10 @@ and open the template in the editor.
     
 }
 
+.body {
+    -fx-background-color: -fx-color-light;
+}
+
 .title-pane {
     -fx-background-color: -fx-color-gray-900;
 }
@@ -46,8 +50,8 @@ and open the template in the editor.
     -fx-fill: #ffffff;
 }
 
-.crumb-pane {
-    -fx-background-color: -fx-color-gray-100;
+.menu {
+    -fx-background-color: -fx-color-gray-200;
 }
 
 .crumb {
@@ -56,6 +60,6 @@ and open the template in the editor.
 }
 
 /* Main */
-.main {
+.list {
     -fx-background-color: transparent;
 }

@@ -25,12 +25,16 @@ public class Pawn extends Piece {
        
         // is the target outside bounds?
         if (validLetter(newLetterPos) && validNumber(newNumberPos)){
-
-            if (super.validRelativeToSelf(newLetterPos, newNumberPos, -1, -1) ||
-                super.validRelativeToSelf(newLetterPos, newNumberPos, -1, 0) ||
-                super.validRelativeToSelf(newLetterPos, newNumberPos, -1, 1) ||
+            
+            //chose 5 difrent tests instead of validList() for the pawns unike 2-stepp at its first move and difrent "facings"
+            if  ((super.validRelativeToSelf(newLetterPos, newNumberPos, -1, -1) && super.white)  ||             // the white cheks
+                (super.validRelativeToSelf(newLetterPos, newNumberPos, -1, 0) && super.white) ||
+                (super.validRelativeToSelf(newLetterPos, newNumberPos, -1, 1) && super.white) ||
                 (super.validRelativeToSelf(newLetterPos, newNumberPos, 0, -2) && firstmove && super.white) ||
-                (super.validRelativeToSelf(newLetterPos, newNumberPos, 0, 2) && firstmove && !super.white)
+                (super.validRelativeToSelf(newLetterPos, newNumberPos, 0, 2) && firstmove && !super.white) ||   // the black cheks
+                (super.validRelativeToSelf(newLetterPos, newNumberPos, 1, -1) && !super.white) ||
+                (super.validRelativeToSelf(newLetterPos, newNumberPos, 1, 0) && !super.white) ||
+                (super.validRelativeToSelf(newLetterPos, newNumberPos, 1, 1) && !super.white)
                     ){
                 // replace with watever method call to send to .txt log
                 System.out.println(super.toString() + " to " + super.LETTERS[newLetterPos] + super.NUMBERS[newNumberPos]);

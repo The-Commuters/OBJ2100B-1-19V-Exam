@@ -29,62 +29,83 @@ public class Result implements Serializable {
         // The method that 
         addPointsToPlayers();
     }
-
+    
+    /**
+     * The game object is sent here after it is clicked on in the 
+     * Game list, in this method the administrator have to choose
+     * if the game ended in a draw or a win, and if win, then who
+     * won.
+     * @param game 
+     */
     public void handleGameResult(Game game) {
-       
-        // Places the buttons on the alert.
-        Button drawButton = new Button ("Draw");
-        Button chooseWinnerButton = new Button ("Choose a winner");
-        FlowPane FunctionTestHbox = new FlowPane();
-        FunctionTestHbox.getChildren().addAll(drawButton, chooseWinnerButton);
         
+        // The alert is set up and styled.
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Success!");
+        alert.setContentText("Did someone win, or did the game end in a draw?");
+        alert.setHeaderText(null);
         
+        // The buttons that is used is created here.
         ButtonType buttonTypeOne = new ButtonType("Draw");
-        ButtonType buttonTypeTwo = new ButtonType("Choose a winner");
-        
+        ButtonType buttonTypeTwo = new ButtonType("Choose a winner");   
         alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
-        
+     
+        // If the game ended in a draw or not.
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == buttonTypeOne){
-            alert.setTitle("Success!");
-            
-            // alert.setHeaderText("Results:");
-            alert.setContentText("A draw have successfully been registered between the two players, and each of them have been rewarded half a point! ");
-            alert.setGraphic(null);
-            alert.showAndWait();
+            alert("Title.", "A draw have successfully been registered between the two players, and each of them have been rewarded half a point! ");
+            Result resultWin = new Result(game.player1, game.player2, true);
+            game.result = resultWin;
+            System.out.println(game.result);
         } else if (result.get() == buttonTypeTwo) {
-            
-            // alert.setHeaderText("Results:");
-            alert.setContentText("A draw have successfully been registered between the two players, and each of them have been rewarded half a point! ");
-            alert.setGraphic(null);
-            alert.showAndWait();
-        }  else {
-            // ... user chose CANCEL or closed the dialog
-        }
-        
+            handleChooseWinner(game);
+        } 
     }
     
+    /**
+     * This is called in handleGameResult() if the player choose the
+     * option where one of the players won. Here the administrator 
+     * have to choose which one.
+     * @param game 
+     */
     public void handleChooseWinner(Game game) {
     
-  
+        // Creates the alert that makes you choose who won and styles it.
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Success!");
-        
-        ButtonType buttonTypeOne = new ButtonType("One");
-        ButtonType buttonTypeTwo = new ButtonType("Two");
-        
-        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
-
-        // alert.setHeaderText("Results:");
-        alert.setContentText("A draw have successfully been registered between the two players, and each of them have been rewarded half a point! ");
+        alert.setContentText("Which of the two players won the game?");
         alert.setGraphic(null);
-        alert.showAndWait();
+        alert.setHeaderText(null);
         
-    
+        // Adds the buttons to the alert.
+        ButtonType buttonTypeOne = new ButtonType(game.player1.name);
+        ButtonType buttonTypeTwo = new ButtonType(game.player2.name);
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+        
+        // finds out which of the users that have been choosen.
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne){
+            
+            Result resultWin = new Result(game.player1, game.player2, false);
+            game.result = resultWin;
+            alert("Success", "The player " + game.player1.name + " have been choosen as the winner, and have recieved a point.");
+            System.out.println(game.result.winner);
+            
+        } else if (result.get() == buttonTypeTwo) {
+            
+            Result resultWin = new Result(game.player2, game.player1, false);
+            game.result = resultWin;
+            alert("Success","The player " + game.player2.name + " have been choosen as the winner, and have recieved a point.");
+            System.out.println(game.result.winner);
+        
+        }  
     }
     
+    /**
+     * The alert method is used to show simple alerts of the type
+     * information, it recieves teh title and message as parameters
+     * and is used when handling the insertion of results.
+     * @param title
+     * @param message 
+     */
     public void alert( String title, String message) {
         
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -92,6 +113,7 @@ public class Result implements Serializable {
 
         // alert.setHeaderText("Results:");
         alert.setContentText(message);
+        alert.setHeaderText(null);
         alert.setGraphic(null);
         alert.showAndWait();
 

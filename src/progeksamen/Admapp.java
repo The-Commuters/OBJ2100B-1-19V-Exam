@@ -21,6 +21,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -74,6 +76,8 @@ public class Admapp extends Application implements Constants {
         
         // Test's the method that saves the tournment-data.
         // SaveTournament(playerList, gameList, resultList);
+       
+        
         
         //----------------------------------/Test of tournment---------------------------------
         
@@ -114,6 +118,7 @@ public class Admapp extends Application implements Constants {
         primaryStage.setScene(scene);
         primaryStage.show();
         
+        result1.handleGameResult(game1);
     }
     
     /**

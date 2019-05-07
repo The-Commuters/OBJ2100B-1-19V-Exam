@@ -4,28 +4,25 @@
 package progeksamen;
 
 import java.io.BufferedWriter;
-import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.io.WriteAbortedException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Optional;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Admapp extends Application implements Constants {
     
@@ -87,6 +84,23 @@ public class Admapp extends Application implements Constants {
             saveTournament(playerList, gameList, resultList);
         });
         root.setTop(saveBtn);
+        
+        
+           
+        Button newBtn = new Button();
+        newBtn.setText("New Tournament");
+        newBtn.setOnAction((ActionEvent event) -> {
+            String tournamentNameIn;
+            
+            tournamentNameIn = TextDialog("Enter tournament name", "Tournament Name", "Name can not be empty");
+            
+                 Tournament test = new Tournament(tournamentNameIn, playerList, gameList, resultList);
+          
+            
+            
+            System.out.println(test.toString());
+        });
+        root.setLeft(newBtn);
         
         // Saves the lists on exit.
         primaryStage.setOnHiding( event -> {
@@ -173,6 +187,26 @@ public class Admapp extends Application implements Constants {
             } catch (ClassCastException | ClassNotFoundException e){
             }
         } catch (IOException ex) {}
+    }
+    
+    public String TextDialog(String HeaderTxt, String tittle, String warning) {
+
+        TextInputDialog textin = new TextInputDialog();
+        textin.initStyle(StageStyle.UTILITY);
+        textin.setHeaderText(HeaderTxt);
+        textin.setTitle(HeaderTxt);
+        Optional<String> result = textin.showAndWait();
+        String text ="";
+        if (result.isPresent()) {
+            while (result.get().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING, warning);
+            alert.showAndWait();
+            result = textin.showAndWait();
+            }
+            
+            text = result.get();
+        }
+        return text;
     }
     
     /**

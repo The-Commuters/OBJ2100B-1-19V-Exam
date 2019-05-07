@@ -45,20 +45,22 @@ public class Result implements Serializable {
         alert.setHeaderText(null);
         
         // The buttons that is used is created here.
-        ButtonType buttonTypeOne = new ButtonType("Draw");
-        ButtonType buttonTypeTwo = new ButtonType("Choose a winner");   
-        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+        ButtonType playerBtnOne = new ButtonType("Draw");
+        ButtonType playerBtnTwo = new ButtonType("Choose a winner"); 
+        ButtonType cancelBtn = new ButtonType("Cancel"); 
+        alert.getButtonTypes().setAll(playerBtnOne, playerBtnTwo, cancelBtn);
      
         // If the game ended in a draw or not.
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonTypeOne){
+        if (result.get() == playerBtnOne){
             alert("Title.", "A draw have successfully been registered between the two players, and each of them have been rewarded half a point! ");
             Result resultWin = new Result(game.player1, game.player2, true);
             game.result = resultWin;
             System.out.println(game.result);
-        } else if (result.get() == buttonTypeTwo) {
+        } else if (result.get() == playerBtnTwo) {
             handleChooseWinner(game);
-        } 
+        } else if (result.get() == cancelBtn) {
+        }
     }
     
     /**
@@ -76,27 +78,28 @@ public class Result implements Serializable {
         alert.setHeaderText(null);
         
         // Adds the buttons to the alert.
-        ButtonType buttonTypeOne = new ButtonType(game.player1.name);
-        ButtonType buttonTypeTwo = new ButtonType(game.player2.name);
-        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+        ButtonType playerBtnOne = new ButtonType(game.player1.name);
+        ButtonType playerBtnTwo = new ButtonType(game.player2.name);
+        ButtonType cancelBtn = new ButtonType("Cancel"); 
+
+        alert.getButtonTypes().setAll(playerBtnOne, playerBtnTwo, cancelBtn);
         
         // finds out which of the users that have been choosen.
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonTypeOne){
+        if (result.get() == playerBtnOne){
             
             Result resultWin = new Result(game.player1, game.player2, false);
             game.result = resultWin;
             alert("Success", "The player " + game.player1.name + " have been choosen as the winner, and have recieved a point.");
-            System.out.println(game.result.winner);
-            
-        } else if (result.get() == buttonTypeTwo) {
+            System.out.println(game.result.winner);   
+        } else if (result.get() == playerBtnTwo) {  
             
             Result resultWin = new Result(game.player2, game.player1, false);
             game.result = resultWin;
             alert("Success","The player " + game.player2.name + " have been choosen as the winner, and have recieved a point.");
             System.out.println(game.result.winner);
-        
-        }  
+        } else if (result.get() == cancelBtn) {
+        }
     }
     
     /**

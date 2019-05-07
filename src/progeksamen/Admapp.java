@@ -81,6 +81,7 @@ public class Admapp extends Application implements Constants {
         
         //----------------------------------/Test of tournment---------------------------------
         
+        //---- Save Button ----
         Button saveBtn = new Button();
         saveBtn.setText("Save");
         saveBtn.setOnAction(( event) -> {
@@ -88,8 +89,19 @@ public class Admapp extends Application implements Constants {
             saveTournament(playerList, gameList, resultList);
         });
         root.setTop(saveBtn);
-        
-        
+        //---- Edit result Button ----
+            //---To be removed---
+            Player playerTest1   = new Player("Harry");
+            Player playerTest2  = new Player("Ron");
+            Game gameTest      = new Game(playerTest1, playerTest2, result1, gameArraylist, date, date);
+            //-------------------
+        Button editResultBtn = new Button();
+        editResultBtn.setText("Edit Result");
+        editResultBtn.setOnAction(( event) -> {
+            result1.handleGameResult(game1);
+        });
+        root.setRight(editResultBtn);
+        //----/Edit result Button ----        
            
         Button newBtn = new Button();
         newBtn.setText("New Tournament");
@@ -101,7 +113,7 @@ public class Admapp extends Application implements Constants {
                  Tournament test = new Tournament(tournamentNameIn, playerList, gameList, resultList);
           
             
-            
+
             System.out.println(test.toString());
         });
         root.setLeft(newBtn);
@@ -118,7 +130,6 @@ public class Admapp extends Application implements Constants {
         primaryStage.setScene(scene);
         primaryStage.show();
         
-        result1.handleGameResult(game1);
     }
     
     /**

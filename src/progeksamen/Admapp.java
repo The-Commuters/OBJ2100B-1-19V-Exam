@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
@@ -175,9 +176,25 @@ public class Admapp extends Application implements Constants {
             // ...Then it creates the backup in clear text.
             BufferedWriter outStream = new BufferedWriter(new FileWriter(tournament + ".txt"));
             
+            PrintWriter cleaner = new PrintWriter(tournament + ".txt");
+            cleaner.print("");
+            cleaner.close();
+            
             for (Tournament tournament : tournaments) {
                 outStream.newLine();
-                outStream.write(tournament.name);
+                outStream.write("---------------------" + tournament.name + "---------------------");
+                
+                for (Player player : tournament.players) {
+                    outStream.newLine();
+                    outStream.write(player.toString());
+                }
+                
+                for (Game game : tournament.games) {
+                    outStream.newLine();
+                    outStream.write(game.toString());
+                }
+                outStream.newLine();
+                outStream.write("---------------------------- END ----------------------------");
             }
             
             outStream.close();

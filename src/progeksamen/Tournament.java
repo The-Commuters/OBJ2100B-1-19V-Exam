@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Tournament {
 
+    String name;
     List<Player> players = new ArrayList();
     List<Game> games = new ArrayList();
     List<Result> results = new ArrayList();
     
-    String name;
 
-    //Player player;
+    // Constructors
     public Tournament(String name){
         this.name = name;
       
@@ -22,8 +22,43 @@ public class Tournament {
         this.players = players;
         this.games = games;
         this.results = results;
+    }
 
-    }   
+    // Getters
+    public String getName() {
+        return name;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public List<Result> getResults() {
+        return results;
+    }
+    
+    // Setters
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public void setGames(List<Game> games) {
+        this.games = games;
+    }
+
+    public void setResults(List<Result> results) {
+        this.results = results;
+    }
+    
 
     @Override
     public String toString() {

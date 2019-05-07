@@ -87,7 +87,7 @@ public class Spillerapp extends Application {
         
         ////////////////////////////////////////////////////////////////
         // List
-        ObservableList<Tournament> listItems = FXCollections.<Tournament>observableArrayList(new Tournament());
+        ObservableList<Tournament> listItems = FXCollections.<Tournament>observableArrayList(new Tournament("Pokemon PVP: Killfuck"));
         
         ListView<Tournament> tournamentList = new ListView<>(listItems);
         tournamentList.getItems().addAll();

@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -34,6 +35,7 @@ public class Spillerapp extends Application {
     public static ArrayList<Player> playerList    = new ArrayList<Player>();
     public static ArrayList<Game> gameList        = new ArrayList<Game>();
     public static ArrayList<Result> resultList    = new ArrayList<Result>();
+     public static ArrayList<Tournament> tournamentListA    = new ArrayList<Tournament>();
     
     @Override
     public void start(Stage primaryStage) {
@@ -87,7 +89,7 @@ public class Spillerapp extends Application {
         
         ////////////////////////////////////////////////////////////////
         // List
-        ObservableList<Tournament> listItems = FXCollections.<Tournament>observableArrayList(new Tournament("Pokemon PVP: Killfuck"));
+        ObservableList<Tournament> listItems = FXCollections.<Tournament>observableArrayList(getList());
         
         ListView<Tournament> tournamentList = new ListView<>(listItems);
         tournamentList.getItems().addAll();
@@ -131,16 +133,16 @@ public class Spillerapp extends Application {
             
             // Collects the player's from the storage-file.
             try{
-                
-                gameList = (ArrayList<Game>) input.readObject();
-                playerList = (ArrayList<Player>) input.readObject();
-                resultList = (ArrayList<Result>) input.readObject();
+                 tournamentListA = (ArrayList<Tournament>) input.readObject();
                 
             } catch (ClassCastException | ClassNotFoundException e){
             }
         } catch (IOException ex) {}
     }
     
+     public List<Tournament> getList(){
+      return tournamentListA;
+  }
     /**
      * @param args the command line arguments
      */

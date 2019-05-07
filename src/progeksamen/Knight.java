@@ -9,21 +9,27 @@ package progeksamen;
  *
  * @author Mads Hagen
  */
-public class Rook extends Piece {
+public class Knight extends Piece {
+    private static final int[] VERTICAL = {-1, 1, 2, 1, 1, -1, -2, -2};
+    private static final int[] HORISONTAL = {-2, -2, -1, 1, 2, 2, 1, -1};
     
-    public Rook(boolean white, int letterPos, int numberPos) {
+    //private static final int[] VERTICAL = {-1, 0, 1, 1, 1, 0, -1, -1};
+    //private static final int[] HORISONTAL = {-1, -1, -1, 0, 1, 1, 1, 0};
+        
+        
+    public Knight(boolean white, int letterPos, int numberPos) {
         super(white, letterPos, numberPos);
-        super.myType = "Rook";
+        super.myType = "Knight";
+        
     }
     
     @Override
-    public void move(int newLetterPos, int newNumberPos) throws IllegalMoveException{
-        
-        // heare comes a series of ifs, they cud all be in one if-statement but are split mostly for redabilety
+    public void move(int newLetterPos, int newNumberPos) throws IllegalMoveException {
+       
         // is the target outside bounds?
         if (validLetter(newLetterPos) && validNumber(newNumberPos)){
 
-            if (validLine(newLetterPos, newNumberPos)){
+            if (super.validList(newLetterPos, newNumberPos, VERTICAL, HORISONTAL)){
                 // replace with watever method call to send to .txt log
                 System.out.println(super.toString() + " to " + super.LETTERS[newLetterPos] + super.NUMBERS[newNumberPos]);
 
@@ -32,12 +38,9 @@ public class Rook extends Piece {
                 super.numberPos = newNumberPos;
             }
         }
-        else {
-            throw new IllegalMoveException("Illegal move at " + super.toString());
+        else{
+            throw new IllegalMoveException("Ellegal move at " + super.toString());
         }
-        
-        
-        
     }
     
 }

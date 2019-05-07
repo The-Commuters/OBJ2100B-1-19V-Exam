@@ -9,21 +9,20 @@ package progeksamen;
  *
  * @author Mads Hagen
  */
-public class Rook extends Piece {
-    
-    public Rook(boolean white, int letterPos, int numberPos) {
+public class Queen extends Piece {
+
+    public Queen(boolean white, int letterPos, int numberPos) {
         super(white, letterPos, numberPos);
-        super.myType = "Rook";
+        super.myType = "Queen";
     }
-    
+
     @Override
-    public void move(int newLetterPos, int newNumberPos) throws IllegalMoveException{
-        
-        // heare comes a series of ifs, they cud all be in one if-statement but are split mostly for redabilety
+    public void move(int newLetterPos, int newNumberPos) throws IllegalMoveException {
+       
         // is the target outside bounds?
         if (validLetter(newLetterPos) && validNumber(newNumberPos)){
 
-            if (validLine(newLetterPos, newNumberPos)){
+            if (super.validTilted(newLetterPos, newNumberPos) || super.validLine(newLetterPos, newNumberPos)){
                 // replace with watever method call to send to .txt log
                 System.out.println(super.toString() + " to " + super.LETTERS[newLetterPos] + super.NUMBERS[newNumberPos]);
 
@@ -32,12 +31,8 @@ public class Rook extends Piece {
                 super.numberPos = newNumberPos;
             }
         }
-        else {
-            throw new IllegalMoveException("Illegal move at " + super.toString());
+        else{
+            throw new IllegalMoveException("Ellegal move at " + super.toString());
         }
-        
-        
-        
     }
-    
 }

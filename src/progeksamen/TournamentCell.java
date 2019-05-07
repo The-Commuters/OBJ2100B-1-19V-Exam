@@ -19,9 +19,9 @@ public class TournamentCell extends ListCell<Tournament> {
     public void updateItem(Tournament item, boolean empty) {
         super.updateItem(item, empty);
  
-        String value = item == null || empty ? null : item.getName();
+        String name = item == null || empty ? null : item.getName();
          
-        setText(value);
+        setText(name);
         setGraphic(null);
         setCursor(Cursor.HAND);
         setPadding(new Insets(10, 20, 10, 20));

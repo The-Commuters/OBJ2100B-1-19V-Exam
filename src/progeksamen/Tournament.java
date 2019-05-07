@@ -59,10 +59,15 @@ public class Tournament {
         this.results = results;
     }
     
+    // Methods
+    public String getDetails() {
+        return "Name : " + this.name + " " + this.players + " Games : " + this.games + " Winners : " + this.results;
+    }
+    
 
     @Override
     public String toString() {
-        return "Name : " + this.name + " " + this.players + " Games : " + this.games + " Winners : " + this.results;
+        return this.name;
     }
 
 }

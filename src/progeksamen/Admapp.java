@@ -12,16 +12,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -104,12 +106,13 @@ public class Admapp extends Application implements Constants {
             Game gameTest      = new Game(playerTest1, playerTest2, result1, gameArraylist, date, date);
             //-------------------
             
+            
         Button editResultBtn = new Button();
         editResultBtn.setText("Edit Result");
         editResultBtn.setOnAction(( event) -> {
             result1.handleGameResult(game1);
         });
-        root.setRight(editResultBtn);
+        //root.setRight(editResultBtn);
         //----/Edit result Button ----        
            
         Button newBtn = new Button();
@@ -125,7 +128,7 @@ public class Admapp extends Application implements Constants {
 
             System.out.println(test.toString());
         });
-        root.setLeft(newBtn);
+        //root.setLeft(newBtn);
         
           Button newPlayerBtn = new Button();
         newPlayerBtn.setText("New Player");
@@ -138,7 +141,21 @@ public class Admapp extends Application implements Constants {
                 playerList.toString();
            
         });
-        root.setRight(newPlayerBtn);
+        
+        ComboBox<Player> playerMenu 
+    = new ComboBox<>();
+        
+       ObservableList playerComboList = FXCollections.observableList(getList());
+        
+        playerMenu.setItems(playerComboList);
+       
+        HBox hbox = new HBox();
+        hbox.getChildren().addAll(playerMenu, newPlayerBtn, newBtn, editResultBtn, saveBtn);
+   
+    
+       
+        //root.setTop(playerMenu);
+      root.setTop(hbox);
         
         // Saves the lists on exit.
         primaryStage.setOnHiding( event -> {
@@ -227,7 +244,10 @@ public class Admapp extends Application implements Constants {
         }
         return text;
     }
-    
+ 
+   public List<Player> getList(){
+      return playerList;
+  }
     /**
      * @param args the command line arguments
      */

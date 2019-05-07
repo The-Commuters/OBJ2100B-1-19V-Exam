@@ -7,6 +7,13 @@ package progeksamen;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.FlowPane;
 
 public class Result implements Serializable {
     
@@ -22,7 +29,73 @@ public class Result implements Serializable {
         // The method that 
         addPointsToPlayers();
     }
+
+    public void handleGameResult(Game game) {
+       
+        // Places the buttons on the alert.
+        Button drawButton = new Button ("Draw");
+        Button chooseWinnerButton = new Button ("Choose a winner");
+        FlowPane FunctionTestHbox = new FlowPane();
+        FunctionTestHbox.getChildren().addAll(drawButton, chooseWinnerButton);
+        
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success!");
+        
+        ButtonType buttonTypeOne = new ButtonType("Draw");
+        ButtonType buttonTypeTwo = new ButtonType("Choose a winner");
+        
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+        
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne){
+            alert.setTitle("Success!");
+            
+            // alert.setHeaderText("Results:");
+            alert.setContentText("A draw have successfully been registered between the two players, and each of them have been rewarded half a point! ");
+            alert.setGraphic(null);
+            alert.showAndWait();
+        } else if (result.get() == buttonTypeTwo) {
+            
+            // alert.setHeaderText("Results:");
+            alert.setContentText("A draw have successfully been registered between the two players, and each of them have been rewarded half a point! ");
+            alert.setGraphic(null);
+            alert.showAndWait();
+        }  else {
+            // ... user chose CANCEL or closed the dialog
+        }
+        
+    }
     
+    public void handleChooseWinner(Game game) {
+    
+  
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success!");
+        
+        ButtonType buttonTypeOne = new ButtonType("One");
+        ButtonType buttonTypeTwo = new ButtonType("Two");
+        
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+
+        // alert.setHeaderText("Results:");
+        alert.setContentText("A draw have successfully been registered between the two players, and each of them have been rewarded half a point! ");
+        alert.setGraphic(null);
+        alert.showAndWait();
+        
+    
+    }
+    
+    public void alert( String title, String message) {
+        
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+
+        // alert.setHeaderText("Results:");
+        alert.setContentText(message);
+        alert.setGraphic(null);
+        alert.showAndWait();
+
+    }
     /**
      * This is called upon every time a result-object is created to be
      * inserted into the result-list. It will add the earned points for

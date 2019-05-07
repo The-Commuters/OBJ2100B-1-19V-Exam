@@ -85,6 +85,8 @@ public class Admapp extends Application implements Constants {
         
         // Test's the method that saves the tournment-data.
         // SaveTournament(playerList, gameList, resultList);
+       
+        
         
         //----------------------------------/Test of tournment---------------------------------
         
@@ -107,6 +109,8 @@ public class Admapp extends Application implements Constants {
         primaryStage.setTitle("Application!");
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+        result1.handleGameResult(game1);
     }
     
     /**
@@ -181,19 +185,7 @@ public class Admapp extends Application implements Constants {
             }
         } catch (IOException ex) {}
     }
-    
-    public void alert( String title, String message) {
-        
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle(title);
-
-        // alert.setHeaderText("Results:");
-        alert.setContentText(message);
-        alert.setGraphic(null);
-        alert.showAndWait();
-
-    }
-    
+   
     /**
      * @param args the command line arguments
      */

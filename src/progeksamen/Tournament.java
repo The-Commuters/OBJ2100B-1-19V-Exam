@@ -9,6 +9,10 @@ public class Tournament {
     List<Game> games = new ArrayList();
     List<Result> results = new ArrayList();
 
+        //Player player;
+    public Tournament() {
+    }   
+    
     //Player player;
     public Tournament(List players, List games, List results) {
         this.players = players;

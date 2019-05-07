@@ -1,0 +1,61 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 06.mai.2019, 19:46:08
+    Author     : DavidNaist
+*/
+
+
+* {
+    /* Gray Color Palette */
+    -fx-color-light: #FAFAFA;
+    
+    -fx-color-gray-100: #F2F3F7;
+    -fx-color-gray-200: #D9DADE;
+    -fx-color-gray-300: #C1C1C6;
+    -fx-color-gray-400: #A8A8AD;
+    -fx-color-gray-500: #8F9095;
+    -fx-color-gray-600: #76777C;
+    -fx-color-gray-700: #5E5E63;
+    -fx-color-gray-800: #45454B;
+    -fx-color-gray-900: #2C2C32;
+    
+    -fx-color-dark: #161619;
+    
+}
+
+.root{
+    
+}
+
+/* Header */
+.header{
+    
+}
+
+.title-pane {
+    -fx-background-color: -fx-color-gray-900;
+}
+
+.title {
+    -fx-font: 20px Tahoma;
+    -fx-font-weight: bold;
+    -fx-fill: #ffffff;
+}
+
+.crumb-pane {
+    -fx-background-color: -fx-color-gray-100;
+}
+
+.crumb {
+    -fx-font: 11px Tahoma;
+    -fx-fill: #2c2c32;
+}
+
+/* Main */
+.main {
+    -fx-background-color: transparent;
+}

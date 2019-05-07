@@ -58,7 +58,7 @@ public class Player implements Serializable{
     @Override
     public String toString(){
     
-        return id + " " + name + " " + score; 
+        return "ID: " + id + " Name: " + name + " Score: " + score; 
     }
     
     public String getWinner(Player p) {

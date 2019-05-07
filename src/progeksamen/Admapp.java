@@ -16,6 +16,8 @@ import java.io.WriteAbortedException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,6 +33,11 @@ public class Admapp extends Application implements Constants {
     public static String tournament = "Tournament";
     
     BorderPane root = new BorderPane();
+    
+    // The list's used to store data.
+    public static ArrayList<Player> playerList    = new ArrayList<Player>();
+    public static ArrayList<Game> gameList        = new ArrayList<Game>();
+    public static ArrayList<Result> resultList    = new ArrayList<Result>();
     
     /** Metodeforklaringer -- MÅ SLETTES SENERE --
      * getTournament() collects the data from the "database"-file.
@@ -102,25 +109,21 @@ public class Admapp extends Application implements Constants {
      * @param games is the ArrayList of game-objects.
      * @param results is the ArrayList of result-objects. 
      */
-    public void saveTournament(List<Player> players, List<Game> games, List<Result> results) {
+    public void saveTournament(ArrayList<Player> players, ArrayList<Game> games, ArrayList<Result> results) {
         
         try {
             
             // First the objects is written to the file that holds the binary data...
             FileOutputStream fileOut = new FileOutputStream(tournament + ".dat");
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
- 
-
-            objectOut.writeObject(playerList);
-
             
-            objectOut.writeObject(gameList);
+            // Places the object-array's in the binary-file.
+            try (ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+                // Places the object-array's in the binary-file.
+                objectOut.writeObject(players);
+                objectOut.writeObject(games);
+                objectOut.writeObject(results);
+            }
             
-           
-            objectOut.writeObject(resultList);
-
-            
-            objectOut.close();
             System.out.println("The Objects was succesfully written to a file in binary");
             
             //------------------------ Start of backup ---------------------
@@ -134,20 +137,13 @@ public class Admapp extends Application implements Constants {
                 outStream.write(player.toString());
             }
 
+            // Places the list of games.
             outStream.newLine();
             outStream.newLine();
             outStream.write("The Games of the tournament:");
             for (Game game : games) {
                 outStream.newLine();
                 outStream.write(game.toString());
-            }
-
-            outStream.newLine();            
-            outStream.newLine();
-            outStream.write("The Results of the tournament:");
-            for (Result result : results) {
-                outStream.newLine();
-                outStream.write(result.toString());
             }
             
             outStream.close();
@@ -169,41 +165,14 @@ public class Admapp extends Application implements Constants {
             
             // Collects the player's from the storage-file.
             try{
-                ArrayList<Player> playerList = (ArrayList<Player>) input.readObject();
-  
-                // Shows it in the console, REMOVE LATER!
-                for (Player player : playerList) {
-                    System.out.println(player.toString());
-                }
-            } catch (EOFException | WriteAbortedException | ClassCastException e){
-   
+                
+                playerList = (ArrayList<Player>) input.readObject();
+                gameList = (ArrayList<Game>) input.readObject();
+                resultList = (ArrayList<Result>) input.readObject();
+                
+            } catch (ClassCastException | ClassNotFoundException e){
             }
-            
-            // Collects the game's from the storage-file.
-            try{
-                ArrayList<Game> gameList = (ArrayList<Game>) input.readObject();
-
-                // Shows it in the console, REMOVE LATER!
-                for (Game game : gameList) {
-                    System.out.println(game.toString());
-                }
-            } catch (EOFException | WriteAbortedException | ClassCastException e){
-
-            }
-
-            // Collects the result's from the storage-file.
-            try{
-                ArrayList<Result> resultList = (ArrayList<Result>) input.readObject();
-
-                // Shows it in the console, REMOVE LATER!
-                for (Result result : resultList) {
-                    System.out.println(result.toString());
-                }
-            } catch (EOFException | WriteAbortedException | ClassCastException e){
-
-            }
-           
-        } catch (IOException | ClassNotFoundException ex) {}
+        } catch (IOException ex) {}
     }
     
     /**

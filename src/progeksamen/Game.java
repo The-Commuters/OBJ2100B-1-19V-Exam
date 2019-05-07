@@ -16,7 +16,7 @@ public class Game implements Serializable{
     Result result;
     ArrayList<String> score;
     Date startDate;
-    Date endDate;
+    Date startTime;
     
     public Game () {}
     public Game (Player player1, Player player2) {
@@ -30,7 +30,7 @@ public class Game implements Serializable{
         this.result = result;
         this.score = moves;
         this.startDate = startDate;
-        this.endDate = endDate;
+        this.startTime = startTime;
     } 
     
     public void addMove(String move) {
@@ -39,8 +39,19 @@ public class Game implements Serializable{
     
      @Override
     public String toString(){
-    
-        return player1.name + " VS " + player2.name;
+        
+        String scoreString = "No moves was taken";
+        // Make a long string with \n every 10 or so moves. 
+        for(String move : score) {
+        
+        }
+        
+        return "Player 1: " + player1.name + 
+                ", Player 2: " + player2.name + 
+                ", " + result.toString() + 
+                ", " + scoreString + 
+                ", Startdate: " + startDate + 
+                ", Starttime: " + startTime + ".";
     }
 }
  

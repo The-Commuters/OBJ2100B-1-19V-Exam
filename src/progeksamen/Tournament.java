@@ -1,15 +1,14 @@
 package progeksamen;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tournament {
+public class Tournament implements Serializable {
 
     String name;
-    List<Player> players = new ArrayList();
-    List<Game> games = new ArrayList();
-    List<Result> results = new ArrayList();
-    
+    ArrayList<Player> players = new ArrayList();
+    ArrayList<Game> games = new ArrayList();
 
     // Constructors
     public Tournament(String name){
@@ -17,11 +16,10 @@ public class Tournament {
       
     }
     
-    public Tournament(String name,List players, List games, List results) {
+    public Tournament(String name, ArrayList<Player> players, ArrayList<Game> games) {
         this.name = name;
         this.players = players;
         this.games = games;
-        this.results = results;
     }
 
     // Getters
@@ -36,10 +34,6 @@ public class Tournament {
     public List<Game> getGames() {
         return games;
     }
-
-    public List<Result> getResults() {
-        return results;
-    }
     
     // Setters
 
@@ -47,22 +41,23 @@ public class Tournament {
         this.name = name;
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
 
-    public void setGames(List<Game> games) {
+    public void setGames(ArrayList<Game> games) {
         this.games = games;
     }
-
-    public void setResults(List<Result> results) {
-        this.results = results;
+    
+    // Methods
+    public String getDetails() {
+        return "Name : " + this.name + " " + this.players + " Games : " + this.games;
     }
     
 
     @Override
     public String toString() {
-        return "Name : " + this.name + " " + this.players + " Games : " + this.games + " Winners : " + this.results;
+        return this.name;
     }
 
 }

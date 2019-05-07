@@ -3,13 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package progeksamen;
+package gui;
 
-public class TournamentList {
+import javafx.scene.layout.HBox;
+
+/**
+ *
+ * @author DavidNaist
+ */
+public class Tools extends HBox {
     
-    Tournament[] tournaments;
-    
-    public TournamentList() {
-        
+    // Constructors
+    public Tools() {
+        super();
     }
 }

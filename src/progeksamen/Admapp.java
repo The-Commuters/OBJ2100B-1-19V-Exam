@@ -118,6 +118,19 @@ public class Admapp extends Application implements Constants {
         });
         root.setLeft(newBtn);
         
+          Button newPlayerBtn = new Button();
+        newPlayerBtn.setText("New Player");
+        newPlayerBtn.setOnAction((ActionEvent event) -> {
+            String playerNameIn;
+            
+            playerNameIn = TextDialog("Enter player name", "Player Name", "Name can not be empty");
+            
+                playerList.add(new Player(playerNameIn));   
+                playerList.toString();
+           
+        });
+        root.setRight(newPlayerBtn);
+        
         // Saves the lists on exit.
         primaryStage.setOnHiding( event -> {
             System.out.println("Your progress have been saved on exit.");

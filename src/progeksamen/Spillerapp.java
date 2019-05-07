@@ -31,11 +31,8 @@ public class Spillerapp extends Application {
     // Current string for the Tournament, needed to find/create the .dat to store binary And the .txt.
     public static String tournament = "Tournament";
     
-        // The list's used to store data.
-    public static ArrayList<Player> playerList    = new ArrayList<Player>();
-    public static ArrayList<Game> gameList        = new ArrayList<Game>();
-    public static ArrayList<Result> resultList    = new ArrayList<Result>();
-     public static ArrayList<Tournament> tournamentListA    = new ArrayList<Tournament>();
+    // The list's used to store data.
+    public static ArrayList<Tournament> tournamentListA    = new ArrayList<Tournament>();
     
     @Override
     public void start(Stage primaryStage) {

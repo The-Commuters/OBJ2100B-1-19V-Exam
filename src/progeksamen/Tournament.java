@@ -3,12 +3,16 @@ package progeksamen;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import static progeksamen.Admapp.tournamentList;
 
 public class Tournament implements Serializable {
-
-    String name;
-    ArrayList<Player> players = new ArrayList();
-    ArrayList<Game> games = new ArrayList();
+    
+    private ArrayList<Tournament> tournaments;
+    private String name;
+    private ArrayList<Player> players = new ArrayList();
+    private ArrayList<Game> games = new ArrayList();
 
     // Constructors
     public Tournament(String name){
@@ -30,20 +34,20 @@ public class Tournament implements Serializable {
                 newPlayerList.add(game);
             }
         }
+        
         System.out.println(newPlayerList.size());
         return newPlayerList;
     }
     
-    // Getters
     public String getName() {
         return name;
     }
 
-    public List<Player> getPlayers() {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    public List<Game> getGames() {
+    public ArrayList<Game> getGames() {
         return games;
     }
     

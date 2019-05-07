@@ -8,9 +8,9 @@ import java.io.Serializable;
 
 public class Player implements Serializable{
     
-    int id;
-    String name;
-    int score;
+    private int id;
+    private String name;
+    private double score;
     
     /**
      * Constructor when the object is created.
@@ -51,24 +51,45 @@ public class Player implements Serializable{
     }
     
     public String getPlayer(){
-       return this.id + this.name + this.score;
+       return this.getId() + this.getName() + this.getScore();
     }
     
-    public void setScore(int score){
+    public void setScore(double score){
         this.score = score;
     }
     
     @Override
     public String toString(){
     
-        return "ID: " + id + " Name: " + name + " Score: " + score; 
+        return "ID: " + getId() + " Name: " + getName() + " Score: " + getScore(); 
     }
     
     public String getWinner(Player p) {
         
-        if (this.score > p.score)
-          return p.name;
-        return this.name;
+        if (this.getScore() > p.getScore())
+          return p.getName();
+        return this.getName();
          
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @return the score
+     */
+    public double getScore() {
+        return score;
     }
 }

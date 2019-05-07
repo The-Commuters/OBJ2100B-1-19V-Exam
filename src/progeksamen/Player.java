@@ -25,7 +25,6 @@ public class Player implements Serializable{
         this.name = name;
         this.id = generateId();
         this.score = 0;
-
     }
     
     /**
@@ -36,6 +35,10 @@ public class Player implements Serializable{
     public Player (int id, String name) {
         this.name = name;
         this.id = id;
+    }
+   
+    public void deletePlayer() {
+        
     }
     
     /**

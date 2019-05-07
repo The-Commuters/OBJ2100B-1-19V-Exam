@@ -91,13 +91,15 @@ public class Result implements Serializable {
             Result resultWin = new Result(game.player1, game.player2, false);
             game.result = resultWin;
             alert("Success", "The player " + game.player1.name + " have been choosen as the winner, and have recieved a point.");
-            System.out.println(game.result.winner);   
+            System.out.println(game.result.winner);  
+            
         } else if (result.get() == playerBtnTwo) {  
             
             Result resultWin = new Result(game.player2, game.player1, false);
             game.result = resultWin;
             alert("Success","The player " + game.player2.name + " have been choosen as the winner, and have recieved a point.");
             System.out.println(game.result.winner);
+            
         } else if (result.get() == cancelBtn) {
         }
     }

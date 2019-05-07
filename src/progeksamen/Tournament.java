@@ -22,6 +22,18 @@ public class Tournament implements Serializable {
         this.games = games;
     }
 
+    public ArrayList<Game> search(String input) {
+        
+        ArrayList<Game> newPlayerList = new ArrayList<Game>();
+        for (Game game : this.games) {
+            if(game.nameContainString(input)) {
+                newPlayerList.add(game);
+            }
+        }
+        System.out.println(newPlayerList.size());
+        return newPlayerList;
+    }
+    
     // Getters
     public String getName() {
         return name;

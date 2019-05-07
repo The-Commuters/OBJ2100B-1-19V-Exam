@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -114,7 +115,16 @@ public class Admapp extends Application implements Constants {
             result1.handleGameResult(game1);
         });
         //root.setRight(editResultBtn);
-        //----/Edit result Button ----        
+        //----/Edit result Button ---- 
+        
+        //----- Search for game ------
+        
+        TextField searchField = new TextField();
+        searchField.setOnAction(( event) -> {
+            result1.handleGameResult(game1);
+        });
+        
+        //-----------------------------
            
         Button newBtn = new Button();
         newBtn.setText("New Tournament");
@@ -125,7 +135,7 @@ public class Admapp extends Application implements Constants {
             
             Tournament test = new Tournament(tournamentNameIn, playerList, gameList);
                  
-            
+            tournamentList.add(test);
 
             System.out.println(test.toString());
         });
@@ -143,20 +153,17 @@ public class Admapp extends Application implements Constants {
            
         });
         
-        ComboBox<Player> playerMenu 
-    = new ComboBox<>();
+        ComboBox<Player> playerMenu = new ComboBox<>();
         
-       ObservableList playerComboList = FXCollections.observableList(getList());
+        ObservableList playerComboList = FXCollections.observableList(getList());
         
         playerMenu.setItems(playerComboList);
        
         HBox hbox = new HBox();
         hbox.getChildren().addAll(playerMenu, newPlayerBtn, newBtn, editResultBtn, saveBtn);
-   
-    
-       
+
         //root.setTop(playerMenu);
-      root.setTop(hbox);
+        root.setTop(hbox);
         
         // Saves the lists on exit.
         primaryStage.setOnHiding( event -> {
@@ -175,7 +182,7 @@ public class Admapp extends Application implements Constants {
     /**
      * This method is the one that saves the Arraylist's into the file
      * to store them. 
-     * @param tournamentList
+     * @param tournaments
      */
     public void saveTournaments(ArrayList<Tournament> tournaments) {
         
@@ -211,7 +218,7 @@ public class Admapp extends Application implements Constants {
                     outStream.write(game.toString());
                 }
                 outStream.newLine();
-                outStream.write("---------------------------- END ----------------------------");
+                outStream.write("------------------------------ END ------------------------------");
             }
             
             outStream.close();

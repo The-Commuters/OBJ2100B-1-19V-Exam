@@ -37,6 +37,16 @@ public class Game implements Serializable{
        this.score.add(move);
     }
     
+    public Boolean nameContainString(String input) {
+        
+        
+        if (this.player1.name.toLowerCase().contains(input.toLowerCase()) || this.player2.name.toLowerCase().contains(input.toLowerCase())) {
+            return true;
+        }
+        
+        return false;
+    }
+    
      @Override
     public String toString(){
         

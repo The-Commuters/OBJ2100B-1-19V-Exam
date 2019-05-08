@@ -149,11 +149,12 @@ public class AdmappNy extends Application {
         Scene scene = new Scene(container);
         scene.getStylesheets().add("progeksamen/main.css");
 
-         /*// Saves the list of  on exit.
+         // Saves the list of  on exit.
         primaryStage.setOnHiding( event -> {
             System.out.println("Your progress have been saved on exit.");
-            Data.saveTournaments(tournamentList);
-        });*/
+            // Saves here to the "Database" where the array lies
+            Data.saveTournaments();
+        });
         
         ////////////////////////////////////////////////////////////////
         // PrimaryStage
@@ -208,7 +209,8 @@ public class AdmappNy extends Application {
        
         // LIST
         ListView<Tournament> list = new ListView<>(Data.getTournaments());
-        list.getItems().addAll();
+        
+        //list.getItems().addAll();
         list.setCellFactory(new TournamentCellFactory());
         list.setOrientation(Orientation.VERTICAL);
         list.setFocusTraversable(false);
@@ -221,14 +223,19 @@ public class AdmappNy extends Application {
             System.out.println("Your progress is saved with the save-button.");
             
             List<Tournament> listOfTournaments = list.getItems();
+            
             ArrayList<Tournament> arrayListOfTournaments;
             if (listOfTournaments instanceof ArrayList<?>) {
                 arrayListOfTournaments = (ArrayList<Tournament>) listOfTournaments;
             } else {
                 arrayListOfTournaments = new ArrayList<>(listOfTournaments);
             }
-            Data.saveTournaments(arrayListOfTournaments);
-            tournamentList = arrayListOfTournaments;
+            
+                        // Saves here to the "Database" where the array lies
+            Data.tournaments = arrayListOfTournaments;
+            Data.saveTournaments();
+            
+
         });
         
         StackPane main = new StackPane(list);
@@ -272,6 +279,7 @@ public class AdmappNy extends Application {
         // LIST
         
         // USED for the search function, listens to the textfield searchField.
+        // DOES NOT WORK PERFECTLY!!!!!!!!!!
         searchField.textProperty().addListener((obs, oldText, newText) -> {
             String[] stringArray = newText.split("");
             ArrayList<Game> newGameList = new ArrayList<Game>();

@@ -16,6 +16,8 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import static progeksamen.Admapp.tournament;
@@ -27,19 +29,20 @@ import static progeksamen.Admapp.tournamentList;
  */
 public class Data {
     
-    private static ArrayList<Tournament> tournaments;
+    // The list of tounaments is stored in when gotten from the database or saved.
+    public static ArrayList<Tournament> tournaments = new ArrayList<Tournament>();
     
     /**
      * This method is the one that saves the Arraylist's into the file
      * to store them. 
      * @param tournaments
      */
-    public static void saveTournaments(ArrayList<Tournament> tournaments) {
+    public static void saveTournaments() {
         
         try {
             
             // First the objects is written to the file that holds the binary data...
-            FileOutputStream fileOut = new FileOutputStream(tournament + ".dat");
+            FileOutputStream fileOut = new FileOutputStream("Tournament.dat");
             
             // Places the object-array's in the binary-file.
             try (ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
@@ -82,12 +85,19 @@ public class Data {
      * that they should be in before the application really starts. 
      * @return 
      */
-    public static ObservableList<Tournament> getTournaments() {
+    public static ObservableList<Tournament> getTournaments()  {
         
         //tempgetTournaments();
+        
         File file = new File("Tournament.dat");
         
-        if(file.isFile() && file.canRead()) {
+        if(!file.isFile() && !file.canRead()) {
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
             
             try {
                 // create an ObjectInputStream for the file we created before
@@ -108,17 +118,17 @@ public class Data {
             } catch (IOException ex) {
                 System.err.println(ex);
             }
-        }
+        
        
-        ObservableList<Tournament> tournamentsOL = FXCollections.<Tournament>observableArrayList(tournaments);
-        return tournamentsOL;
+        //ObservableList<Tournament> tournamentsOL = FXCollections.<Tournament>observableArrayList(tournaments);
+        return null;
     }
         
     
     // Creates temp information to use undr testing.
     public static void tempgetTournaments() {
 
-        /*  //----------------------------------Test of tournment---------------------------------
+          //----------------------------------Test of tournment---------------------------------
         // Test-input used when writing into the file.
         Player player   = new Player("Harry");
         Player player1  = new Player("Ron");
@@ -150,18 +160,18 @@ public class Data {
         Tournament tournament2 = new Tournament("Team Nado: Vers 3", playerList, gameList);
         Tournament tournament3 = new Tournament("Team Nado: Vers 4", playerList, gameList);
         
-        tournamentList.add(tournament1); tournamentList.add(tournament2); tournamentList.add(tournament3);
+        tournaments.add(tournament1); tournaments.add(tournament2); tournaments.add(tournament3);
         
         // Test's the method that saves the tournment-data.
         // SaveTournament(playerList, gameList, resultList);
-       Data.saveTournaments(tournamentList);
+       Data.saveTournaments();
         //----------------------------------/Test of tournment---------------------------------*/
         
     } 
     
     public static ArrayList<Tournament> getTournementArrayList() {
         
-        tournaments = (ArrayList<Tournament>)getTournaments();
+        //tournaments = (ArrayList<Tournament>)getTournaments();
         
         return tournaments;
     }

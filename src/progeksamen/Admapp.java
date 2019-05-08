@@ -54,7 +54,7 @@ public class Admapp extends Application implements Constants {
         
         // Test's the method that saves the tournment-data.
         // SaveTournament(playerList, gameList, resultList);
-       Data.saveTournaments(tournamentList);
+       //Data.saveTournaments(tournamentList);
        
        
        
@@ -101,7 +101,7 @@ public class Admapp extends Application implements Constants {
         // Event that sav
         saveBtn.setOnAction(( event) -> {
             System.out.println("Your progress is saved with the save-button.");
-            Data.saveTournaments(tournamentList);
+            //Data.saveTournaments(tournamentList);
         });
         root.setTop(saveBtn);
         //---- Edit result Button ----
@@ -183,7 +183,7 @@ public class Admapp extends Application implements Constants {
         // Saves the lists on exit.
         primaryStage.setOnHiding( event -> {
             System.out.println("Your progress have been saved on exit.");
-            Data.saveTournaments(tournamentList);
+            //Data.saveTournaments(tournamentList);
             
         });
  

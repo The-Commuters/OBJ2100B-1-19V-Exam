@@ -210,7 +210,7 @@ public class AdmappNy extends Application {
         // LIST
         ListView<Tournament> list = new ListView<>(Data.getTournaments());
         
-        //list.getItems().addAll();
+   
         list.setCellFactory(new TournamentCellFactory());
         list.setOrientation(Orientation.VERTICAL);
         list.setFocusTraversable(false);
@@ -221,21 +221,7 @@ public class AdmappNy extends Application {
         // Event that saves the current list of users.
         saveBtn.setOnAction(( event) -> {
             System.out.println("Your progress is saved with the save-button.");
-            
-            List<Tournament> listOfTournaments = list.getItems();
-            
-            ArrayList<Tournament> arrayListOfTournaments;
-            if (listOfTournaments instanceof ArrayList<?>) {
-                arrayListOfTournaments = (ArrayList<Tournament>) listOfTournaments;
-            } else {
-                arrayListOfTournaments = new ArrayList<>(listOfTournaments);
-            }
-            
-                        // Saves here to the "Database" where the array lies
-            Data.tournaments = arrayListOfTournaments;
             Data.saveTournaments();
-            
-
         });
         
         StackPane main = new StackPane(list);

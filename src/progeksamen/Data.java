@@ -98,26 +98,29 @@ public class Data {
                 Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-            
-            try {
-                // create an ObjectInputStream for the file we created before
-                ObjectInputStream input = new ObjectInputStream(new FileInputStream("Tournament.dat"));
 
-                // Collects the player's from the storage-file.
-                try{
-                    tournaments = (ArrayList<Tournament>) input.readObject();
-                    System.out.println("The list of tournaments have been collected fron the binary-file");
+        try {
+            // create an ObjectInputStream for the file we created before
+            ObjectInputStream input = new ObjectInputStream(new FileInputStream("Tournament.dat"));
 
+            // Collects the player's from the storage-file.
+            try{
+                tournaments = (ArrayList<Tournament>) input.readObject();
+                System.out.println("The list of tournaments have been collected fron the binary-file");
+ 
+
+      
                     ObservableList<Tournament> tournamentsOL = FXCollections.<Tournament>observableArrayList(tournaments);
+              
 
-                    return tournamentsOL;
-                } catch (ClassCastException | ClassNotFoundException e){
-                    System.err.println(e);
-                }
-                
-            } catch (IOException ex) {
-                System.err.println(ex);
+                return tournamentsOL;
+            } catch (ClassCastException | ClassNotFoundException e){
+                System.err.println(e);
             }
+
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
         
        
         //ObservableList<Tournament> tournamentsOL = FXCollections.<Tournament>observableArrayList(tournaments);

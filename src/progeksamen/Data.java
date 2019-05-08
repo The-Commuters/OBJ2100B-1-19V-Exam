@@ -68,7 +68,7 @@ public class Data {
                 
                 for (Game game : tournament.getGames()) {
                     outStream.newLine();
-//                    outStream.write(game.toString());
+                    outStream.write("Gamestate: " + game.getGameState() + "; Player 1: " + game.getPlayer1()+ "; Player 2: " + game.getPlayer2()+ "; Score:");
                 }
                 outStream.newLine();
             }

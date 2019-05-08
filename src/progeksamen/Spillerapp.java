@@ -179,7 +179,7 @@ public class Spillerapp extends Application {
         TextArea textarea = new TextArea("I am big gay gay, i love big long ducks, i am super super gay, ilove big long ducks");
         textarea.setMaxSize(320, 320);
         
-        chessboardContainer.getChildren().addAll(chessboard, textarea);
+        //chessboardContainer.getChildren().addAll(chessboard, textarea);
         // CHESS
         
         HBox centerHorizontal = new HBox(chessboardContainer, textarea);
@@ -212,5 +212,11 @@ public class Spillerapp extends Application {
     public void chooseGame(ObservableValue<? extends Game> observable, Game previousGame, Game currentGame) {
         System.out.println("Moved from " + previousGame + "page, to " + currentGame + "page");
         container.put(game(currentGame));
+    }
+
+    private static class Chessboard {
+
+        public Chessboard() {
+        }
     }
 }

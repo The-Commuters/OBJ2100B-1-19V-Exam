@@ -193,14 +193,17 @@ public class AdmappNyNy extends Application {
         newPlayerBtn.setText("New Player");
         
         ComboBox<Player> playerMenuPlayer1 = new ComboBox<>();
+        playerMenuPlayer1.setMaxWidth(180);
         ComboBox<Player> playerMenuPlayer2 = new ComboBox<>();
+        playerMenuPlayer2.setMaxWidth(180);
         
         // This is the textfield used to search the tournament for games.
         TextField searchField = new TextField();
+        
         Button newGameBtn = new Button("New game");
       
-        tools.getChildren().addAll(playerMenuPlayer1, playerMenuPlayer2, newGameBtn, newPlayerBtn);
-        BorderPane header = new BorderPane(menu, title, null , null, null);
+        tools.getChildren().addAll(playerMenuPlayer1, playerMenuPlayer2, searchField);
+        BorderPane header = new BorderPane(menu, title, newPlayerBtn , newGameBtn, null);
         body.setTop(header);
         
         ////////////////////////////////////////////////////////////////

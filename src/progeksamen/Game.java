@@ -18,7 +18,7 @@ public class Game implements Serializable{
     private Player player1;
     private Player player2;
     private Result result;
-    private ArrayList<String> score;
+    private ArrayList<String> score = new ArrayList<String>();
     private Date startDate = new Date();
     private Date startTime = new Date();
     
@@ -27,13 +27,18 @@ public class Game implements Serializable{
         this.player1 = player1;
         this.player2 = player2;
     }
+    
+    public Game (Player player1, Player player2, Result result) {
+        this.player1 = player1;
+        this.player2 = player2;
+    }
 
     public Game (Player player1, Player player2, Result result, Date startDate, Date startTime) {
         this.player1 = player1;
         this.player2 = player2;
         this.result = result;
-        this.startDate =  new Date();
-        this.startTime =  new Date();
+        this.startDate =  startTime;
+        this.startTime =  startTime;
     } 
     
     public Game (Player player1, Player player2, Result result, ArrayList<String> moves, Date startDate, Date startTime) {
@@ -41,8 +46,8 @@ public class Game implements Serializable{
         this.player2 = player2;
         this.result = result;
         this.score = moves;
-        this.startDate =  new Date();
-        this.startTime =  new Date();
+        this.startDate =  startTime;
+        this.startTime =  startTime;
     } 
     
     public void addMove(String move) {
@@ -216,8 +221,10 @@ public class Game implements Serializable{
         
         return "Player 1: " + getPlayer1().getName() + 
                 ", Player 2: " + getPlayer2().getName() + 
-                ", " + getResult().toString() + 
-                ", " + scoreString;
+                ", " + getResult() + 
+                ", " + scoreString + 
+                ", Startdate: " + getStartDate() + 
+                ", Starttime: " + getStartTime() + ".";
     }
 
     /**

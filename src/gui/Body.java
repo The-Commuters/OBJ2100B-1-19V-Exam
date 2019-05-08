@@ -13,7 +13,7 @@ import javafx.scene.layout.Pane;
  *
  * @author DavidNaist
  */
-public class Body extends BorderPane {
+public final class Body extends BorderPane {
     
     // Fields
     private String name;
@@ -26,6 +26,7 @@ public class Body extends BorderPane {
     public Body(String name, Pane header, Pane main) {
         super(main, header, null, null, null);
         this.name = name;
+        init();
     }
     
     // Getters

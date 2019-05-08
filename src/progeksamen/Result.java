@@ -17,9 +17,9 @@ import javafx.scene.layout.FlowPane;
 
 public class Result implements Serializable {
     
-    Player winner;
-    Player loser;
-    Boolean draw;
+    private Player winner;
+    private Player loser;
+    private Boolean draw;
     
     public Result(Player winner, Player loser, Boolean draw) {
         this.winner = winner;
@@ -27,7 +27,7 @@ public class Result implements Serializable {
         this.draw = draw;
         
         // The method that 
-        addPointsToPlayers();
+        //addPointsToPlayers();
     }
     
     /**
@@ -54,9 +54,9 @@ public class Result implements Serializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == playerBtnOne){
             alert("Title.", "A draw have successfully been registered between the two players, and each of them have been rewarded half a point! ");
-            Result resultWin = new Result(game.player1, game.player2, true);
-            game.result = resultWin;
-            System.out.println(game.result);
+            Result resultWin = new Result(game.getPlayer1(), game.getPlayer2(), true);
+            game.setResult(resultWin);
+            System.out.println(game.getResult());
         } else if (result.get() == playerBtnTwo) {
             handleChooseWinner(game);
         } else if (result.get() == cancelBtn) {
@@ -78,8 +78,8 @@ public class Result implements Serializable {
         alert.setHeaderText(null);
         
         // Adds the buttons to the alert.
-        ButtonType playerBtnOne = new ButtonType(game.player1.name);
-        ButtonType playerBtnTwo = new ButtonType(game.player2.name);
+        ButtonType playerBtnOne = new ButtonType(game.getPlayer1().getName());
+        ButtonType playerBtnTwo = new ButtonType(game.getPlayer2().getName());
         ButtonType cancelBtn = new ButtonType("Cancel"); 
 
         alert.getButtonTypes().setAll(playerBtnOne, playerBtnTwo, cancelBtn);
@@ -88,16 +88,18 @@ public class Result implements Serializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == playerBtnOne){
             
-            Result resultWin = new Result(game.player1, game.player2, false);
-            game.result = resultWin;
-            alert("Success", "The player " + game.player1.name + " have been choosen as the winner, and have recieved a point.");
-            System.out.println(game.result.winner);   
+            Result resultWin = new Result(game.getPlayer1(), game.getPlayer2(), false);
+            game.setResult(resultWin);
+            alert("Success", "The player " + game.getPlayer1().getName() + " have been choosen as the winner, and have recieved a point.");
+            System.out.println(game.getResult().winner);  
+            
         } else if (result.get() == playerBtnTwo) {  
             
-            Result resultWin = new Result(game.player2, game.player1, false);
-            game.result = resultWin;
-            alert("Success","The player " + game.player2.name + " have been choosen as the winner, and have recieved a point.");
-            System.out.println(game.result.winner);
+            Result resultWin = new Result(game.getPlayer2(), game.getPlayer1(), false);
+            game.setResult(resultWin);
+            alert("Success","The player " + game.getPlayer2().getName() + " have been choosen as the winner, and have recieved a point.");
+            System.out.println(game.getResult().winner);
+            
         } else if (result.get() == cancelBtn) {
         }
     }
@@ -126,34 +128,36 @@ public class Result implements Serializable {
      * inserted into the result-list. It will add the earned points for
      * victories and draws to the players that have earned them.
      */
-    public void addPointsToPlayers () {
+    /*public void addPointsToPlayers (Game game) {
         
         // Collects the public static list of players.
-        ArrayList<Player> resultPlayerList = Admapp.playerList;
+        ArrayList<Player> resultPlayerList = ;
         
         // Goes trough all of the players in the playerlist and gi
         resultPlayerList.forEach((player) -> {
             if (this.draw) {
-                if (player.name == this.winner.name || player.name == this.loser.name) {
-                    player.score += 0.5;
+                if (player.getName() == this.winner.getName() || player.getName() == this.loser.getName()) {
+                    
+                    double newScore = player.getScore()+0.5;
+                    player.setScore(newScore);
                 }
             } else {
-                if(player.name == this.winner.name) {
-                    player.score += 1;
+                if(player.getName() == this.winner.getName()) {
+                    double newScore = player.getScore()+1;
+                    player.setScore(newScore);
                 }
             }
         });
         
-        // The new and updated list with scores is placed in the playerList.
-        Admapp.playerList = resultPlayerList;
-    }
+       
+    }*/
     
     @Override
     public String toString() {
         if (draw){
-            return "Draw Between: " + winner.name + " & " + loser.name;
+            return "Draw Between: " + winner.getName() + " & " + loser.getName();
         } else {
-            return "Winner: " + winner.name + " Loser: " + loser.name + " Draw: " + draw;
+            return "Winner: " + winner.getName() + " Loser: " + loser.getName() + " Draw: " + draw;
         }
     }
     

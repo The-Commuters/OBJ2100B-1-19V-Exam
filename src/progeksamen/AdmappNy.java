@@ -91,15 +91,7 @@ public class AdmappNy extends Application {
         //root.setRight(editResultBtn);
         //----/Edit result Button ---- 
         
-        //----- Search for game ------
-        TextField searchField = new TextField();
-        searchField.textProperty().addListener((obs, oldText, newText) -> {
-            //System.out.println("Text changed from "+oldText+" to "+newText);
-            ArrayList<Game> newGameList = new ArrayList<Game>();
-            Tournament tournamentSearchTest = tournamentList.get(1);
-            newGameList = tournamentSearchTest.search(newText);
-        });
-        //-----------------------------
+
            
         Button newBtn = new Button();
         newBtn.setText("New Tournament");
@@ -242,8 +234,11 @@ public class AdmappNy extends Application {
         Crumb crumb = new Crumb("Tournament", "Lobby");
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);
-  
-        BorderPane header = new BorderPane(menu, title, null, null, null);
+        
+        // This is the textfield used to search the tournament for games.
+        TextField searchField = new TextField();
+        
+        BorderPane header = new BorderPane(menu, title, searchField, null, null);
         body.setTop(header);
         
         ////////////////////////////////////////////////////////////////
@@ -263,6 +258,16 @@ public class AdmappNy extends Application {
         list.getStyleClass().add("list");
         // LIST
         
+        // USED for the search function, listens to the textfield searchField.
+        searchField.textProperty().addListener((obs, oldText, newText) -> {
+            String[] stringArray = newText.split("");
+            ArrayList<Game> newGameList = new ArrayList<Game>();
+            Tournament tournamentSearchTest = tournament;
+            for (String character : stringArray) 
+                newGameList = tournamentSearchTest.search(character);
+            listItems.setAll(newGameList);
+        });
+        
         StackPane main = new StackPane(list);
         body.setCenter(main);
         
@@ -278,8 +283,16 @@ public class AdmappNy extends Application {
         Crumb crumb = new Crumb("Tournament", "Lobby", "Game");
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);
+        
+        // The button that lets you edit or add a new result to a game.
+        Button editResultBtn = new Button();
+        
+        editResultBtn.setText("Edit Result");
+        editResultBtn.setOnAction(( event) -> {
+            game.getResult().handleGameResult(game);
+        });
   
-        BorderPane header = new BorderPane(menu, title, null, null, null);
+        BorderPane header = new BorderPane(menu, title, editResultBtn, null, null);
         body.setTop(header);
         
         ////////////////////////////////////////////////////////////////

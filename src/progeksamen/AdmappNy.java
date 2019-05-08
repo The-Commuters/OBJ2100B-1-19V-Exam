@@ -197,16 +197,17 @@ public class AdmappNy extends Application {
         Crumb crumb = new Crumb("Tournament");
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);
+         
+        // Save button
+        Button saveBtn = new Button();
+        saveBtn.setText("Save");
         
         // New tournament button
         Button newTournBtn = new Button();
         newTournBtn.setText("New Tournament");
-        
-        // Save button -
-        Button saveBtn = new Button();
-        saveBtn.setText("Save");
+        tools.getChildren().addAll(newTournBtn, saveBtn);
   
-        BorderPane header = new BorderPane(menu, title, saveBtn, null, null);
+        BorderPane header = new BorderPane(menu, title, null, null, null);
         body.setTop(header);
         
         ////////////////////////////////////////////////////////////////
@@ -214,21 +215,23 @@ public class AdmappNy extends Application {
        
         // LIST
         ListView<Tournament> list = new ListView<>(Data.getTournaments());
-        
-   
         list.setCellFactory(new TournamentCellFactory());
         list.setOrientation(Orientation.VERTICAL);
         list.setFocusTraversable(false);
         list.getSelectionModel().selectedItemProperty().addListener(this::chooseTournament);
         list.getStyleClass().add("list");
-        // LIST
-       
+        
+        // LISTENERS
+        // When the button to create a new tournement is finished. 
         newTournBtn.setOnAction((ActionEvent event) -> {
             String tournamentNameIn = TextDialog("Enter tournament name", "Tournament Name", "Name can not be empty");
             Tournament newTournament = new Tournament(tournamentNameIn);
             Data.tournaments.add(newTournament);
+            ObservableList<Tournament> newTounaments = FXCollections.<Tournament>observableArrayList(Data.tournaments);
+            list.setItems(newTounaments);
         });
-        // Event that saves the current list of users.
+        
+        // When the button to save the tournaments is pressed.
         saveBtn.setOnAction(( event) -> {
             System.out.println("Your progress is saved with the save-button.");
             Data.saveTournaments();
@@ -322,17 +325,17 @@ public class AdmappNy extends Application {
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);
        
-        
         // The button that lets you edit or add a new result to a game.
         Button editResultBtn = new Button();
         editResultBtn.setText("Edit Result");
-     
-        editResultBtn.setOnAction(( event) -> {
-            game.getResult().handleGameResult(game);
-        });
   
         BorderPane header = new BorderPane(menu, title, editResultBtn, null, null);
         body.setTop(header);
+        
+        // LISTENERS
+        editResultBtn.setOnAction(( event) -> {
+            game.getResult().handleGameResult(game);
+        });
         
         ////////////////////////////////////////////////////////////////
         // Main

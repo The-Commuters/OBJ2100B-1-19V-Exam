@@ -43,6 +43,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import static progeksamen.Data.tournaments;
 
 public class AdmappNy extends Application {
     
@@ -197,6 +198,10 @@ public class AdmappNy extends Application {
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);
         
+        // New tournament button
+        Button newTournBtn = new Button();
+        newTournBtn.setText("New Tournament");
+        
         // Save button -
         Button saveBtn = new Button();
         saveBtn.setText("Save");
@@ -218,6 +223,11 @@ public class AdmappNy extends Application {
         list.getStyleClass().add("list");
         // LIST
        
+        newTournBtn.setOnAction((ActionEvent event) -> {
+            String tournamentNameIn = TextDialog("Enter tournament name", "Tournament Name", "Name can not be empty");
+            Tournament newTournament = new Tournament(tournamentNameIn);
+            Data.tournaments.add(newTournament);
+        });
         // Event that saves the current list of users.
         saveBtn.setOnAction(( event) -> {
             System.out.println("Your progress is saved with the save-button.");
@@ -239,28 +249,27 @@ public class AdmappNy extends Application {
         Crumb crumb = new Crumb("Tournament", "Lobby");
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);
-       
+        
+        // Button for the new player-feature
+        Button newPlayerBtn = new Button();
+        newPlayerBtn.setText("New Player");
         
         ComboBox<Player> playerMenu = new ComboBox<>();
         // This is the textfield used to search the tournament for games.
         TextField searchField = new TextField();
         
-        BorderPane header = new BorderPane(menu, title, playerMenu,searchField,  null);
+        BorderPane header = new BorderPane(menu, title, playerMenu, searchField,  newPlayerBtn);
         body.setTop(header);
         
         ////////////////////////////////////////////////////////////////
         // Main
           
-
-         ObservableList<Player> playerLists = FXCollections.<Player>observableArrayList(Data.getPlayers());
         
-         playerMenu.setItems(playerLists);
-         
-                 
+        ObservableList<Player> playerLists = FXCollections.<Player>observableArrayList(tournament.getPlayers());
+        playerMenu.setItems(playerLists);
         playerMenu.setOnAction(e -> {
-               Player player_int = playerMenu.getSelectionModel().getSelectedItem();
-        
-               System.out.println(player_int);
+            Player player_int = playerMenu.getSelectionModel().getSelectedItem();
+            System.out.println(player_int);
         });
         // LIST INPUT
         ObservableList<Game> listItems = FXCollections.<Game>observableArrayList(tournament.getGames());
@@ -287,6 +296,16 @@ public class AdmappNy extends Application {
             listItems.setAll(newGameList);
         });
         
+        newPlayerBtn.setOnAction((ActionEvent event) -> {
+            int index = Data.tournaments.indexOf(tournament);
+            String playerNameIn;
+            playerNameIn = TextDialog("Enter player name", "Player Name", "Name can not be empty");
+            tournament.getPlayers().add(new Player(playerNameIn));
+            Data.tournaments.set(index, tournament);
+            ObservableList<Player> players = FXCollections.<Player>observableArrayList(tournament.getPlayers());
+            playerMenu.setItems(players);
+        });
+        
         StackPane main = new StackPane(list);
         body.setCenter(main);
         
@@ -302,6 +321,7 @@ public class AdmappNy extends Application {
         Crumb crumb = new Crumb("Tournament", "Lobby", "Game");
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);
+       
         
         // The button that lets you edit or add a new result to a game.
         Button editResultBtn = new Button();

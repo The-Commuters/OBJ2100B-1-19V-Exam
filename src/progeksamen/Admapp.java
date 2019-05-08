@@ -48,10 +48,9 @@ public class Admapp extends Application implements Constants {
     public void start(Stage primaryStage) {
         
         // The method that collects the tournaments-arraylist.
+ 
         
-        
-        
-        tournamentList = Data.tempgetTournaments();
+        Data.tempgetTournaments();
         
         // Test's the method that saves the tournment-data.
         // SaveTournament(playerList, gameList, resultList);

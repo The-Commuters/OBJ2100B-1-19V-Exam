@@ -6,6 +6,7 @@
 package progeksamen;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -82,33 +83,40 @@ public class Data {
      * @return 
      */
     public static ObservableList<Tournament> getTournaments() {
-
-        try {
-            // create an ObjectInputStream for the file we created before
-            ObjectInputStream input = new ObjectInputStream(new FileInputStream("Tournament.dat"));
-            System.out.println(1);
-            
-            // Collects the player's from the storage-file.
-            try{
-                tournaments = (ArrayList<Tournament>) input.readObject();
-                System.out.println("The list of tournaments have been collected fron the binary-file");
-                
-                ObservableList<Tournament> tournamentsOL = FXCollections.<Tournament>observableArrayList(tournaments);
-
-                return tournamentsOL;
-            } catch (ClassCastException | ClassNotFoundException e){
-                System.err.println(e);
-            }
-        } catch (IOException ex) {
-            System.err.println(ex);
-        }
-        return null;
         
-    } 
+        tempgetTournaments();
+        File file = new File("Tournament.dat");
+        
+        if(file.isFile() && file.canRead()) {
+            
+            try {
+                // create an ObjectInputStream for the file we created before
+                ObjectInputStream input = new ObjectInputStream(new FileInputStream("Tournament.dat"));
+
+                // Collects the player's from the storage-file.
+                try{
+                    tournaments = (ArrayList<Tournament>) input.readObject();
+                    System.out.println("The list of tournaments have been collected fron the binary-file");
+
+                    ObservableList<Tournament> tournamentsOL = FXCollections.<Tournament>observableArrayList(tournaments);
+
+                    return tournamentsOL;
+                } catch (ClassCastException | ClassNotFoundException e){
+                    System.err.println(e);
+                }
+                
+            } catch (IOException ex) {
+                System.err.println(ex);
+            }
+        }
+       
+        ObservableList<Tournament> tournamentsOL = FXCollections.<Tournament>observableArrayList(tournaments);
+        return tournamentsOL;
+    }
+        
     
-    
-    
-        public static ArrayList<Tournament> tempgetTournaments() {
+    // Creates temp information to use undr testing.
+    public static void tempgetTournaments() {
 
           //----------------------------------Test of tournment---------------------------------
         // Test-input used when writing into the file.
@@ -148,7 +156,14 @@ public class Data {
         // SaveTournament(playerList, gameList, resultList);
        Data.saveTournaments(tournamentList);
         //----------------------------------/Test of tournment---------------------------------
-        return tournamentList;
         
     } 
+    
+    public static ArrayList<Tournament> getTournementArrayList() {
+        
+        tournaments = (ArrayList<Tournament>)getTournaments();
+        
+        return tournaments;
+    }
+    
 }

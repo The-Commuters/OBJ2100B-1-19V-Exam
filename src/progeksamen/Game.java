@@ -23,6 +23,14 @@ public class Game implements Serializable{
         this.player1 = player1;
         this.player2 = player2;
     }
+
+    public Game (Player player1, Player player2, Result result, Date startDate, Date startTime) {
+        this.player1 = player1;
+        this.player2 = player2;
+        this.result = result;
+        this.startDate = startDate;
+        this.startTime = startTime;
+    } 
     
     public Game (Player player1, Player player2, Result result, ArrayList<String> moves, Date startDate, Date startTime) {
         this.player1 = player1;

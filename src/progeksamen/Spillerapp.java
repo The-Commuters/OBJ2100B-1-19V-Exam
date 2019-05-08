@@ -39,16 +39,10 @@ import static progeksamen.Admapp.tournamentList;
 public class Spillerapp extends Application {
     
     Container container;
-    
-    // Current string for the Tournament, needed to find/create the .dat to store binary And the .txt.
-    public static String tournament = "Tournament";
-    public static ArrayList<Tournament> tournamentList    = new ArrayList<Tournament>();
-    
+   
     @Override
     public void start(Stage primaryStage) {
-        
-        tournamentList = Data.tempgetTournaments();
-        
+ 
         // The first page
         Page tournamentPage = tournament();
         

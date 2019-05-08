@@ -9,7 +9,6 @@ import static progeksamen.Admapp.tournamentList;
 
 public class Tournament implements Serializable {
     
-    private ArrayList<Tournament> tournaments;
     private String name;
     private ArrayList<Player> players = new ArrayList();
     private ArrayList<Game> games = new ArrayList();

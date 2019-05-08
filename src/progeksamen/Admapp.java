@@ -116,7 +116,7 @@ public class Admapp extends Application implements Constants {
         Button editResultBtn = new Button();
         editResultBtn.setText("Edit Result");
         editResultBtn.setOnAction(( event) -> {
-            result1.handleGameResult(game1);
+            //result1.handleGameResult(game1);
         });
         //root.setRight(editResultBtn);
         //----/Edit result Button ---- 

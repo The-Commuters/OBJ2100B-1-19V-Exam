@@ -14,6 +14,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import static progeksamen.Admapp.tournament;
@@ -84,14 +85,15 @@ public class Data {
 
         try {
             // create an ObjectInputStream for the file we created before
-            ObjectInputStream input = new ObjectInputStream(new FileInputStream(tournament + ".dat"));
+            ObjectInputStream input = new ObjectInputStream(new FileInputStream("Tournament.dat"));
+            System.out.println(1);
             
             // Collects the player's from the storage-file.
             try{
-                tournamentList = (ArrayList<Tournament>) input.readObject();
+                tournaments = (ArrayList<Tournament>) input.readObject();
                 System.out.println("The list of tournaments have been collected fron the binary-file");
                 
-                ObservableList<Tournament> tournamentsOL = FXCollections.observableArrayList(tournamentList);
+                ObservableList<Tournament> tournamentsOL = FXCollections.<Tournament>observableArrayList(tournaments);
 
                 return tournamentsOL;
             } catch (ClassCastException | ClassNotFoundException e){
@@ -101,6 +103,52 @@ public class Data {
             System.err.println(ex);
         }
         return null;
+        
+    } 
+    
+    
+    
+        public static ArrayList<Tournament> tempgetTournaments() {
+
+          //----------------------------------Test of tournment---------------------------------
+        // Test-input used when writing into the file.
+        Player player   = new Player("Harry");
+        Player player1  = new Player("Ron");
+        Player player2  = new Player("Hermoine"); 
+        
+        ArrayList<String> gameArraylist = new ArrayList<>();
+        gameArraylist.add("Number1");
+        gameArraylist.add("Number2");
+        gameArraylist.add("Number3");
+        
+        Date date = new Date();
+        
+        Result result1  = new Result(player1, player2, true);
+        Result result2  = new Result(player2, player1, true);
+        Result result3  = new Result(player, player1, false);
+        
+        Game game1      = new Game(player1, player2, result1, gameArraylist, date, date);
+        Game game2      = new Game(player2, player1, result1, gameArraylist, date, date);
+        Game game3      = new Game(player, player1, result1, gameArraylist, date, date);
+        
+        // The list's used to store data.
+        ArrayList<Player> playerList    = new ArrayList<Player>();
+        ArrayList<Game> gameList        = new ArrayList<Game>();
+       
+        playerList.add(player);  playerList.add(player1); playerList.add(player2);
+        gameList.add(game1);     gameList.add(game2);     gameList.add(game3);
+        
+        Tournament tournament1 = new Tournament("Team Nado: Vers 2", playerList, gameList);
+        Tournament tournament2 = new Tournament("Team Nado: Vers 3", playerList, gameList);
+        Tournament tournament3 = new Tournament("Team Nado: Vers 4", playerList, gameList);
+        
+        tournamentList.add(tournament1); tournamentList.add(tournament2); tournamentList.add(tournament3);
+        
+        // Test's the method that saves the tournment-data.
+        // SaveTournament(playerList, gameList, resultList);
+       Data.saveTournaments(tournamentList);
+        //----------------------------------/Test of tournment---------------------------------
+        return tournamentList;
         
     } 
 }

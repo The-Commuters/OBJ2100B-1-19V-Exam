@@ -48,10 +48,17 @@ public class Admapp extends Application implements Constants {
     public void start(Stage primaryStage) {
         
         // The method that collects the tournaments-arraylist.
-        Data.getTournaments();
         
-        //----------------------------------Test of tournment---------------------------------
-        // Test-input used when writing into the file.
+        
+        
+        tournamentList = Data.tempgetTournaments();
+        
+        // Test's the method that saves the tournment-data.
+        // SaveTournament(playerList, gameList, resultList);
+       Data.saveTournaments(tournamentList);
+       
+       
+       
         Player player   = new Player("Harry");
         Player player1  = new Player("Ron");
         Player player2  = new Player("Hermoine"); 
@@ -83,9 +90,8 @@ public class Admapp extends Application implements Constants {
         Tournament tournament3 = new Tournament("Team Nado: Vers 4", playerList, gameList);
         
         tournamentList.add(tournament1); tournamentList.add(tournament2); tournamentList.add(tournament3);
-        
-        // Test's the method that saves the tournment-data.
-        // SaveTournament(playerList, gameList, resultList);
+       
+       
        
         //----------------------------------/Test of tournment---------------------------------
         

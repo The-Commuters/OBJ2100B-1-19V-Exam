@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -33,6 +34,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import static progeksamen.Admapp.tournamentList;
 
 public class Spillerapp extends Application {
     
@@ -40,15 +42,12 @@ public class Spillerapp extends Application {
     
     // Current string for the Tournament, needed to find/create the .dat to store binary And the .txt.
     public static String tournament = "Tournament";
-    
-    // The list's used to store data.
-    
+    public static ArrayList<Tournament> tournamentList    = new ArrayList<Tournament>();
     
     @Override
     public void start(Stage primaryStage) {
         
-        // The method that collects the data from the Binary file.
-        getTournament();
+        tournamentList = Data.tempgetTournaments();
         
         // The first page
         Page tournamentPage = tournament();
@@ -86,11 +85,10 @@ public class Spillerapp extends Application {
         ////////////////////////////////////////////////////////////////
         // Main
         
-        // LIST INPUT
-        ObservableList<Tournament> listItems = FXCollections.<Tournament>observableArrayList(getList());
+       
         
         // LIST
-        ListView<Tournament> list = new ListView<>(listItems);
+        ListView<Tournament> list = new ListView<>(Data.getTournaments());
         list.getItems().addAll();
         list.setCellFactory(new TournamentCellFactory());
         list.setOrientation(Orientation.VERTICAL);
@@ -146,7 +144,7 @@ public class Spillerapp extends Application {
         
         ////////////////////////////////////////////////////////////////
         // Header
-        Title title = new Title(new Text(body.getName()));
+        Title title = new Title(new Text(game.getPlayer1().getName() + " VS " + game.getPlayer2().getName()));
         Crumb crumb = new Crumb("Tournament", "Lobby", "Game");
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);
@@ -166,30 +164,6 @@ public class Spillerapp extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-    }
-    
-    /**
-     * The getTorunament is the method that collects the data from the 
-     * binary file where it was stored, and places them into the list
-     * that they should be in before the application really starts. 
-     */
-    public void getTournament() {
-        
-        try {
-            // create an ObjectInputStream for the file we created before
-            ObjectInputStream input = new ObjectInputStream(new FileInputStream(tournament + ".dat"));
-            
-            // Collects the player's from the storage-file.
-            try{
-                 tournamentList = (ArrayList<Tournament>) input.readObject();
-                
-            } catch (ClassCastException | ClassNotFoundException e){
-            }
-        } catch (IOException ex) {}
-    }
-    
-    public List<Tournament> getList(){
-        return tournamentList;
     }
     
     public void chooseTournament(ObservableValue<? extends Tournament> observable, Tournament previousTournament, Tournament currentTournament) {

@@ -159,6 +159,13 @@ public class Data {
         
     } 
     
+       public static ArrayList<Player> getPlayers() {
+        
+        ArrayList players = (ArrayList<Player>)getTournaments().get(0).getPlayers();
+        
+        return players;
+    }
+    
     public static ArrayList<Tournament> getTournementArrayList() {
         
         tournaments = (ArrayList<Tournament>)getTournaments();

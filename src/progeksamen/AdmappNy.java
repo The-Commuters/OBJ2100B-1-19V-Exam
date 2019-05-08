@@ -3,13 +3,13 @@
  */
 package progeksamen;
 
-import gui.Body;
-import gui.Container;
-import gui.Crumb;
-import gui.Menu;
-import gui.Page;
-import gui.Title;
-import gui.Tools;
+import gui.components.Body;
+import gui.components.Container;
+import gui.components.Crumb;
+import gui.components.Menu;
+import gui.components.Page;
+import gui.components.Title;
+import gui.components.Tools;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

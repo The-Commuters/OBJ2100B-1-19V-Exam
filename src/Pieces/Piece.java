@@ -17,8 +17,8 @@ public abstract class Piece {
     int numberPos; // numbers decend along the Y-axis, starting at 0/8 ending at 7/1
     static String myType = "Piece"; // this is changed in every construktor, but can be edited if locaisation somehow later is added
     
-    protected static final char[] LETTERS = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-    protected static final int[] NUMBERS = {8, 7, 6, 5, 4, 3, 2, 1};
+    public static final char[] LETTERS = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+    public static final int[] NUMBERS = {8, 7, 6, 5, 4, 3, 2, 1};
     
 
     public Piece(boolean white, int letterPos, int numberPos) {
@@ -101,7 +101,7 @@ public abstract class Piece {
     
     // recives a target and a list of places to chek 
     protected boolean validList(int verticalTarget, int horisontalTarget, int[] verticalAdjustment, int[] horisontalAdjustment){
-        for (int i = 0; i < verticalAdjustment.length; i++){
+        for (int i = 0; i < verticalAdjustment.length-1; i++){
             if (validRelativeToSelf(verticalTarget, horisontalTarget, verticalAdjustment[i], horisontalAdjustment[i])){
                 return true;
             }

@@ -214,14 +214,11 @@ public class Game implements Serializable{
         //}
         
         return "Player 1: " + getPlayer1().getName() + 
-                ", Player 2: " + getPlayer2().getName();
-        
-              /* return "Player 1: " + getPlayer1().getName() + 
                 ", Player 2: " + getPlayer2().getName() + 
                 ", " + getResult().toString() + 
                 ", " + scoreString + 
                 ", Startdate: " + getStartDate() + 
-                ", Starttime: " + getStartTime() + ".";*/
+                ", Starttime: " + getStartTime() + ".";
     }
 
     /**

@@ -20,7 +20,7 @@ import javafx.scene.image.ImageView;
 public class Back extends Button {
     
     // Constants
-    private final ImageView GRAPHIC = new ImageView(new Image("http://downloadicons.net/sites/default/files/green-back-button-icon-65921.png", 20, 0, true, true, true)); 
+    private final ImageView GRAPHIC = new ImageView(new Image("gui/images/back.png", 20, 0, true, true, true)); 
 
     // Constructors
     public Back(Container container) {

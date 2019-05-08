@@ -101,6 +101,20 @@ public class AdmappNyNy extends Application {
         primaryStage.show();
         
     }
+    /**
+     * This method will take in the 3 Strings from 
+     * the method caller and use them in the dialog 
+     * that will be shown to the user
+     * 
+     * It will try to stop the user 
+     * from not entering anything
+     * 
+     * 
+     * @param HeaderTxt
+     * @param tittle
+     * @param warning
+     * @return the users input in to the dialog
+     */
     
     public String TextDialog(String HeaderTxt, String tittle, String warning) {
 

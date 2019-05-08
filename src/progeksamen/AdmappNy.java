@@ -247,16 +247,28 @@ public class AdmappNy extends Application {
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);
        
-  
+        
+        ComboBox<Player> playerMenu = new ComboBox<>();
         // This is the textfield used to search the tournament for games.
         TextField searchField = new TextField();
         
-        BorderPane header = new BorderPane(menu, title, searchField, null, null);
+        BorderPane header = new BorderPane(menu, title, playerMenu,searchField,  null);
         body.setTop(header);
         
         ////////////////////////////////////////////////////////////////
         // Main
+          
+
+         ObservableList<Player> playerLists = FXCollections.<Player>observableArrayList(Data.getPlayers());
         
+         playerMenu.setItems(playerLists);
+         
+                 
+        playerMenu.setOnAction(e -> {
+               Player player_int = playerMenu.getSelectionModel().getSelectedItem();
+        
+               System.out.println(player_int);
+        });
         // LIST INPUT
         ObservableList<Game> listItems = FXCollections.<Game>observableArrayList(tournament.getGames());
         

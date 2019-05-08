@@ -17,6 +17,7 @@ public class Game implements Serializable{
     private ArrayList<String> score;
     private Date startDate;
     private Date startTime;
+    private boolean completed = false;
     
     public Game () {}
     public Game (Player player1, Player player2) {
@@ -153,6 +154,14 @@ public class Game implements Serializable{
      */
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+    
+    public boolean getGameState() {
+        return completed;
+    }
+    
+    public void setGameState(boolean state) {
+        this.completed = state;
     }
 }
  

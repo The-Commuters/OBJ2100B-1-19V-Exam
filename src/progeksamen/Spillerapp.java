@@ -27,14 +27,28 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -59,12 +73,16 @@ public class Spillerapp extends Application {
         // Scene
         Scene scene = new Scene(container);
         scene.getStylesheets().add("progeksamen/main.css");
+       
         
         ////////////////////////////////////////////////////////////////
         // PrimaryStage
         primaryStage.setTitle("ChessX");
         primaryStage.setScene(scene);
+        primaryStage.setMinWidth(container.getMinWidth());
+        primaryStage.setMinHeight(container.getMinHeight());
         primaryStage.show();
+        
     }
     
     public Page tournament() {
@@ -148,6 +166,32 @@ public class Spillerapp extends Application {
         
         ////////////////////////////////////////////////////////////////
         // Main
+        
+        // CHESS
+        HBox chessboardContainer = new HBox();
+        
+        // CHESSBOARD
+        
+        Chessboard chessboard = new Chessboard();
+        
+        // CHESSBOARD
+        
+        TextArea textarea = new TextArea("I am big gay gay, i love big long ducks, i am super super gay, ilove big long ducks");
+        textarea.setMaxSize(320, 320);
+        
+        chessboardContainer.getChildren().addAll(chessboard, textarea);
+        // CHESS
+        
+        HBox centerHorizontal = new HBox(chessboardContainer, textarea);
+        centerHorizontal.setAlignment(Pos.CENTER);
+        
+        VBox centerVertical = new VBox(centerHorizontal);
+        centerVertical.setAlignment(Pos.CENTER);
+        
+        StackPane main = new StackPane(centerVertical);
+                
+        body.setCenter(main);
+        
         
         return new Page(body);
     }

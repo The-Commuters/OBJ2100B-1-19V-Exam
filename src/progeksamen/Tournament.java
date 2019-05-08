@@ -2,6 +2,8 @@ package progeksamen;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,6 +43,12 @@ public class Tournament implements Serializable {
     public String getName() {
         return name;
     }
+    
+    public void sortScoreBoard() {
+              Comparator c = Collections.reverseOrder();
+
+         Collections.sort(players, c);
+    }
 
     public ArrayList<Player> getPlayers() {
         return players;
@@ -70,9 +78,13 @@ public class Tournament implements Serializable {
     }
     
 
+    
     @Override
     public String toString() {
         return this.name;
     }
+
+   
+   
 
 }

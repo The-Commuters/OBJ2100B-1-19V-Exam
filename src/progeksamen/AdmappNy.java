@@ -256,6 +256,8 @@ public class AdmappNy extends Application {
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);
         
+         Button test = new Button("test");
+        Button test2 = new Button("test2");
         // Button for the new player-feature
         Button newPlayerBtn = new Button();
         newPlayerBtn.setText("New Player");
@@ -311,6 +313,29 @@ public class AdmappNy extends Application {
             ObservableList<Game> games = FXCollections.<Game>observableArrayList(tournament.getGames());
             list.setItems(games);
         });
+           
+        //
+         System.out.println(tournament.getPlayers().get(0).getScore());
+           
+           // Main
+        test.setOnAction(e ->{
+            
+            System.out.println(tournament.getDetails());
+            tournament.getPlayers().get(0).setScore(7);
+             System.out.println(tournament.getDetails());
+          tournament.sortScoreBoard();
+         System.out.print(tournament.getDetails());
+          
+         //tournament.getPlayers().get(0).reversed();
+         
+        });
+        
+         test2.setOnAction(e ->{
+          System.out.print(tournament.getPlayers().get(0).compare(playerName1, playerName2));
+         
+        });
+        
+        
         
         // USED for the search function, listens to the textfield searchField.
         // DOES NOT WORK PERFECTLY!!!!!!!!!!

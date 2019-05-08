@@ -257,7 +257,8 @@ public class AdmappNyNy extends Application {
             Tournament tournamentSearchTest = tournament;
             for (String character : stringArray) 
                 newGameList = tournamentSearchTest.search(character);
-            listItems.setAll(newGameList);
+            ObservableList<Game> games = FXCollections.<Game>observableArrayList(newGameList);
+            listItems.setAll(games);
         });
         
         // When the new player button is pressed, then this process starts.

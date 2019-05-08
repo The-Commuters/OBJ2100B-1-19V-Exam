@@ -87,7 +87,7 @@ public class Data {
      */
     public static ObservableList<Tournament> getTournaments()  {
         
-        //tempgetTournaments();
+        tempgetTournaments();
         
         File file = new File("Tournament.dat");
         
@@ -107,12 +107,9 @@ public class Data {
             try{
                 tournaments = (ArrayList<Tournament>) input.readObject();
                 System.out.println("The list of tournaments have been collected fron the binary-file");
- 
 
-      
                     ObservableList<Tournament> tournamentsOL = FXCollections.<Tournament>observableArrayList(tournaments);
               
-
                 return tournamentsOL;
             } catch (ClassCastException | ClassNotFoundException e){
                 System.err.println(e);
@@ -138,9 +135,7 @@ public class Data {
         Player player2  = new Player("Hermoine"); 
         
         ArrayList<String> gameArraylist = new ArrayList<>();
-        gameArraylist.add("Number1");
-        gameArraylist.add("Number2");
-        gameArraylist.add("Number3");
+
         
         Date date = new Date();
         

@@ -18,7 +18,7 @@ public class Game implements Serializable{
     private Player player1;
     private Player player2;
     private Result result;
-    private ArrayList<String> score;
+    private ArrayList<String> score = new ArrayList<String>();
     private Date startDate = new Date();
     private Date startTime = new Date();
     
@@ -221,8 +221,10 @@ public class Game implements Serializable{
         
         return "Player 1: " + getPlayer1().getName() + 
                 ", Player 2: " + getPlayer2().getName() + 
-                ", " + getResult().toString() + 
-                ", " + scoreString;
+                ", " + getResult() + 
+                ", " + scoreString + 
+                ", Startdate: " + getStartDate() + 
+                ", Starttime: " + getStartTime() + ".";
     }
 
     /**

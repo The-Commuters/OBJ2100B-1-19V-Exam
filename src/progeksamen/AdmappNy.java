@@ -54,6 +54,10 @@ public class AdmappNy extends Application {
      static ArrayList<Tournament> tournamentList    = new ArrayList<Tournament>();
     
         Container container;
+        
+        Player playerName1;
+          Player playerName2;
+          
     
     /** Metodeforklaringer -- MÅ SLETTES SENERE --
      * getTournament() collects the data from the "database"-file.
@@ -184,9 +188,6 @@ public class AdmappNy extends Application {
         return text;
     }
  
-   public List<Player> getList(){
-      return tournamentList.get(0).getPlayers();
-   }
    
    public Page tournament() {
         Body body = new Body("Tournament");
@@ -205,8 +206,10 @@ public class AdmappNy extends Application {
         // Save button -
         Button saveBtn = new Button();
         saveBtn.setText("Save");
+        
+        tools.getChildren().addAll(saveBtn);
   
-        BorderPane header = new BorderPane(menu, title, saveBtn, null, null);
+        BorderPane header = new BorderPane(menu,title , null , null, null);
         body.setTop(header);
         
         ////////////////////////////////////////////////////////////////
@@ -254,23 +257,44 @@ public class AdmappNy extends Application {
         Button newPlayerBtn = new Button();
         newPlayerBtn.setText("New Player");
         
-        ComboBox<Player> playerMenu = new ComboBox<>();
+        ComboBox<Player> playerMenuPlayer1 = new ComboBox<>();
+         ComboBox<Player> playerMenuPlayer2 = new ComboBox<>();
         // This is the textfield used to search the tournament for games.
         TextField searchField = new TextField();
+        Button newGameBtn = new Button("New game");
         
-        BorderPane header = new BorderPane(menu, title, playerMenu, searchField,  newPlayerBtn);
+      
+        tools.getChildren().addAll(playerMenuPlayer1, playerMenuPlayer2, newGameBtn);
+       
+        
+        BorderPane header = new BorderPane(menu, title, null , null, null);
         body.setTop(header);
         
         ////////////////////////////////////////////////////////////////
         // Main
           
+
+         ObservableList<Player> playerLists = FXCollections.<Player>observableArrayList(tournament.getPlayers());
         
-        ObservableList<Player> playerLists = FXCollections.<Player>observableArrayList(tournament.getPlayers());
-        playerMenu.setItems(playerLists);
-        playerMenu.setOnAction(e -> {
-            Player player_int = playerMenu.getSelectionModel().getSelectedItem();
-            System.out.println(player_int);
+         playerMenuPlayer1.setItems(playerLists);
+         playerMenuPlayer2.setItems(playerLists);
+         
+          
+          
+                 
+        playerMenuPlayer1.setOnAction(e -> {
+               playerName1 = playerMenuPlayer1.getSelectionModel().getSelectedItem();
+        
+               System.out.println(playerName1);
         });
+        
+        playerMenuPlayer2.setOnAction(e -> {
+               playerName2 = playerMenuPlayer2.getSelectionModel().getSelectedItem();
+        
+               System.out.println(playerName2);
+        });
+        
+        
         // LIST INPUT
         ObservableList<Game> listItems = FXCollections.<Game>observableArrayList(tournament.getGames());
         
@@ -284,6 +308,21 @@ public class AdmappNy extends Application {
         list.getSelectionModel().selectedItemProperty().addListener(this::chooseGame);
         list.getStyleClass().add("list");
         // LIST
+        
+           newGameBtn.setOnAction(e -> {
+          
+           //Data.tournaments.get(0).getGames().add(new Game(playerName1, playerName2));
+           
+     
+            int index = Data.tournaments.indexOf(tournament);
+            
+            tournament.getGames().add(new Game(playerName1, playerName2));
+            Data.tournaments.set(index, tournament);
+            ObservableList<Game> games = FXCollections.<Game>observableArrayList(tournament.getGames());
+            list.setItems(games);
+       
+              
+        });
         
         // USED for the search function, listens to the textfield searchField.
         // DOES NOT WORK PERFECTLY!!!!!!!!!!
@@ -330,8 +369,10 @@ public class AdmappNy extends Application {
         editResultBtn.setOnAction(( event) -> {
             game.getResult().handleGameResult(game);
         });
-  
-        BorderPane header = new BorderPane(menu, title, editResultBtn, null, null);
+        
+        tools.getChildren().addAll(editResultBtn);
+        
+        BorderPane header = new BorderPane(menu, title, null, null, null);
         body.setTop(header);
         
         ////////////////////////////////////////////////////////////////

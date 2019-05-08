@@ -3,27 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package progeksamen;
+package Pieces;
+
+import progeksamen.IllegalMoveException;
 
 /**
  *
  * @author Mads Hagen
  */
-public class Rook extends Piece {
-    
-    public Rook(boolean white, int letterPos, int numberPos) {
+public class Bishop extends Piece {
+
+    public Bishop(boolean white, int letterPos, int numberPos) {
         super(white, letterPos, numberPos);
-        super.myType = "Rook";
+        super.myType = "Bishop";
     }
     
     @Override
-    public void move(int newLetterPos, int newNumberPos) throws IllegalMoveException{
+    public void move(int newLetterPos, int newNumberPos) throws IllegalMoveException {
+        boolean validTarget = false;
         
-        // heare comes a series of ifs, they cud all be in one if-statement but are split mostly for redabilety
         // is the target outside bounds?
         if (validLetter(newLetterPos) && validNumber(newNumberPos)){
 
-            if (validLine(newLetterPos, newNumberPos)){
+
+
+            if (super.validTilted(newLetterPos, newNumberPos)){
                 // replace with watever method call to send to .txt log
                 System.out.println(super.toString() + " to " + super.LETTERS[newLetterPos] + super.NUMBERS[newNumberPos]);
 
@@ -32,12 +36,10 @@ public class Rook extends Piece {
                 super.numberPos = newNumberPos;
             }
         }
-        else {
-            throw new IllegalMoveException("Illegal move at " + super.toString());
+        else{
+            throw new IllegalMoveException("Ellegal move at " + super.toString());
         }
-        
-        
-        
     }
     
 }
+

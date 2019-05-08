@@ -3,29 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package progeksamen;
+package Pieces;
+
+import progeksamen.IllegalMoveException;
 
 /**
  *
  * @author Mads Hagen
  */
-public class Bishop extends Piece {
-
-    public Bishop(boolean white, int letterPos, int numberPos) {
+public class King extends Piece {
+    private static final int[] VERTICAL = {-1, 0, 1, 1, 1, 0, -1, -1};
+    private static final int[] HORISONTAL = {-1, -1, -1, 0, 1, 1, 1, 0};
+        
+        
+    public King(boolean white, int letterPos, int numberPos) {
         super(white, letterPos, numberPos);
-        super.myType = "Bishop";
+        super.myType = "King";
+        
     }
     
     @Override
     public void move(int newLetterPos, int newNumberPos) throws IllegalMoveException {
-        boolean validTarget = false;
-        
+       
         // is the target outside bounds?
         if (validLetter(newLetterPos) && validNumber(newNumberPos)){
 
-
-
-            if (super.validTilted(newLetterPos, newNumberPos)){
+            if (super.validList(newLetterPos, newNumberPos, VERTICAL, HORISONTAL)){
                 // replace with watever method call to send to .txt log
                 System.out.println(super.toString() + " to " + super.LETTERS[newLetterPos] + super.NUMBERS[newNumberPos]);
 
@@ -40,4 +43,3 @@ public class Bishop extends Piece {
     }
     
 }
-

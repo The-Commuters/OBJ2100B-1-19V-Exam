@@ -5,6 +5,9 @@
  */
 package progeksamen;
 
+import Pieces.Rook;
+import Pieces.Piece;
+
 /**
  *
  * @author Mads Hagen

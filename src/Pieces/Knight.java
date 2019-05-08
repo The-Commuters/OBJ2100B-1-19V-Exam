@@ -3,20 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package progeksamen;
+package Pieces;
+
+import progeksamen.IllegalMoveException;
 
 /**
  *
  * @author Mads Hagen
  */
-public class King extends Piece {
-    private static final int[] VERTICAL = {-1, 0, 1, 1, 1, 0, -1, -1};
-    private static final int[] HORISONTAL = {-1, -1, -1, 0, 1, 1, 1, 0};
+public class Knight extends Piece {
+    private static final int[] VERTICAL = {-1, 1, 2, 1, 1, -1, -2, -2};
+    private static final int[] HORISONTAL = {-2, -2, -1, 1, 2, 2, 1, -1};
+    
+    //private static final int[] VERTICAL = {-1, 0, 1, 1, 1, 0, -1, -1};
+    //private static final int[] HORISONTAL = {-1, -1, -1, 0, 1, 1, 1, 0};
         
         
-    public King(boolean white, int letterPos, int numberPos) {
+    public Knight(boolean white, int letterPos, int numberPos) {
         super(white, letterPos, numberPos);
-        super.myType = "King";
+        super.myType = "Knight";
         
     }
     

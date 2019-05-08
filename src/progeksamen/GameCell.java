@@ -13,13 +13,13 @@ import javafx.scene.control.ListCell;
  *
  * @author DavidNaist
  */
-public class TournamentCell extends ListCell<Tournament> {
+public class GameCell extends ListCell<Game> {
     
     @Override
-    public void updateItem(Tournament item, boolean empty) {
+    public void updateItem(Game item, boolean empty) {
         super.updateItem(item, empty);
  
-        String name = item == null || empty ? null : item.getName();
+        String name = item == null || empty ? null : item.getPlayer1().getName() + " VS " + item.getPlayer2().getName();
          
         setText(name);
         setGraphic(null);

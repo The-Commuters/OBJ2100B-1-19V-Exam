@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package gui.components;
 
 import javafx.scene.text.Text;
 
@@ -17,7 +17,7 @@ public class Crumb extends Text {
     public Crumb(String... crumbs) {
         
         for (String crumb: crumbs) {
-            setText(crumbs.length > 1 ? getText() + " > " + crumb : crumb);
+            setText(getText() + (crumb.equals(crumbs[0]) ? crumb : " > " + crumb));
         }
         
         init();

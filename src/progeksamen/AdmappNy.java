@@ -50,7 +50,7 @@ public class AdmappNy extends Application {
     public static String tournament = "Tournament";
     
     BorderPane root = new BorderPane();
-    public static ArrayList<Tournament> tournamentList    = new ArrayList<Tournament>();
+     static ArrayList<Tournament> tournamentList    = new ArrayList<Tournament>();
     
         Container container;
     
@@ -148,6 +148,12 @@ public class AdmappNy extends Application {
         // Scene
         Scene scene = new Scene(container);
         scene.getStylesheets().add("progeksamen/main.css");
+
+         /*// Saves the list of  on exit.
+        primaryStage.setOnHiding( event -> {
+            System.out.println("Your progress have been saved on exit.");
+            Data.saveTournaments(tournamentList);
+        });*/
         
         ////////////////////////////////////////////////////////////////
         // PrimaryStage
@@ -209,21 +215,20 @@ public class AdmappNy extends Application {
         list.getSelectionModel().selectedItemProperty().addListener(this::chooseTournament);
         list.getStyleClass().add("list");
         // LIST
-        
-           
+       
         // Event that saves the current list of users.
         saveBtn.setOnAction(( event) -> {
             System.out.println("Your progress is saved with the save-button.");
             
-                List<Tournament> listOfTournaments = list.getItems();
-                ArrayList<Tournament> arrayListOfTournaments;
-                if (listOfTournaments instanceof ArrayList<?>) {
-                    arrayListOfTournaments = (ArrayList<Tournament>) listOfTournaments;
-                } else {
-                    arrayListOfTournaments = new ArrayList<>(listOfTournaments);
-                }
-            
+            List<Tournament> listOfTournaments = list.getItems();
+            ArrayList<Tournament> arrayListOfTournaments;
+            if (listOfTournaments instanceof ArrayList<?>) {
+                arrayListOfTournaments = (ArrayList<Tournament>) listOfTournaments;
+            } else {
+                arrayListOfTournaments = new ArrayList<>(listOfTournaments);
+            }
             Data.saveTournaments(arrayListOfTournaments);
+            tournamentList = arrayListOfTournaments;
         });
         
         StackPane main = new StackPane(list);
@@ -242,9 +247,6 @@ public class AdmappNy extends Application {
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);
        
-              // Save button -
-        Button saveBtn = new Button();
-        saveBtn.setText("Save");
   
         // This is the textfield used to search the tournament for games.
         TextField searchField = new TextField();
@@ -268,10 +270,6 @@ public class AdmappNy extends Application {
         list.getSelectionModel().selectedItemProperty().addListener(this::chooseGame);
         list.getStyleClass().add("list");
         // LIST
-        
-      
-        
-        
         
         // USED for the search function, listens to the textfield searchField.
         searchField.textProperty().addListener((obs, oldText, newText) -> {
@@ -302,8 +300,7 @@ public class AdmappNy extends Application {
         // The button that lets you edit or add a new result to a game.
         Button editResultBtn = new Button();
         editResultBtn.setText("Edit Result");
-        
-        
+     
         editResultBtn.setOnAction(( event) -> {
             game.getResult().handleGameResult(game);
         });

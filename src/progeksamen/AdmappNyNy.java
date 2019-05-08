@@ -193,17 +193,18 @@ public class AdmappNyNy extends Application {
         newPlayerBtn.setText("New Player");
         
         ComboBox<Player> playerMenuPlayer1 = new ComboBox<>();
-        playerMenuPlayer1.setMaxWidth(180);
+        playerMenuPlayer1.setMaxWidth(130);
         ComboBox<Player> playerMenuPlayer2 = new ComboBox<>();
-        playerMenuPlayer2.setMaxWidth(180);
+        playerMenuPlayer2.setMaxWidth(130);
         
         // This is the textfield used to search the tournament for games.
         TextField searchField = new TextField();
+        searchField.setMaxWidth(60);
         
         Button newGameBtn = new Button("New game");
       
-        tools.getChildren().addAll(playerMenuPlayer1, playerMenuPlayer2, searchField);
-        BorderPane header = new BorderPane(menu, title, newPlayerBtn , newGameBtn, null);
+        tools.getChildren().addAll(playerMenuPlayer1, playerMenuPlayer2, newGameBtn, newPlayerBtn, searchField);
+        BorderPane header = new BorderPane(menu, title, null , null, null);
         body.setTop(header);
         
         ////////////////////////////////////////////////////////////////
@@ -240,7 +241,8 @@ public class AdmappNyNy extends Application {
         // LISTENER
         newGameBtn.setOnAction(e -> {
            //Data.tournaments.get(0).getGames().add(new Game(playerName1, playerName2));
-            int index = Data.tournaments.indexOf(tournament);    
+            int index = Data.tournaments.indexOf(tournament); 
+            System.out.println("All ok!");
             tournament.getGames().add(new Game(playerName1, playerName2));
             Data.tournaments.set(index, tournament);
             ObservableList<Game> games = FXCollections.<Game>observableArrayList(tournament.getGames());

@@ -14,11 +14,11 @@ import javafx.scene.control.ButtonType;
 
 public class Game implements Serializable{
     
-    private boolean completed = false;
-    private Player player1 = null;
-    private Player player2 = null;
-    private Result result = null;
-    private ArrayList<String> score = null;
+    private boolean completed;
+    private Player player1;
+    private Player player2;
+    private Result result;
+    private ArrayList<String> score;
     private Date startDate;
     private Date startTime;
     

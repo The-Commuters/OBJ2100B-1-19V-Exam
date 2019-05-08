@@ -63,7 +63,7 @@ public class Data {
                 
                 for (Player player : tournament.getPlayers()) {
                     outStream.newLine();
-                    outStream.write(player.toString());
+                    outStream.write("Player-id: " + player.getId() + "; Playername: "+player.getName()+"; Playerscore: "+player.getScore());
                 }
                 
                 for (Game game : tournament.getGames()) {

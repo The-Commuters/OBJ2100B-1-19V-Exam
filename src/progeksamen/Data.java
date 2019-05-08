@@ -84,7 +84,7 @@ public class Data {
      */
     public static ObservableList<Tournament> getTournaments() {
         
-        tempgetTournaments();
+        //tempgetTournaments();
         File file = new File("Tournament.dat");
         
         if(file.isFile() && file.canRead()) {
@@ -117,7 +117,7 @@ public class Data {
     
     // Creates temp information to use undr testing.
     public static void tempgetTournaments() {
-
+/*
           //----------------------------------Test of tournment---------------------------------
         // Test-input used when writing into the file.
         Player player   = new Player("Harry");
@@ -154,8 +154,8 @@ public class Data {
         
         // Test's the method that saves the tournment-data.
         // SaveTournament(playerList, gameList, resultList);
-       Data.saveTournaments(tournamentList);
-        //----------------------------------/Test of tournment---------------------------------
+       //Data.saveTournaments(tournamentList);
+        //----------------------------------/Test of tournment---------------------------------*/
         
     } 
     

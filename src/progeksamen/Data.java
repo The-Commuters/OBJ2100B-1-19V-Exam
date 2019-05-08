@@ -117,8 +117,8 @@ public class Data {
     
     // Creates temp information to use undr testing.
     public static void tempgetTournaments() {
-/*
-          //----------------------------------Test of tournment---------------------------------
+
+        /*  //----------------------------------Test of tournment---------------------------------
         // Test-input used when writing into the file.
         Player player   = new Player("Harry");
         Player player1  = new Player("Ron");
@@ -154,7 +154,7 @@ public class Data {
         
         // Test's the method that saves the tournment-data.
         // SaveTournament(playerList, gameList, resultList);
-       //Data.saveTournaments(tournamentList);
+       Data.saveTournaments(tournamentList);
         //----------------------------------/Test of tournment---------------------------------*/
         
     } 

@@ -15,12 +15,12 @@ import javafx.scene.control.ButtonType;
 public class Game implements Serializable{
     
     private boolean completed = false;
-    private Player player1 = null;
-    private Player player2 = null;
-    private Result result = null;
-    private ArrayList<String> score = null;
-    private Date startDate;
-    private Date startTime;
+    private Player player1;
+    private Player player2;
+    private Result result;
+    private ArrayList<String> score;
+    private Date startDate = new Date();
+    private Date startTime = new Date();
     
     public Game () {}
     public Game (Player player1, Player player2) {
@@ -32,8 +32,8 @@ public class Game implements Serializable{
         this.player1 = player1;
         this.player2 = player2;
         this.result = result;
-        this.startDate = startDate;
-        this.startTime = startTime;
+        this.startDate =  new Date();
+        this.startTime =  new Date();
     } 
     
     public Game (Player player1, Player player2, Result result, ArrayList<String> moves, Date startDate, Date startTime) {
@@ -41,8 +41,8 @@ public class Game implements Serializable{
         this.player2 = player2;
         this.result = result;
         this.score = moves;
-        this.startDate = startDate;
-        this.startTime = startTime;
+        this.startDate =  new Date();
+        this.startTime =  new Date();
     } 
     
     public void addMove(String move) {

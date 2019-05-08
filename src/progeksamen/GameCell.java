@@ -29,6 +29,7 @@ public class GameCell extends ListCell<Game> {
             String text;
             String players = item.getPlayer1().getName() + " VS " + item.getPlayer2().getName() + "\n";
             String time;
+            
             if (item.getGameState()) {
                 time = "Started: " + item.getStartDate() + ", " + item.getStartTime() + "\n";
                 if (item.getResult().getDraw()) {

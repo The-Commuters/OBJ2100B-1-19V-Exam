@@ -63,12 +63,12 @@ public class Data {
                 
                 for (Player player : tournament.getPlayers()) {
                     outStream.newLine();
-                    outStream.write(player.toString());
+                    outStream.write("Player-id: " + player.getId() + "; Playername: "+player.getName()+"; Playerscore: "+player.getScore());
                 }
                 
                 for (Game game : tournament.getGames()) {
                     outStream.newLine();
-//                    outStream.write(game.toString());
+                    outStream.write("Gamestate: " + game.getGameState() + "; Player 1: " + game.getPlayer1()+ "; Player 2: " + game.getPlayer2()+ "; Score:");
                 }
                 outStream.newLine();
             }

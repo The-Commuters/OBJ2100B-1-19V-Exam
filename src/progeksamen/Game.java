@@ -23,6 +23,12 @@ public class Game implements Serializable{
     private Date startTime = new Date();
     
     public Game () {}
+
+    /**
+     *
+     * @param player1
+     * @param player2
+     */
     public Game (Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
@@ -33,6 +39,14 @@ public class Game implements Serializable{
         this.player2 = player2;
     }
 
+    /**
+     *
+     * @param player1
+     * @param player2
+     * @param result
+     * @param startDate
+     * @param startTime
+     */
     public Game (Player player1, Player player2, Result result, Date startDate, Date startTime) {
         this.player1 = player1;
         this.player2 = player2;
@@ -41,6 +55,15 @@ public class Game implements Serializable{
         this.startTime =  startTime;
     } 
     
+    /**
+     *
+     * @param player1
+     * @param player2
+     * @param result
+     * @param moves
+     * @param startDate
+     * @param startTime
+     */
     public Game (Player player1, Player player2, Result result, ArrayList<String> moves, Date startDate, Date startTime) {
         this.player1 = player1;
         this.player2 = player2;
@@ -50,12 +73,19 @@ public class Game implements Serializable{
         this.startTime =  startTime;
     } 
     
+    /**
+     *
+     * @param move
+     */
     public void addMove(String move) {
         this.getScore().add(move);
     }
     
-
- public void handleGameResult(Game game) {
+    /**
+     *
+     * @param game
+     */
+    public void handleGameResult(Game game) {
         
         // The alert is set up and styled.
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

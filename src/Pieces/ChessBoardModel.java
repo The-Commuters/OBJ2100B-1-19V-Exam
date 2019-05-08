@@ -15,10 +15,94 @@ import progeksamen.IllegalMoveException;
 public class ChessBoardModel {
     Piece[][] board = new Piece[8][8]; // x/letter then y/number
     Rook tool = new Rook(true, 0, 0); // exists to acsess the Piece classes
+    private int turn;
+    boolean hwiteMove;
 
     public ChessBoardModel() {
         reset();
         System.out.println("New Board Made");
+        turn = 1;
+        hwiteMove = true;
+    }
+    
+    /*
+        1. e4 e5
+        2. Nf3 Nc6
+        3. Bb5 a6
+    */
+    public static void parseSAN(String command){
+        int piece = determineType(command.charAt(0));
+        // chek for spetial cases from end notations (pawn transforms and 
+        //
+        
+        // logic to determine target cordinates
+        if (piece == -1){
+            // send error til interface
+        }
+        else if (piece == 6){ // if its a pawn
+            // pawn seartching method
+            // chek for promotion
+        }
+        else if (piece == 1) {
+            // king seartch
+        }
+        else if (piece == 2) {
+            // queen
+        }
+        else if (piece == 3) {
+            //Bishop
+        }
+        else if (piece == 4) {
+            // Knight
+        }
+        else if (piece == 5) {
+            // Rook
+        }
+        else {
+            // throw an exeption
+        }
+    }
+    
+    private int determineType(char firstLetter){
+        int type = -1; // -1 being the error signal
+        
+        // ser etter edle brikker
+        switch(firstLetter) {
+            case 'K': type = 1; break;
+            case 'Q': type = 2; break;
+            case 'B': type = 3; break;
+            case 'N': type = 4; break;
+            case 'R': type = 5; break;
+            default: type = -1;
+        }
+        if (type != -1){
+            return type;
+        }
+        
+        // < mindre en, > støre en
+        
+       
+        type = letterToCordinate(firstLetter);
+        if (tool.validNumber(type)){
+            return 6; // bonne
+        }
+        
+        return -1;
+    }
+    
+    private char determineLetter(String command){
+        // hvis der er bonne forandring
+        // hvis det er oppsagt
+    }
+    
+    public void turnDone(){
+        if (hwiteMove){
+            hwiteMove = false;
+        }
+        else{
+            hwiteMove = true;
+            turn++;
+        }
     }
     
     // resets the board

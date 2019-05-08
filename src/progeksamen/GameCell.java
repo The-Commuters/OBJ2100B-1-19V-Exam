@@ -25,5 +25,6 @@ public class GameCell extends ListCell<Game> {
         setGraphic(null);
         setCursor(Cursor.HAND);
         setPadding(new Insets(10, 20, 10, 20));
+        getStyleClass().add("cell");
     }
 }

@@ -63,3 +63,19 @@ and open the template in the editor.
 .list {
     -fx-background-color: transparent;
 }
+
+.cell {
+    -fx-background-color: -fx-color-gray-100;
+}
+
+.cell:hover {
+    -fx-background-color: -fx-color-light;
+}
+
+.cell:pressed {
+    -fx-background-color: -fx-color-gray-200;
+}
+
+.tool {
+    -fx-background-color: transparent;
+}

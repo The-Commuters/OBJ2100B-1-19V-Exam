@@ -3,13 +3,14 @@
  */
 package progeksamen;
 
-import gui.Title;
-import gui.Body;
-import gui.Crumb;
-import gui.Menu;
-import gui.Container;
-import gui.Page;
-import gui.Tools;
+import gui.components.Title;
+import gui.components.Body;
+import gui.components.Crumb;
+import gui.components.Menu;
+import gui.components.Container;
+import gui.components.Page;
+import gui.components.Tools;
+import gui.tools.Back;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,6 +22,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
@@ -39,7 +43,7 @@ import static progeksamen.Admapp.tournamentList;
 public class Spillerapp extends Application {
     
     Container container;
-   
+    
     @Override
     public void start(Stage primaryStage) {
  
@@ -79,8 +83,6 @@ public class Spillerapp extends Application {
         ////////////////////////////////////////////////////////////////
         // Main
         
-       
-        
         // LIST
         ListView<Tournament> list = new ListView<>(Data.getTournaments());
         list.getItems().addAll();
@@ -98,11 +100,12 @@ public class Spillerapp extends Application {
     }
     
     public Page lobby(Tournament tournament) {
-        Body body = new Body(tournament.getName());
+        Body body = new Body("Tournament");
         
         ////////////////////////////////////////////////////////////////
         // Header
-        Title title = new Title(new Text(body.getName()));
+        Title title = new Title(new Text(tournament.getName()));
+        title.addButton(new Back(container));
         Crumb crumb = new Crumb("Tournament", "Lobby");
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);
@@ -113,12 +116,8 @@ public class Spillerapp extends Application {
         ////////////////////////////////////////////////////////////////
         // Main
         
-        // LIST INPUT
-        ObservableList<Game> listItems = FXCollections.<Game>observableArrayList(tournament.getGames());
-        
-        
         // LIST
-        ListView<Game> list = new ListView<>(listItems);
+        ListView<Game> list = new ListView<>(FXCollections.<Game>observableArrayList(tournament.getGames()));
         list.getItems().addAll();
         list.setCellFactory(new GameCellFactory());
         list.setOrientation(Orientation.VERTICAL);
@@ -134,11 +133,12 @@ public class Spillerapp extends Application {
     }
     
     public Page game(Game game) {
-        Body body = new Body("DANIEL VS David");
+        Body body = new Body("Game");
         
         ////////////////////////////////////////////////////////////////
         // Header
         Title title = new Title(new Text(game.getPlayer1().getName() + " VS " + game.getPlayer2().getName()));
+        title.addButton(new Back(container));
         Crumb crumb = new Crumb("Tournament", "Lobby", "Game");
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);

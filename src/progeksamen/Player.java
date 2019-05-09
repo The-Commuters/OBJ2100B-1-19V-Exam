@@ -5,8 +5,9 @@
 package progeksamen;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
-public class Player implements Serializable{
+public class Player implements Serializable, Comparator<Player>, Comparable<Player>{
     
     private int id;
     private String name;
@@ -51,7 +52,7 @@ public class Player implements Serializable{
     }
     
     public String getPlayer(){
-       return this.getId() + this.getName() + this.getScore();
+       return this.getId() + this.getName() + this.getScore()/2;
     }
     
     public void setScore(double score){
@@ -61,7 +62,7 @@ public class Player implements Serializable{
     @Override
     public String toString(){
     
-        return "ID: " + getId() + " Name: " + getName() + " Score: " + getScore(); 
+        return "Name: " + getName() + " Score: " + getScore()/2; 
     }
     
     public String getWinner(Player p) {
@@ -92,4 +93,20 @@ public class Player implements Serializable{
     public double getScore() {
         return score;
     }
+    @Override
+      public int compare(Player p1, Player p2) {
+        if (p1.getScore() < p2.getScore()) return -1;
+        if (p1.getScore() > p2.getScore()) return 1;
+        return 0;
+      }
+    
+      
+      
+    @Override
+      public int compareTo(Player p1) {
+        int comparePlayer =  (int) p1.score;
+
+        // This sorts them in a decending order 
+        return (int) (comparePlayer - this.getScore());
+      }
 }

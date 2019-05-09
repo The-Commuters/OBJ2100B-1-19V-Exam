@@ -25,116 +25,20 @@ public class Result implements Serializable {
         this.winner = winner;
         this.loser = loser;
         this.draw = draw;
-        
-        // The method that 
-        //addPointsToPlayers();
     }
-    
-    /**
-     * The game object is sent here after it is clicked on in the 
-     * Game list, in this method the administrator have to choose
-     * if the game ended in a draw or a win, and if win, then who
-     * won.
-     * @param game 
-     */
-    public void handleGameResult(Game game) {
-        
-        // The alert is set up and styled.
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Did someone win, or did the game end in a draw?");
-        alert.setHeaderText(null);
-        
-        // The buttons that is used is created here.
-        ButtonType playerBtnOne = new ButtonType("Draw");
-        ButtonType playerBtnTwo = new ButtonType("Choose a winner"); 
-        ButtonType cancelBtn = new ButtonType("Cancel"); 
-        alert.getButtonTypes().setAll(playerBtnOne, playerBtnTwo, cancelBtn);
-     
-        // If the game ended in a draw or not.
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == playerBtnOne){
-            alert("Title.", "A draw have successfully been registered between the two players, and each of them have been rewarded half a point! ");
-            Result resultWin = new Result(game.getPlayer1(), game.getPlayer2(), true);
-            game.setResult(resultWin);
-            System.out.println(game.getResult());
-        } else if (result.get() == playerBtnTwo) {
-            handleChooseWinner(game);
-        } else if (result.get() == cancelBtn) {
-        }
-    }
-    
-    /**
-     * This is called in handleGameResult() if the player choose the
-     * option where one of the players won. Here the administrator 
-     * have to choose which one.
-     * @param game 
-     */
-    public void handleChooseWinner(Game game) {
-    
-        // Creates the alert that makes you choose who won and styles it.
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Which of the two players won the game?");
-        alert.setGraphic(null);
-        alert.setHeaderText(null);
-        
-        // Adds the buttons to the alert.
-        ButtonType playerBtnOne = new ButtonType(game.getPlayer1().getName());
-        ButtonType playerBtnTwo = new ButtonType(game.getPlayer2().getName());
-        ButtonType cancelBtn = new ButtonType("Cancel"); 
 
-        alert.getButtonTypes().setAll(playerBtnOne, playerBtnTwo, cancelBtn);
-        
-        // finds out which of the users that have been choosen.
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == playerBtnOne){
-            
-            Result resultWin = new Result(game.getPlayer1(), game.getPlayer2(), false);
-            game.setResult(resultWin);
-            alert("Success", "The player " + game.getPlayer1().getName() + " have been choosen as the winner, and have recieved a point.");
-            System.out.println(game.getResult().winner);  
-            
-        } else if (result.get() == playerBtnTwo) {  
-            
-            Result resultWin = new Result(game.getPlayer2(), game.getPlayer1(), false);
-            game.setResult(resultWin);
-            alert("Success","The player " + game.getPlayer2().getName() + " have been choosen as the winner, and have recieved a point.");
-            System.out.println(game.getResult().winner);
-            
-        } else if (result.get() == cancelBtn) {
-        }
-    }
-    
-    /**
-     * The alert method is used to show simple alerts of the type
-     * information, it recieves teh title and message as parameters
-     * and is used when handling the insertion of results.
-     * @param title
-     * @param message 
-     */
-    public void alert( String title, String message) {
-        
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-
-        // alert.setHeaderText("Results:");
-        alert.setContentText(message);
-        alert.setHeaderText(null);
-        alert.setGraphic(null);
-        alert.showAndWait();
-
-    }
     /**
      * This is called upon every time a result-object is created to be
      * inserted into the result-list. It will add the earned points for
      * victories and draws to the players that have earned them.
      */
-    /*public void addPointsToPlayers (Game game) {
+    public void addPointsToPlayers (Game game) {
         
         // Collects the public static list of players.
-        ArrayList<Player> resultPlayerList = ;
+        //ArrayList<Player> resultPlayerList = ;
         
         // Goes trough all of the players in the playerlist and gi
-        resultPlayerList.forEach((player) -> {
+        /*resultPlayerList.forEach((player) -> {
             if (this.draw) {
                 if (player.getName() == this.winner.getName() || player.getName() == this.loser.getName()) {
                     
@@ -147,10 +51,8 @@ public class Result implements Serializable {
                     player.setScore(newScore);
                 }
             }
-        });
-        
-       
-    }*/
+        });*/
+    }
     
     @Override
     public String toString() {

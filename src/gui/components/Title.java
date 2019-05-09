@@ -7,6 +7,7 @@ package gui.components;
 
 import gui.tools.Back;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -36,7 +37,8 @@ public final class Title extends HBox {
         
         setPadding(new Insets(paddingVertical, paddingHorizontal, paddingVertical, paddingHorizontal));
         getStyleClass().add("title-pane");
-        title.getStyleClass().add("title");  
+        title.getStyleClass().add("title");
+        setAlignment(Pos.CENTER_LEFT);
         
         update();
     }

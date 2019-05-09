@@ -14,6 +14,7 @@ import gui.components.Container;
 import gui.components.Page;
 import gui.components.Tools;
 import gui.tools.Back;
+import gui.tools.TextDialog;
 import java.util.ArrayList;
 import java.util.Optional;
 import javafx.application.Application;
@@ -27,6 +28,8 @@ import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -85,36 +88,6 @@ public class AdmappNyNy extends Application {
         primaryStage.show();
         
     }
-    /**
-     * This method will take in the 3 Strings from 
-     * the method caller and use them in the dialog 
-     * that will be shown to the use
-     * @param HeaderTxt
-     * @param tittle
-     * @param warning
-     * @return the users input in to the dialog
-     */
-    public String TextDialog(String HeaderTxt, String tittle, String warning) {
-
-        TextInputDialog textin = new TextInputDialog();
-                textin.setGraphic(null);
-        textin.setHeaderText(null);
-        
-        textin.initStyle(StageStyle.UTILITY);
-        textin.setHeaderText(HeaderTxt);
-        textin.setTitle(HeaderTxt);
-        Optional<String> result = textin.showAndWait();
-        String text ="";
-        if (result.isPresent()) {
-            while (result.get().isEmpty()){
-                Alert alert = new Alert(Alert.AlertType.WARNING, warning);
-                alert.showAndWait();
-                result = textin.showAndWait();
-            }
-            text = result.get();
-        }
-        return text;
-    }
     
     /**
      * The uppermost layer of the pages, the tournament is where one
@@ -155,13 +128,16 @@ public class AdmappNyNy extends Application {
 
         // The button that adds a new tournament to the tournaments-list
         newTournBtn.setOnAction((ActionEvent event) -> {
-            String tournamentNameIn = TextDialog("Enter tournament name", "Tournament Name", "Name can not be empty");
+            String tournamentNameIn = new TextDialog("Enter tournament name", "Tournament Name", "Name can not be empty").toString();
+            
+            if (!tournamentNameIn.isEmpty()){
             Tournament newTournament = new Tournament(tournamentNameIn);
             Data.tournaments.add(newTournament);
             ObservableList<Tournament> newTournaments = FXCollections.<Tournament>observableArrayList(tournaments);
             list.setItems(newTournaments);
-            chooseTournament(newTournament,newTournament);
+             chooseTournament(newTournament,newTournament);
             newUsers.fire();
+            }
         });
         
         // Event that saves the current list of users.

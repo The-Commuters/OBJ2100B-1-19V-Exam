@@ -33,6 +33,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -80,6 +81,7 @@ public class AdmappNyNy extends Application {
         primaryStage.setScene(scene);
         primaryStage.setMinWidth(container.getMinWidth());
         primaryStage.setMinHeight(container.getMinHeight());
+        primaryStage.getIcons().add(new Image("gui/images/king-white.png"));
         primaryStage.show();
         
     }

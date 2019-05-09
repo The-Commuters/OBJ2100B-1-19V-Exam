@@ -1,0 +1,30 @@
+
+-------------------------------------- Team Nado: Vers 2 ---------------------------------------------
+Player-id: 0; Playername: Harry; Playerscore: 0.0
+Player-id: 0; Playername: Ron; Playerscore: 0.0
+Player-id: 0; Playername: Hermoine; Playerscore: 0.0
+Gamestate: false; Player 1: Name: Ron Score: 0.0; Player 2: Name: Hermoine Score: 0.0; Score:
+Gamestate: false; Player 1: Name: Hermoine Score: 0.0; Player 2: Name: Ron Score: 0.0; Score:
+Gamestate: false; Player 1: Name: Harry Score: 0.0; Player 2: Name: Ron Score: 0.0; Score:
+
+-------------------------------------- Team Nado: Vers 3 ---------------------------------------------
+Player-id: 0; Playername: Harry; Playerscore: 0.0
+Player-id: 0; Playername: Ron; Playerscore: 0.0
+Player-id: 0; Playername: Hermoine; Playerscore: 0.0
+Gamestate: false; Player 1: Name: Ron Score: 0.0; Player 2: Name: Hermoine Score: 0.0; Score:
+Gamestate: false; Player 1: Name: Hermoine Score: 0.0; Player 2: Name: Ron Score: 0.0; Score:
+Gamestate: false; Player 1: Name: Harry Score: 0.0; Player 2: Name: Ron Score: 0.0; Score:
+
+-------------------------------------- Team Nado: Vers 4 ---------------------------------------------
+Player-id: 0; Playername: Harry; Playerscore: 0.0
+Player-id: 0; Playername: Ron; Playerscore: 0.0
+Player-id: 0; Playername: Hermoine; Playerscore: 0.0
+Gamestate: false; Player 1: Name: Ron Score: 0.0; Player 2: Name: Hermoine Score: 0.0; Score:
+Gamestate: false; Player 1: Name: Hermoine Score: 0.0; Player 2: Name: Ron Score: 0.0; Score:
+Gamestate: false; Player 1: Name: Harry Score: 0.0; Player 2: Name: Ron Score: 0.0; Score:
+
+-------------------------------------- Hehhehe ---------------------------------------------
+Player-id: 0; Playername: Hehhehehee; Playerscore: 0.0
+Player-id: 0; Playername: Hehehhe; Playerscore: 0.0
+
+--------------------------------------  ---------------------------------------------

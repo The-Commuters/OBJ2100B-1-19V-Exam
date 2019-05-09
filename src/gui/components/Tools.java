@@ -16,5 +16,7 @@ public class Tools extends HBox {
     // Constructors
     public Tools() {
         super();
+        
+        this.setSpacing(8);
     }
 }

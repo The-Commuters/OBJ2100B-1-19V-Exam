@@ -25,7 +25,7 @@ public class Game implements Serializable{
     public Game () {}
 
     /**
-     *
+     * Constructor
      * @param player1
      * @param player2
      */
@@ -34,13 +34,19 @@ public class Game implements Serializable{
         this.player2 = player2;
     }
     
+    /**
+     * Constructor
+     * @param player1
+     * @param player2
+     * @param result 
+     */
     public Game (Player player1, Player player2, Result result) {
         this.player1 = player1;
         this.player2 = player2;
     }
 
     /**
-     *
+     * Constructor
      * @param player1
      * @param player2
      * @param result
@@ -56,7 +62,7 @@ public class Game implements Serializable{
     } 
     
     /**
-     *
+     * Constructor
      * @param player1
      * @param player2
      * @param result
@@ -74,7 +80,7 @@ public class Game implements Serializable{
     } 
     
     /**
-     *
+     * Adds move into the score.
      * @param move
      */
     public void addMove(String move) {
@@ -212,9 +218,7 @@ public class Game implements Serializable{
         }
     }
         
-
-    
-     /**
+    /**
      * The alert method is used to show simple alerts of the type
      * information, it recieves teh title and message as parameters
      * and is used when handling the insertion of results.

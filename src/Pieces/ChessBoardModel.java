@@ -90,13 +90,7 @@ public class ChessBoardModel {
         return -1;
     }
     
-    private char determineLetter(String command){
-        return 0;
-        // hvis der er bonne forandring
-        // hvis det er oppsagt
-        return 'c';
-    }
-    
+ 
     public void turnDone(){
         if (hwiteMove){
             hwiteMove = false;

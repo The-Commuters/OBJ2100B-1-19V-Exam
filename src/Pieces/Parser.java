@@ -28,34 +28,31 @@ public class Parser {
     
     
     //Nf3
-    private static Move parseSAN(String oneMove){
+    private static Move parseLAN(String oneMove){
         
         //code here
-        int piece = determineType(oneMove.charAt(0));
+        
         Map position = determinePromotion(oneMove);
         boolean drawIsOfferd = determineDrawOffer(oneMove);
         boolean isCaptureing = oneMove.contains("x");
         boolean isThreateningChekMate = oneMove.contains("#");
         boolean isThreateningChek = oneMove.contains("+");
+        Map castle = determineCastle(oneMove);
+        Map result = determineResult(oneMove);
         
+        Point start = determineStartLAN(oneMove);
+        Point stop = determineStopLAN(oneMove);
         
-        //FIKTIVE DATA
-        Map castle = new HashMap();
-        castle.put(false, CastleType.NO_CASTLE);
-        
-        Map result = new HashMap();
-        result.put(false, Result.NO_RESULT);
-        
-        return new Move(new Point(1, 0), new Point(2, 3), isThreateningChek, isThreateningChekMate, isCaptureing, drawIsOfferd, position, castle, result); 
+        return new Move(start, stop, isThreateningChek, isThreateningChekMate, isCaptureing, drawIsOfferd, position, castle, result); 
     }
     
 
     // Nf3 Nc6
-    public static Move[] parseSANTurn(String move){
+    public static Move[] parseLANTurn(String move){
         ArrayList<Move> parsedMoves = new ArrayList<>();
         
         for (String oneMove: move.split(" ")){
-            parsedMoves.add(parseSAN(oneMove));
+            parsedMoves.add(parseLAN(oneMove));
         }
         
         Move[] moves = new Move[parsedMoves.size()];
@@ -63,22 +60,112 @@ public class Parser {
         return moves; // move  = 
     }
     
-    
-    /*
-         e4 e5
+     /*    e4 e5
          Nf3 Nc6
-         Bb5 a6
-    */
-    public static Move[] parseSANArray(String[] score){
+         Bb5 a6*/    
+    public static Move[] parseLANArray(String[] score){
          ArrayList<Move> parsedMoves = new ArrayList<>();
         
         for (String move: score){
-            parsedMoves.addAll(new ArrayList<>(Arrays.asList(parseSANTurn(move))));
+            parsedMoves.addAll(new ArrayList<>(Arrays.asList(parseLANTurn(move))));
         }
         
         Move[] moves = new Move[parsedMoves.size()];
         moves = parsedMoves.toArray(moves);
         return moves;
+    }
+    
+    private static Point determineStartLAN(String oneMove){
+        int x = -1, y = -1;
+        int piece = determineType(oneMove.charAt(0));
+        if (piece == 6){
+            x = letterToCordinate(oneMove.charAt(0));
+            y = numberToCordinate(oneMove.charAt(1));
+        }// < mindre en, > støre en
+        else if (piece >= 1 && piece <= 5){
+            x = letterToCordinate(oneMove.charAt(1));
+            y = numberToCordinate(oneMove.charAt(2));
+        }
+        
+        
+        return new Point(x, y);
+    }
+    
+    private static Point determineStopLAN(String oneMove){
+        int x = -1, y = -1;
+        
+        //adjust for the potential lenght of the previus message
+        int adjustingPiece = determineType(oneMove.charAt(0));
+        int stringLenghtModifier = 3; // 2 is the with of a pawns command and 1 more for the -
+        if (adjustingPiece >= 1 && adjustingPiece <= 5){
+            stringLenghtModifier++; // all other peieces are 3 wide
+        }
+        
+        
+        int piece = determineType(oneMove.charAt(0+stringLenghtModifier));
+        if (piece == 6){
+            x = letterToCordinate(oneMove.charAt(0+stringLenghtModifier));
+            y = numberToCordinate(oneMove.charAt(1+stringLenghtModifier));
+        }// < mindre en, > støre en
+        else if (piece >= 1 && piece <= 5){
+            x = letterToCordinate(oneMove.charAt(1+stringLenghtModifier));
+            y = numberToCordinate(oneMove.charAt(2+stringLenghtModifier));
+        }
+        
+        
+        return new Point(x, y);
+    }
+    
+    private static Point determineStopSAN(String oneMove){
+        int x = -1, y = -1;
+        int piece = determineType(oneMove.charAt(0));
+        if (piece == 6){
+            x = letterToCordinate(oneMove.charAt(0));
+            y = numberToCordinate(oneMove.charAt(1));
+        }// < mindre en, > støre en
+        else if (piece >= 1 && piece <= 5){
+            x = letterToCordinate(oneMove.charAt(1));
+            y = numberToCordinate(oneMove.charAt(2));
+        }
+        
+        
+        return new Point(x, y);
+    }
+    
+    private static Map determineResult(String oneMove){
+        Map result = new HashMap();
+        if (oneMove.contains("1–0")){
+            result.put(true, Result.WHITE_VICTORY);
+        }
+        else if(oneMove.contains("0–1")){
+            result.put(true, Result.BLACK_VICTORY);
+        }
+        else if(oneMove.contains("½–½")){
+            result.put(true, Result.DRAW);
+        }
+        else if(oneMove.contains("0.5–0.5")){
+            result.put(true, Result.DRAW);
+        }
+        else{
+            result.put(false, Result.NO_RESULT);
+        }
+        
+        
+        return result;
+    }
+    // KING_SIDE_CASTLE
+    private static Map determineCastle(String oneMove){
+        Map castle = new HashMap();
+        if (oneMove.contains("0-0")){
+            castle.put(true, CastleType.QUEEN_SIDE_CASTLE);
+        }
+        else if (oneMove.contains("0-0-0")){
+            castle.put(true, CastleType.KING_SIDE_CASTLE);
+        }
+        else{
+            castle.put(false, CastleType.NO_CASTLE);
+        }
+        return castle;
     }
     
     private static Map determinePromotion(String oneMove){
@@ -139,8 +226,7 @@ public class Parser {
         }
         
         // < mindre en, > støre en
-        
-       
+        // turn the letter into an acsepted cordinate
         type = letterToCordinate(firstLetter);
         if (validNumber(type)){
             return 6; // bonne
@@ -150,15 +236,18 @@ public class Parser {
     }
     
     private static int letterToCordinate(char letter){
-        int cordinate = (int)letter;
-        System.out.println(cordinate);
+        int cordinate = (int)letter; // turn teh char into an int, a is 97
+        //System.out.println(cordinate);
         
-        if (cordinate > 0 || cordinate < LETTERS.length-1){
+        cordinate = cordinate - 97; // not a, the lowest number shud be 0 and h the highest number 7
+        
+        //if the letter 
+        if (cordinate > 0 || cordinate < LETTERS.length-1){ // make shure they are within those boundries
             return -1;
         }
         
         // a is represented buy the number 97
-        return (cordinate - 97);
+        return cordinate;
     }
     
     private static int numberToCordinate(int number){

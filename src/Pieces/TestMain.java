@@ -5,6 +5,7 @@
  */
 package Pieces;
 
+import static Pieces.Piece.LETTERS;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import progeksamen.*;
+import Pieces.*;
 
 /**
  *
@@ -25,7 +27,7 @@ public class TestMain extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        /*
+        
         Button btn = new Button();
         btn.setText("Say 'Hello World'");
         btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -44,20 +46,20 @@ public class TestMain extends Application {
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         primaryStage.show();
-        */
+        
        
         
-        String[] testSetSAN = {"e4 e5", "Nf3 Nc6", "Bb5 a6"};
-        String[] testSetLAN = {"e2-e4 e7-e5", "Bf1-c4", "Qd1-c6"};
-        Move[] m = Parser.parseLANArray(testSetLAN);
-        System.out.println("starting printout");
-        for (Move move: m){
-            System.out.println("" + move.toString());
-            System.out.println("nekst jolly one!");
-        }
         
+        ChessBoardModel m = new ChessBoardModel();
+        m.move(0, 7, 0, 2);
+        
+        
+   
+        //System.out.println(testData);
         
     }
+    
+    
 
     /**
      * @param args the command line arguments

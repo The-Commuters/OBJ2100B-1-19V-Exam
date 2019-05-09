@@ -43,7 +43,7 @@ public class Parser {
         Point start = determineStartLAN(oneMove);
         Point stop = determineStopLAN(oneMove);
         
-        System.out.println("parseLAN is being called!");
+        //System.out.println("parseLAN is being called!");
         
         return new Move(start, stop, isThreateningChek, isThreateningChekMate, isCaptureing, drawIsOfferd, position, castle, result); 
     }
@@ -53,7 +53,7 @@ public class Parser {
     public static Move[] parseLANTurn(String move){
         ArrayList<Move> parsedMoves = new ArrayList<>();
         
-        System.out.println("parseLANTurn is being called!");
+        //System.out.println("parseLANTurn is being called!");
         
         for (String oneMove: move.split(" ")){
             parsedMoves.add(parseLAN(oneMove));
@@ -70,7 +70,7 @@ public class Parser {
     public static Move[] parseLANArray(String[] score){
          ArrayList<Move> parsedMoves = new ArrayList<>();
          
-        System.out.println("parseLANArray is being called!");
+        //System.out.println("parseLANArray is being called!");
         
         for (String move: score){
             parsedMoves.addAll(new ArrayList<>(Arrays.asList(parseLANTurn(move))));
@@ -84,16 +84,16 @@ public class Parser {
     private static Point determineStartLAN(String oneMove){
         int x = -1, y = -1;
         int piece = determineType(oneMove.charAt(0));
+        
         if (piece == 6){
-            x = letterToCordinate(oneMove.charAt(0));
-            y = numberToCordinate(oneMove.charAt(1));
+            x = charakterToCordinate(oneMove.charAt(0));
+            y = charakterToCordinate(oneMove.charAt(1));
         }// < mindre en, > støre en
         else if (piece >= 1 && piece <= 5){
-            x = letterToCordinate(oneMove.charAt(1));
-            y = numberToCordinate(oneMove.charAt(2));
+            x = charakterToCordinate(oneMove.charAt(1));
+            y = charakterToCordinate(oneMove.charAt(2));
         }
-        
-        
+                
         return new Point(x, y);
     }
     
@@ -110,12 +110,12 @@ public class Parser {
         
         int piece = determineType(oneMove.charAt(0+stringLenghtModifier));
         if (piece == 6){
-            x = letterToCordinate(oneMove.charAt(0+stringLenghtModifier));
-            y = numberToCordinate(oneMove.charAt(1+stringLenghtModifier));
+            x = charakterToCordinate(oneMove.charAt(0+stringLenghtModifier));
+            y = charakterToCordinate(oneMove.charAt(1+stringLenghtModifier));
         }// < mindre en, > støre en
         else if (piece >= 1 && piece <= 5){
-            x = letterToCordinate(oneMove.charAt(1+stringLenghtModifier));
-            y = numberToCordinate(oneMove.charAt(2+stringLenghtModifier));
+            x = charakterToCordinate(oneMove.charAt(1+stringLenghtModifier));
+            y = charakterToCordinate(oneMove.charAt(2+stringLenghtModifier));
         }
         
         
@@ -218,6 +218,8 @@ public class Parser {
     private static int determineType(char firstLetter){
         int type = -1; // -1 being the error signal
         
+        //String testData = "firstLetter: " + firstLetter;
+        
         // ser etter edle brikker
         switch(firstLetter) {
             case 'K': type = 1; break;
@@ -234,6 +236,9 @@ public class Parser {
         // < mindre en, > støre en
         // turn the letter into an acsepted cordinate
         type = letterToCordinate(firstLetter);
+        
+        //testData += " in-bokstav som kommer ut av letterToCordinate() " + type;
+        //System.out.println(testData);
         if (validNumber(type)){
             return 6; // bonne
         }
@@ -243,27 +248,70 @@ public class Parser {
     
     private static int letterToCordinate(char letter){
         int cordinate = (int)letter; // turn teh char into an int, a is 97
-        System.out.println("number made in parser.letterToCordinate " + cordinate);
         
+        // String testData = "letterToCordinate turns " + letter + " into " + cordinate;
         cordinate = cordinate - 97; // not a, the lowest number shud be 0 and h the highest number 7
         
+        // < mindre en, > støre en
         //if the letter 
-        if (cordinate > 0 || cordinate < LETTERS.length-1){ // make shure they are within those boundries
+        if (cordinate < 0 || cordinate > LETTERS.length-1){ // make shure they are within those boundries
+            // testData += " subtrakt 97 to get " + cordinate + " it does not get acsepted as from 0 to 7";
+            // System.out.println(testData);
             return -1;
         }
-        
+        // testData += " subtrakt 97 to get " + cordinate + " it gets acsepted";
+        // System.out.println(testData);
         // a is represented buy the number 97
         return cordinate;
     }
     
+    private static int charakterToCordinate(char charakter){
+        int cordinate = -1;
+        switch (charakter){
+            case 'A': cordinate = 0; break;
+            case 'B': cordinate = 1; break;
+            case 'C': cordinate = 2; break;
+            case 'D': cordinate = 3; break;
+            case 'E': cordinate = 4; break;
+            case 'F': cordinate = 5; break;
+            case 'G': cordinate = 6; break;
+            case 'H': cordinate = 7; break;
+            case 'a': cordinate = 0; break;
+            case 'b': cordinate = 1; break;
+            case 'c': cordinate = 2; break;
+            case 'd': cordinate = 3; break;
+            case 'e': cordinate = 4; break;
+            case 'f': cordinate = 5; break;
+            case 'g': cordinate = 6; break;
+            case 'h': cordinate = 7; break;
+            case '1': cordinate = 0; break;
+            case '2': cordinate = 1; break;
+            case '3': cordinate = 2; break;
+            case '4': cordinate = 3; break;
+            case '5': cordinate = 4; break;
+            case '6': cordinate = 5; break;
+            case '7': cordinate = 6; break;
+            case '8': cordinate = 7; break;
+            default: cordinate = -1;
+        }
+        return cordinate;
+    }
+    
+    
     private static int numberToCordinate(int number){
         
-        System.out.println("number being turned into a cordinate" + number);
         
-        if (number > 0 || number < LETTERS.length-1){
+        String testData = "numberToCordinate kordinat: " + number;
+
+        // < mindre en, > støre en
+        
+        if (number < 0 || number > LETTERS.length-1){
             return -1;
         }
+        
         int cordinate = (number - LETTERS.length) * -1;
+        testData += " blir til kordinaten: " + cordinate;
+        System.out.println(testData);
         // a is represented buy the number 97
         return cordinate;
     }

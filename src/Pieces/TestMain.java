@@ -5,6 +5,7 @@
  */
 package Pieces;
 
+import static Pieces.Piece.LETTERS;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class TestMain extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        /*
+        
         Button btn = new Button();
         btn.setText("Say 'Hello World'");
         btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -44,20 +45,31 @@ public class TestMain extends Application {
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         primaryStage.show();
-        */
+        
        
         
         String[] testSetSAN = {"e4 e5", "Nf3 Nc6", "Bb5 a6"};
-        String[] testSetLAN = {"e2-e4 e7-e5", "Bf1-c4", "Qd1-c6"};
-        Move[] m = Parser.parseLANArray(testSetLAN);
-        System.out.println("starting printout");
-        for (Move move: m){
-            System.out.println("" + move.toString());
-            System.out.println("nekst jolly one!");
-        }
+        String[] testSet = {"e2-e4 e7-e5", "Bf1-c4 Bf8-c5", "Qd1-f3 Nb8-c6"};
+        Move[] m = Parser.parseLANArray(testSet);
+        System.out.println("starting printout" + m[0].toString());
+        System.out.println(m[1].toString());
+        System.out.println(m[2].toString());
         
+        
+        /*
+        String testData = "3 becomes " + numberToCordinate(3);
+        for (int x = 1; x < 9; x++){
+            testData += " " +numberToCordinate(x);
+        }
+        */
+        
+        
+   
+        //System.out.println(testData);
         
     }
+    
+    
 
     /**
      * @param args the command line arguments

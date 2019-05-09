@@ -15,6 +15,7 @@ import gui.components.Container;
 import gui.components.Page;
 import gui.components.Tools;
 import gui.tools.Back;
+import gui.tools.TextDialog;
 import java.util.ArrayList;
 import java.util.Optional;
 import javafx.application.Application;
@@ -87,36 +88,38 @@ public class Admapp extends Application {
         primaryStage.show();
         
     }
-    /**
-     * This method will take in the 3 Strings from 
-     * the method caller and use them in the dialog 
-     * that will be shown to the use
-     * @param HeaderTxt
-     * @param tittle
-     * @param warning
-     * @return the users input in to the dialog
-     */
-    public String TextDialog(String HeaderTxt, String tittle, String warning) {
-
-        TextInputDialog textin = new TextInputDialog();
-                textin.setGraphic(null);
-        textin.setHeaderText(null);
-        
-        textin.initStyle(StageStyle.UTILITY);
-        textin.setHeaderText(HeaderTxt);
-        textin.setTitle(HeaderTxt);
-        Optional<String> result = textin.showAndWait();
-        String text ="";
-        if (result.isPresent()) {
-            while (result.get().isEmpty()){
-                Alert alert = new Alert(Alert.AlertType.WARNING, warning);
-                alert.showAndWait();
-                result = textin.showAndWait();
-            }
-            text = result.get();
-        }
-        return text;
-    }
+//    /**
+//     * This method will take in the 3 Strings from 
+//     * the method caller and use them in the dialog 
+//     * that will be shown to the use
+//     * @param HeaderTxt
+//     * @param tittle
+//     * @param warning
+//     * @return the users input in to the dialog
+//     */
+//    public String TextDialog(String HeaderTxt, String tittle, String warning) {
+//
+//        TextInputDialog textin = new TextInputDialog();
+//                textin.setGraphic(null);
+//        textin.setHeaderText(null);
+//        
+//        textin.initStyle(StageStyle.UTILITY);
+//        textin.setHeaderText(HeaderTxt);
+//        textin.setTitle(HeaderTxt);
+//        Optional<String> result = textin.showAndWait();
+//        String text ="";
+//        if (result.isPresent()) {
+//            while (result.get().isEmpty()){
+//                Alert alert = new Alert(Alert.AlertType.WARNING, warning);
+//                alert.showAndWait();
+//                result = textin.showAndWait();
+//            }
+//            text = result.get();
+//        }
+//        return text;
+//    }
+//    
+    
     
     /**
      * The uppermost layer of the pages, the tournament is where one
@@ -155,9 +158,9 @@ public class Admapp extends Application {
         list.getSelectionModel().selectedItemProperty().addListener(this::chooseTournament);
         list.getStyleClass().add("list");
 
-        // The button that adds a new tournament to the tournaments-list
+        // The button that adds a new tournasment to the tournaments-list
         newTournBtn.setOnAction((ActionEvent event) -> {
-            String tournamentNameIn = TextDialog("Enter tournament name", "Tournament Name", "Name can not be empty");
+            String tournamentNameIn = new TextDialog("Enter tournament name", "Tournament Name", "Name can not be empty").toString();
             Tournament newTournament = new Tournament(tournamentNameIn);
             Data.tournaments.add(newTournament);
             ObservableList<Tournament> newTournaments = FXCollections.<Tournament>observableArrayList(tournaments);

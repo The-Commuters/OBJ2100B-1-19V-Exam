@@ -38,6 +38,7 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -71,10 +72,12 @@ import static progeksamen.Data.tournaments;
 public class AdmappNyNy extends Application {
     
     Container container;
-            Player playerName1;
-          Player playerName2;
-     Dialog dialog;
-           Button newUsers = new Button();
+    Player playerName1;
+    Player playerName2;
+    Dialog dialog;
+    Button newUsers = new Button();
+    ComboBox<Player> playerMenuPlayer1 = new ComboBox<>();
+    ComboBox<Player> playerMenuPlayer2 = new ComboBox<>();
     
     @Override
     public void start(Stage primaryStage) {
@@ -178,8 +181,6 @@ public class AdmappNyNy extends Application {
         list.setFocusTraversable(false);
         list.getSelectionModel().selectedItemProperty().addListener(this::chooseTournament);
         list.getStyleClass().add("list");
-        
-      
 
         // The button that adds a new tournament to the tournaments-list
         newTournBtn.setOnAction((ActionEvent event) -> {
@@ -214,21 +215,10 @@ public class AdmappNyNy extends Application {
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);
         
-        Button test = new Button("test");
         Button leaderBoardBtn = new Button("Show Leaderboard");
         
         // Button for the new player-feature
         newUsers.setText("New Player");
- 
-        // The comboboxes where the admin chooses the to players.
-        ComboBox<Player> playerMenuPlayer1 = new ComboBox<>();
-        ComboBox<Player> playerMenuPlayer2 = new ComboBox<>();
-        
-        // Sets the max and min width of the player 
-        playerMenuPlayer1.setMaxWidth(130);
-        playerMenuPlayer2.setMaxWidth(130);
-        playerMenuPlayer1.setMinWidth(130);
-        playerMenuPlayer2.setMinWidth(130);
         
         // This is the textfield used to search the tournament for games.
         TextField searchField = new TextField();
@@ -237,7 +227,7 @@ public class AdmappNyNy extends Application {
         // Button that creates a new game-object.
         Button newGameBtn = new Button("New game");
       
-        tools.getChildren().addAll(leaderBoardBtn, playerMenuPlayer1, playerMenuPlayer2, newGameBtn, newUsers, searchField);
+        tools.getChildren().addAll(leaderBoardBtn, newGameBtn, newUsers, searchField);
         BorderPane header = new BorderPane(menu, title, null , null, null);
         body.setTop(header);
         
@@ -253,10 +243,16 @@ public class AdmappNyNy extends Application {
         list.getSelectionModel().selectedItemProperty().addListener(this::chooseGame);
         list.getStyleClass().add("list");
         
-        // LISTENERs
-        //The dialogpane that pops up after the name for a new tournament have been written in.
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        // LISTENER FOR THE ADDING OF USERS
+        // The dialogpane that pops up after the name for a new tournament have been written in.
         newUsers.setOnAction((ActionEvent event) -> {
             final Stage dialogStage = new Stage();
+            dialogStage.setWidth(600);
+            
+            // Adds a title and crumb to the dialogpane.
+            Title titleUserCreation = new Title(new Text("Add Users"));
+            Crumb crumbUserCreation = new Crumb("Tournament", "Lobby", "Game");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             TextField newUserField = new TextField();
             Button addUser = new Button("Add a new user");
@@ -268,14 +264,13 @@ public class AdmappNyNy extends Application {
             playerList.setOrientation(Orientation.VERTICAL);
             playerList.setFocusTraversable(false);
             playerList.getStyleClass().add("list");
-            HBox hBox = new HBox(playerList);
             
             // Event that fire when the addUser-button is pressed.
             addUser.setOnAction((ActionEvent e) -> {
                 Player player = new Player(newUserField.getText());
                 Data.tournaments.get(Data.tournaments.size() - 1).getPlayers().add(player);
                 Tournament newTournament = Data.tournaments.get(Data.tournaments.size() - 1);
-                ObservableList<Player> updatedPlayerlist = FXCollections.<Player>observableArrayList(newTournament.getPlayers());                //ListView<Tournament> list = new ListView<>(Data.getTournaments());
+                ObservableList<Player> updatedPlayerlist = FXCollections.<Player>observableArrayList(newTournament.getPlayers());
                 playerList.setItems(updatedPlayerlist);
                 playerMenuPlayer1.setItems(updatedPlayerlist);
                 playerMenuPlayer2.setItems(updatedPlayerlist);
@@ -288,24 +283,78 @@ public class AdmappNyNy extends Application {
             
             // Adds the elements to the new page.
             VBox vBox = new VBox();
-            vBox.getChildren().addAll(newUserField, addUser, playerList, done);
+            vBox.getChildren().addAll(titleUserCreation, crumbUserCreation, newUserField, addUser, playerList, done);
             dialogStage.setScene(new Scene(vBox));
             dialogStage.show();
         });
         
-         ObservableList<Player> playerLists = FXCollections.<Player>observableArrayList(tournament.getPlayers());
-         playerMenuPlayer1.setItems(playerLists);
-         playerMenuPlayer2.setItems(playerLists);
-         
-        playerMenuPlayer1.setOnAction(e -> {
-               playerName1 = playerMenuPlayer1.getSelectionModel().getSelectedItem();
-               System.out.println(playerName1);
-        });
+        //////////////////////////////////////////////////////////////////////////////////////////////
+            
+        // LIST INPUT FOR GAMELIST
+        ObservableList<Game> listGameItems = FXCollections.<Game>observableArrayList(tournament.getGames());
         
-        playerMenuPlayer2.setOnAction(e -> {
-               playerName2 = playerMenuPlayer2.getSelectionModel().getSelectedItem();
-               System.out.println(playerName2);
+        // LIST FOR GAMELIST
+        ListView<Game> gameList = new ListView<>(listGameItems);
+        gameList.getItems().addAll();
+        gameList.setCellFactory(new GameCellFactory());
+        gameList.setOrientation(Orientation.VERTICAL);
+        gameList.setFocusTraversable(false);
+        gameList.getSelectionModel().selectedItemProperty().addListener(this::chooseGame);
+        gameList.getStyleClass().add("list");
+        
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        // LISTENER FOR THE ADDING OF GAMES
+        // 
+        newGameBtn.setOnAction((ActionEvent event) -> {
+            final Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            
+            // The comboboxes where the admin chooses the to players.
+            Button addGame = new Button("Create Game");
+            Label addGameLabel = new Label("Choose two players");
+
+            // Sets the max and min width of the player 
+            playerMenuPlayer1.setMaxWidth(200);
+            playerMenuPlayer2.setMaxWidth(200);
+            playerMenuPlayer1.setMinWidth(300);
+            playerMenuPlayer2.setMinWidth(300);
+            
+            // Adds the game to the list's of other games.
+            addGame.setOnAction(e -> {
+                int index = Data.tournaments.indexOf(tournament); 
+                System.out.println("All ok!");
+                tournament.getGames().add(new Game(playerName1, playerName2));
+                Data.tournaments.set(index, tournament);
+                ObservableList<Game> games = FXCollections.<Game>observableArrayList(tournament.getGames());
+                gameList.setItems(games);
+                dialogStage.close();
+            });
+           
+            ObservableList<Player> playerLists = FXCollections.<Player>observableArrayList(tournament.getPlayers());
+            playerMenuPlayer1.setItems(playerLists);
+            playerMenuPlayer2.setItems(playerLists);
+
+            playerMenuPlayer1.setOnAction(e -> {
+                  playerName1 = playerMenuPlayer1.getSelectionModel().getSelectedItem();
+                  System.out.println(playerName1);
+            });
+
+            playerMenuPlayer2.setOnAction(e -> {
+                  playerName2 = playerMenuPlayer2.getSelectionModel().getSelectedItem();
+                  System.out.println(playerName2);
+            });
+            
+            // Adds the elements to the new page.
+            VBox vBox = new VBox(addGameLabel, playerMenuPlayer1, playerMenuPlayer2, addGame);
+            vBox.setPadding(new Insets(20, 20, 20, 20));
+            vBox.setSpacing(10);
+            vBox.getChildren().addAll();
+            dialogStage.setScene(new Scene(vBox));
+            dialogStage.show();
         });
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        
+
         
           //System.out.println(tournament.getPlayers().get(0).getScore());
         
@@ -321,48 +370,18 @@ public class AdmappNyNy extends Application {
 //         //tournament.getPlayers().get(0).reversed();
 //         
 //        });
-        
-         
-
-         dialog = new Dialog();
+ 
+        dialog = new Dialog();
         dialog.initModality(Modality.APPLICATION_MODAL); 
-        dialog.setTitle("Leaderboard");
-        
-        
-        //alert.initModality(Modality.APPLICATION_MODAL);
-         Window window = dialog.getDialogPane().getScene().getWindow();
-         
-          window.setOnCloseRequest(e -> dialog.close());   
-       
-         leaderBoardBtn.setOnAction(e ->{
-             dialog.setContentText(tournament.getLeaderBoard());
-          //System.out.print(tournament.getPlayers().get(0).compare(playerName1, playerName2));
-         dialog.showAndWait();
+        dialog.setTitle("Leaderboard");        //alert.initModality(Modality.APPLICATION_MODAL);
+        Window window = dialog.getDialogPane().getScene().getWindow();
+        window.setOnCloseRequest(e -> dialog.close());   
+        leaderBoardBtn.setOnAction(e ->{
+            dialog.setContentText(tournament.getLeaderBoard());
+            dialog.showAndWait();
         });
-        
-        // LIST INPUT
-        ObservableList<Game> listGameItems = FXCollections.<Game>observableArrayList(tournament.getGames());
-        
-        // LIST
-        ListView<Game> gameList = new ListView<>(listGameItems);
-        gameList.getItems().addAll();
-        gameList.setCellFactory(new GameCellFactory());
-        gameList.setOrientation(Orientation.VERTICAL);
-        gameList.setFocusTraversable(false);
-        gameList.getSelectionModel().selectedItemProperty().addListener(this::chooseGame);
-        gameList.getStyleClass().add("list");
-        
-        // LISTENER
-        newGameBtn.setOnAction(e -> {
-           //Data.tournaments.get(0).getGames().add(new Game(playerName1, playerName2));
-            int index = Data.tournaments.indexOf(tournament); 
-            System.out.println("All ok!");
-            tournament.getGames().add(new Game(playerName1, playerName2));
-            Data.tournaments.set(index, tournament);
-            ObservableList<Game> games = FXCollections.<Game>observableArrayList(tournament.getGames());
-            gameList.setItems(games);
-        });
-        
+
+ 
         // USED for the search function, listens to the textfield searchField.
         // DOES NOT WORK PERFECTLY!!!!!!!!!!
         searchField.textProperty().addListener((obs, oldText, newText) -> {
@@ -377,7 +396,6 @@ public class AdmappNyNy extends Application {
         
         StackPane main = new StackPane(gameList);
         body.setCenter(main);
-        
         return new Page(body);
     }
     
@@ -394,13 +412,11 @@ public class AdmappNyNy extends Application {
         // The button that lets you edit or add a new result to a game.
         Button editResultBtn = new Button();
         editResultBtn.setText("Edit Result");
-        
         editResultBtn.setOnAction(( event) -> {
             game.handleGameResult(game);
         });
         
         tools.getChildren().addAll(editResultBtn);
-        
         BorderPane header = new BorderPane(menu, title, null, null, null);
         body.setTop(header);
         

@@ -122,13 +122,14 @@ public class Game implements Serializable{
                     // Adds the new point to the players score.
                     tournament.getPlayers().get(indexPlayer1).setScore(prevScorePlayer1+1);
                     tournament.getPlayers().get(indexPlayer2).setScore(prevScorePlayer2+1);
+                    
                     // Sets the new tournament object back at the place where it was.
                     Data.tournaments.set(indexTournament, tournament);
                     
                     break;
                 }
             }
-            
+        // If there was a winner, then call on the method.
         } else if (result.get() == playerBtnTwo) {
             handleChooseWinner(game);
         } else if (result.get() == cancelBtn) {

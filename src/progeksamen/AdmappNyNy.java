@@ -219,7 +219,9 @@ public class AdmappNyNy extends Application {
         gameList.getSelectionModel().selectedItemProperty().addListener(this::chooseGame);
         gameList.getStyleClass().add("list");
         
-        // LISTENER FOR THE ADDING OF USERS
+        
+        // LISTENER FOR THE ADDING OF USERS IN DIALOGPANE
+        //////////////////////////////////////////////////////////////////////////////////////
         // The dialogpane that pops up after the name for a new tournament have been written in.
         newUsers.setOnAction((ActionEvent event) -> {
             final Stage dialogStage = new Stage();
@@ -235,7 +237,7 @@ public class AdmappNyNy extends Application {
             playerList.setOrientation(Orientation.VERTICAL);
             playerList.setFocusTraversable(false);
             playerList.getStyleClass().add("list");
-            
+
             // Event that fire when the addUser-button is pressed, and adds the users to the tournament and updates lists.
             addUser.setOnAction((ActionEvent e) -> {
                 Player player = new Player(newUserField.getText());
@@ -255,11 +257,15 @@ public class AdmappNyNy extends Application {
             // Adds the elements to the new page.
             VBox vBox = new VBox();
             vBox.getChildren().addAll(newUserField, addUser, playerList, done);
+            vBox.setPadding(new Insets(20, 20, 20, 20));
+            vBox.setSpacing(10);
             dialogStage.setScene(new Scene(vBox));
             dialogStage.show();
         });      
              
-        // LISTENER FOR THE ADDING OF GAMES
+        
+        // LISTENER FOR THE ADDING OF GAMES IN DIALOGPANE
+        ////////////////////////////////////////////////////////////////////////////////////
         // This opens a dialogStage where the Admin can place two players and then press the button to create a game.
         newGameBtn.setOnAction((ActionEvent event) -> {
             final Stage dialogStage = new Stage();
@@ -278,7 +284,6 @@ public class AdmappNyNy extends Application {
             // Adds the game to the list's of other games.
             addGame.setOnAction(e -> {
                 int index = Data.tournaments.indexOf(tournament); 
-                System.out.println("All ok!");
                 tournament.getGames().add(new Game(playerName1, playerName2));
                 Data.tournaments.set(index, tournament);
                 ObservableList<Game> games = FXCollections.<Game>observableArrayList(tournament.getGames());
@@ -310,7 +315,9 @@ public class AdmappNyNy extends Application {
             dialogStage.show();
         });
         
-        // LISTENER FOR OPENING THE SEARCH-DIALOG
+        
+        // LISTENER FOR OPENING THE SEARCH-DIALOGPANE
+        //////////////////////////////////////////////////////////////////////////////////////
         // The dialogpane that pops up after the name for a new tournament have been written in.
         searchBtn.setOnAction((ActionEvent event) -> {
             final Stage dialogStage = new Stage();
@@ -320,10 +327,10 @@ public class AdmappNyNy extends Application {
             TextField searchField = new TextField();
             searchField.setMaxWidth(600);
             
-                    // LIST INPUT FOR GAMELIST
+            // LIST INPUT FOR GAMELIST
             ObservableList<Game> searchListItems = FXCollections.<Game>observableArrayList(tournament.getGames());
 
-            // LIST FOR THE GAMES
+            // List of games, placed in the search-dialog.
             ListView<Game> searchList = new ListView<>(searchListItems);
             searchList.getItems().addAll();
             searchList.setCellFactory(new GameCellFactory());

@@ -31,7 +31,7 @@ public class GameCell extends ListCell<Game> {
             String time;
             
             if (item.getGameState()) {
-                time = "Started: " + item.getStartDate() + ", " + item.getStartTime() + "\n";
+                time = "Started: " + item.getStartDate() + "\n";
                 if (item.getResult().getDraw()) {
                     time += "Game is completed, It ended in a draw.";
                 } else {
@@ -41,11 +41,11 @@ public class GameCell extends ListCell<Game> {
             }
             else {
                 if (new Date().before(item.getStartDate())) {
-                    time = "Started: " + item.getStartDate() + ", " + item.getStartTime() + "\n";
+                    time = "Started: " + item.getStartDate() + "\n";
                     time +=  "Game starts in " + (long)TimeUnit.DAYS.convert(item.getStartDate().getTime() - new Date().getTime(), TimeUnit.MILLISECONDS) + " days"; 
                 }
                 else {
-                    time = "Started: " + item.getStartDate() + ", " + item.getStartTime() + "\n";
+                    time = "Started: " + item.getStartDate() + "\n";
                     time += "Game is being played right now!";
                 }
                 

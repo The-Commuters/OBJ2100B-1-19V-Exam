@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import progeksamen.*;
+import Pieces.*;
 
 /**
  *
@@ -48,20 +49,9 @@ public class TestMain extends Application {
         
        
         
-        String[] testSetSAN = {"e4 e5", "Nf3 Nc6", "Bb5 a6"};
-        String[] testSet = {"e2-e4 e7-e5", "Bf1-c4 Bf8-c5", "Qd1-f3 Nb8-c6"};
-        Move[] m = Parser.parseLANArray(testSet);
-        System.out.println("starting printout" + m[0].toString());
-        System.out.println(m[1].toString());
-        System.out.println(m[2].toString());
         
-        
-        /*
-        String testData = "3 becomes " + numberToCordinate(3);
-        for (int x = 1; x < 9; x++){
-            testData += " " +numberToCordinate(x);
-        }
-        */
+        ChessBoardModel m = new ChessBoardModel();
+        m.move(0, 7, 0, 2);
         
         
    

@@ -265,7 +265,7 @@ public class Parser {
         return cordinate;
     }
     
-    private static int charakterToCordinate(char charakter){
+    public static int charakterToCordinate(char charakter){
         int cordinate = -1;
         switch (charakter){
             case 'A': cordinate = 0; break;

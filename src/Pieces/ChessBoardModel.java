@@ -24,75 +24,12 @@ public class ChessBoardModel {
         turn = 1;
         hwiteMove = true;
     }
-    
-    /*
-        1. e4 e5
-        2. Nf3 Nc6
-        3. Bb5 a6
-    */
-    
-    /*
-    public void parseSAN(String command){
-        int piece = determineType(command.charAt(0));
-        // chek for spetial cases from end notations (pawn transforms and 
-        //
-        
-        // logic to determine target cordinates
-        if (piece == -1){
-            // send error til interface
-        }
-        else if (piece == 6){ // if its a pawn
-            // pawn seartching method
-            // chek for promotion
-        }
-        else if (piece == 1) {
-            // king seartch
-        }
-        else if (piece == 2) {
-            // queen
-        }
-        else if (piece == 3) {
-            //Bishop
-        }
-        else if (piece == 4) {
-            // Knight
-        }
-        else if (piece == 5) {
-            // Rook
-        }
-        else {
-            // throw an exeption
-        }
+
+    public Piece[][] getBoard() {
+        return board;
     }
-*/
-    /*
-    private int determineType(char firstLetter){
-        int type = -1; // -1 being the error signal
-        
-        // ser etter edle brikker
-        switch(firstLetter) {
-            case 'K': type = 1; break;
-            case 'Q': type = 2; break;
-            case 'B': type = 3; break;
-            case 'N': type = 4; break;
-            case 'R': type = 5; break;
-            default: type = -1;
-        }
-        if (type != -1){
-            return type;
-        }
-        
-        // < mindre en, > støre en
-        
-       
-        type = letterToCordinate(firstLetter);
-        if (tool.validNumber(type)){
-            return 6; // bonne
-        }
-        
-        return -1;
-    }
-    */
+    
+    
     public void turnDone(){
         if (hwiteMove){
             hwiteMove = false;
@@ -156,6 +93,13 @@ public class ChessBoardModel {
     // move that takes in charakters and letters
     public void move(char pieceLetter, int pieceNumber, char targetLetter, int targetNumber){
         move(letterToCordinate(pieceLetter), numberToCordinate(pieceNumber), letterToCordinate(targetLetter), numberToCordinate(targetNumber));
+    }
+    
+    public void move(Move m){
+        move((int)m.getStartPoint().getX(), 
+                (int)m.getStartPoint().getY(), 
+                (int)m.getEndPoint().getX(), 
+                (int)m.getEndPoint().getY());
     }
     
     private int letterToCordinate(char letter){

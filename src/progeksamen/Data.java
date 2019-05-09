@@ -87,7 +87,7 @@ public class Data {
      */
     public static ObservableList<Tournament> getTournaments()  {
         
-        tempgetTournaments();
+        //tempgetTournaments();
         
         File file = new File("Tournament.dat");
         

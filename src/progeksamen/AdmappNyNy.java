@@ -58,6 +58,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import static progeksamen.Admapp.tournamentList;
@@ -105,6 +106,9 @@ public class AdmappNyNy extends Application {
     public String TextDialog(String HeaderTxt, String tittle, String warning) {
 
         TextInputDialog textin = new TextInputDialog();
+                textin.setGraphic(null);
+        textin.setHeaderText(null);
+        
         textin.initStyle(StageStyle.UTILITY);
         textin.setHeaderText(HeaderTxt);
         textin.setTitle(HeaderTxt);
@@ -135,6 +139,9 @@ public class AdmappNyNy extends Application {
         Button newTournBtn = new Button();
         newTournBtn.setText("New Tournament");
         
+        
+        Button newUsers = new Button();
+        
         // Save button -
         Button saveBtn = new Button();
         saveBtn.setText("Save");
@@ -155,8 +162,48 @@ public class AdmappNyNy extends Application {
         list.getSelectionModel().selectedItemProperty().addListener(this::chooseTournament);
         list.getStyleClass().add("list");
         
+        
+        //LISTENERS
+        //The dialogpane that pops up after the name for a new tournament have been written in.
+        newUsers.setOnAction((ActionEvent event) -> {
+            final Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            
+            Tournament LastTournament = Data.tournaments.get(Data.tournaments.size() - 1);
+            
+            TextField newUserField = new TextField();
+            Button addUser = new Button("Add a new user");
+            Button done = new Button("Done");
+            
+            //LIST
+            ObservableList<Player> newPlayers = FXCollections.<Player>observableArrayList(LastTournament.getPlayers());
+            ListView<Player> playerList = new ListView<>(newPlayers);
+            playerList.setOrientation(Orientation.VERTICAL);
+            playerList.setFocusTraversable(false);
+            playerList.getStyleClass().add("list");
+            HBox hBox = new HBox(playerList);
+            
+            // Event that fire when the addUser-button is pressed.
+            addUser.setOnAction((ActionEvent e) -> {
+                Player player = new Player(newUserField.getText());
+                Data.tournaments.get(Data.tournaments.size() - 1).getPlayers().add(player);
+                Tournament newTournament = Data.tournaments.get(Data.tournaments.size() - 1);
+                ObservableList<Player> newPlayers2 = FXCollections.<Player>observableArrayList(newTournament.getPlayers());
+                //ListView<Tournament> list = new ListView<>(Data.getTournaments());
+                playerList.setItems(newPlayers2);
+            });
+            
+            // Event that fires when the done-button is pressed.
+            done.setOnAction((ActionEvent e) -> {
+                dialogStage.close();
+            });
+            
+            VBox vBox = new VBox();
+            vBox.getChildren().addAll(newUserField, addUser, playerList, done);
+            dialogStage.setScene(new Scene(vBox));
+            dialogStage.show();
+        });
 
-        // LISTENER  
         // The button that adds a new tournament to the tournaments-list
         newTournBtn.setOnAction((ActionEvent event) -> {
             String tournamentNameIn = TextDialog("Enter tournament name", "Tournament Name", "Name can not be empty");
@@ -164,6 +211,7 @@ public class AdmappNyNy extends Application {
             Data.tournaments.add(newTournament);
             ObservableList<Tournament> newTournaments = FXCollections.<Tournament>observableArrayList(tournaments);
             list.setItems(newTournaments);
+            newUsers.fire();
         });
         
         // Event that saves the current list of users.
@@ -193,9 +241,12 @@ public class AdmappNyNy extends Application {
         newPlayerBtn.setText("New Player");
         
         ComboBox<Player> playerMenuPlayer1 = new ComboBox<>();
-        playerMenuPlayer1.setMaxWidth(130);
         ComboBox<Player> playerMenuPlayer2 = new ComboBox<>();
+        
+        playerMenuPlayer1.setMaxWidth(130);
         playerMenuPlayer2.setMaxWidth(130);
+        playerMenuPlayer1.setMinWidth(130);
+        playerMenuPlayer2.setMinWidth(130);
         
         // This is the textfield used to search the tournament for games.
         TextField searchField = new TextField();

@@ -237,7 +237,7 @@ public class AdmappNyNy extends Application {
         // Button that creates a new game-object.
         Button newGameBtn = new Button("New game");
       
-        tools.getChildren().addAll(leaderBoardBtn, playerMenuPlayer1, playerMenuPlayer2, newGameBtn, newPlayerBtn, searchField);
+        tools.getChildren().addAll(leaderBoardBtn, playerMenuPlayer1, playerMenuPlayer2, newGameBtn, newUsers, searchField);
         BorderPane header = new BorderPane(menu, title, null , null, null);
         body.setTop(header);
         
@@ -341,16 +341,16 @@ public class AdmappNyNy extends Application {
         });
         
         // LIST INPUT
-        ObservableList<Game> listItems = FXCollections.<Game>observableArrayList(tournament.getGames());
+        ObservableList<Game> listGameItems = FXCollections.<Game>observableArrayList(tournament.getGames());
         
         // LIST
-        ListView<Game> list = new ListView<>(listItems);
-        list.getItems().addAll();
-        list.setCellFactory(new GameCellFactory());
-        list.setOrientation(Orientation.VERTICAL);
-        list.setFocusTraversable(false);
-        list.getSelectionModel().selectedItemProperty().addListener(this::chooseGame);
-        list.getStyleClass().add("list");
+        ListView<Game> gameList = new ListView<>(listGameItems);
+        gameList.getItems().addAll();
+        gameList.setCellFactory(new GameCellFactory());
+        gameList.setOrientation(Orientation.VERTICAL);
+        gameList.setFocusTraversable(false);
+        gameList.getSelectionModel().selectedItemProperty().addListener(this::chooseGame);
+        gameList.getStyleClass().add("list");
         
         // LISTENER
         newGameBtn.setOnAction(e -> {
@@ -360,7 +360,7 @@ public class AdmappNyNy extends Application {
             tournament.getGames().add(new Game(playerName1, playerName2));
             Data.tournaments.set(index, tournament);
             ObservableList<Game> games = FXCollections.<Game>observableArrayList(tournament.getGames());
-            list.setItems(games);
+            gameList.setItems(games);
         });
         
         // USED for the search function, listens to the textfield searchField.
@@ -375,7 +375,7 @@ public class AdmappNyNy extends Application {
             listItems.setAll(games);
         });
         
-        StackPane main = new StackPane(list);
+        StackPane main = new StackPane(gameList);
         body.setCenter(main);
         
         return new Page(body);

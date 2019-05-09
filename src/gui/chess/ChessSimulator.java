@@ -25,36 +25,25 @@ import javafx.util.Duration;
  */
 public class ChessSimulator extends HBox {
     
-    // Methods
-    Point[] oldPos = {new Point(0, 1), new Point(0, 6), new Point(0, 2), new Point(0, 5), new Point(0, 3)}; 
-    Point[] newPos = {new Point(0, 2), new Point(0, 5), new Point(0, 3), new Point(0, 4), new Point(0, 4)};
-    
     // Constructor
-    public ChessSimulator(int size, ArrayList<String> lan) {
+    public ChessSimulator(int size, ArrayList<String> lan, Move[] parsedMoves) {
         String[] lanArray = new String[lan.size()];
         lanArray = lan.toArray(lanArray);
-        // Timeline timeline = makeTimeline(Parser.parseSANArray(sanArray));
-        
-        
         
         Field field = new Field(size);
-        SequentialTransition chessSim = makeSequentialTransition(field, oldPos, newPos);
-        // chessSim.setCycleCount(Timeline.INDEFINITE);
-        // chessSim.setAutoReverse(true);     
-        
+        SequentialTransition chessSim = makeSequentialTransition(field, parsedMoves);    
         Chessboard chessboard = new Chessboard(size, field);
         ChessFeed chessFeed = new ChessFeed(size, lanArray, chessSim);
-        
         
         getChildren().addAll(chessboard, chessFeed);
     }
     
     // Methods
-    private SequentialTransition makeSequentialTransition(Field field, Point[] oldPos, Point[] newPos) {
+    private SequentialTransition makeSequentialTransition(Field field, Move[] moves) {
         
         ArrayList<Timeline> timelines = new ArrayList<>();
         
-        for (int i = 0; i < oldPos.length; i++) {
+        for (int i = 0; i < moves.length; i++) {
             
             ArrayList<KeyFrame> keyFrames = new ArrayList<>();
             
@@ -62,11 +51,11 @@ public class ChessSimulator extends HBox {
             
             Point[][] positionGridCopy = field.getPositionGrid();
             
-            int oldPositionX = (int)positionGridCopy[(int)oldPos[i].getX()][(int)oldPos[i].getY()].getX();
-            int oldPositionY = (int)positionGridCopy[(int)oldPos[i].getX()][(int)oldPos[i].getY()].getY();
+            int oldPositionX = (int)positionGridCopy[(int)moves[i].getStartPoint().getX()][(int)moves[i].getStartPoint().getY()].getX();
+            int oldPositionY = (int)positionGridCopy[(int)moves[i].getStartPoint().getX()][(int)moves[i].getStartPoint().getY()].getY();
             
-            int newPositionX = (int)positionGridCopy[(int)newPos[i].getX()][(int)newPos[i].getY()].getX();
-            int newPositionY = (int)positionGridCopy[(int)newPos[i].getX()][(int)newPos[i].getY()].getY();
+            int newPositionX = (int)positionGridCopy[(int)moves[i].getStartPoint().getX()][(int)moves[i].getStartPoint().getY()].getX();
+            int newPositionY = (int)positionGridCopy[(int)moves[i].getStartPoint().getX()][(int)moves[i].getStartPoint().getY()].getY();
             
             // Find tracker
             Piece piece = new Piece();
@@ -115,13 +104,5 @@ public class ChessSimulator extends HBox {
         SequentialTransition chessSim = new SequentialTransition(timelinesArray);
         
         return chessSim;
-    }
-    
-    
-    private Timeline makeTimeline(Move[] score) {
-        
-        
-        
-        return new Timeline();
     }
 }

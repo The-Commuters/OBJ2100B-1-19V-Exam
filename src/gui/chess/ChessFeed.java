@@ -6,9 +6,12 @@
 package gui.chess;
 
 import javafx.animation.SequentialTransition;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -54,20 +57,20 @@ class ChessFeed extends BorderPane {
     // Methods
     private HBox createControllers(SequentialTransition chessSim) {
         
-        Button play = new Button("Play");
-        //play.setGraphic(GRAPHIC);
+        Button play = new Button("");
+        play.setGraphic(new ImageView(new Image("gui/images/play.png", 20, 0, true, true, true)));
         play.getStyleClass().add("tool");
         play.setCursor(Cursor.HAND);
         play.setOnAction((e) -> {
             setCuePoint((int)Math.floor(chessSim.getCurrentTime().divide(500).toMillis()));
             
+
+            chessSim.play();   
             chessSim.jumpTo(getTimeStep().multiply(getCuePoint()));
-            chessSim.play();
-            
         });
         
-        Button pause = new Button("Pause");
-        //pause.setGraphic(GRAPHIC);
+        Button pause = new Button("");
+        pause.setGraphic(new ImageView(new Image("gui/images/pause.png", 20, 0, true, true, true)));
         pause.getStyleClass().add("tool");
         pause.setCursor(Cursor.HAND);
         pause.setOnAction((e) -> {
@@ -78,8 +81,8 @@ class ChessFeed extends BorderPane {
             
         });
         
-        Button first = new Button("First Move");
-        //first.setGraphic(GRAPHIC);
+        Button first = new Button("");
+        first.setGraphic(new ImageView(new Image("gui/images/first.png", 20, 0, true, true, true)));
         first.getStyleClass().add("tool");
         first.setCursor(Cursor.HAND);
         first.setOnAction((e) -> {
@@ -92,8 +95,8 @@ class ChessFeed extends BorderPane {
             setCuePoint((int)Math.floor(chessSim.getCurrentTime().divide(500).toMillis()));
         });
         
-        Button prev = new Button("prev");
-        //prev.setGraphic(GRAPHIC);
+        Button prev = new Button("");
+        prev.setGraphic(new ImageView(new Image("gui/images/prev.png", 20, 0, true, true, true)));
         prev.getStyleClass().add("tool");
         prev.setCursor(Cursor.HAND);
         prev.setOnAction((e) -> {
@@ -110,8 +113,8 @@ class ChessFeed extends BorderPane {
         });
         
         
-        Button next = new Button("Next");
-        //next.setGraphic(GRAPHIC);
+        Button next = new Button("");
+        next.setGraphic(new ImageView(new Image("gui/images/next.png", 20, 0, true, true, true)));
         next.getStyleClass().add("tool");
         next.setCursor(Cursor.HAND);
         next.setOnAction((e) -> {
@@ -128,8 +131,8 @@ class ChessFeed extends BorderPane {
             setCuePoint((int)Math.floor(chessSim.getCurrentTime().divide(500).toMillis()));
         });
         
-        Button last = new Button("Last move");
-        //last.setGraphic(GRAPHIC);
+        Button last = new Button("");
+        last.setGraphic(new ImageView(new Image("gui/images/last.png", 20, 0, true, true, true)));
         last.getStyleClass().add("tool");
         last.setCursor(Cursor.HAND);
         last.setOnAction((e) -> {
@@ -145,7 +148,8 @@ class ChessFeed extends BorderPane {
             setCuePoint((int)Math.floor(chessSim.getCurrentTime().divide(500).toMillis()));
         });
 
-        HBox controllers = new HBox(play, pause , last, prev, next, first);
+        HBox controllers = new HBox(play, pause , first, prev, next, last);
+        controllers.setPadding(new Insets(10, 10, 10, 10));
         return controllers;
     }
     

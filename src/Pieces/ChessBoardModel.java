@@ -94,6 +94,7 @@ public class ChessBoardModel {
         return 0;
         // hvis der er bonne forandring
         // hvis det er oppsagt
+        return 'c';
     }
     
     public void turnDone(){

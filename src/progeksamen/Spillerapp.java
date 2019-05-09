@@ -3,6 +3,7 @@
  */
 package progeksamen;
 
+import gui.chess.ChessSimulator;
 import gui.components.Title;
 import gui.components.Body;
 import gui.components.Crumb;
@@ -103,7 +104,6 @@ public class Spillerapp extends Application {
         
         // LIST
         ListView<Tournament> list = new ListView<>(Data.getTournaments());
-        list.getItems().addAll();
         list.setCellFactory(new TournamentCellFactory());
         list.setOrientation(Orientation.VERTICAL);
         list.setFocusTraversable(false);
@@ -136,7 +136,6 @@ public class Spillerapp extends Application {
         
         // LIST
         ListView<Game> list = new ListView<>(FXCollections.<Game>observableArrayList(tournament.getGames()));
-        list.getItems().addAll();
         list.setCellFactory(new GameCellFactory());
         list.setOrientation(Orientation.VERTICAL);
         list.setFocusTraversable(false);
@@ -167,22 +166,11 @@ public class Spillerapp extends Application {
         ////////////////////////////////////////////////////////////////
         // Main
         
-        // CHESS
-        HBox chessboardContainer = new HBox();
+        // CHESS SIMULATOR
+        ChessSimulator chessSimulator = new ChessSimulator(320, game.getScore());
+        // CHESS SIMULATOR
         
-        // CHESSBOARD
-        
-        Chessboard chessboard = new Chessboard();
-        
-        // CHESSBOARD
-        
-        TextArea textarea = new TextArea("I am big gay gay, i love big long ducks, i am super super gay, ilove big long ducks");
-        textarea.setMaxSize(320, 320);
-        
-        //chessboardContainer.getChildren().addAll(chessboard, textarea);
-        // CHESS
-        
-        HBox centerHorizontal = new HBox(chessboardContainer, textarea);
+        HBox centerHorizontal = new HBox(chessSimulator);
         centerHorizontal.setAlignment(Pos.CENTER);
         
         VBox centerVertical = new VBox(centerHorizontal);

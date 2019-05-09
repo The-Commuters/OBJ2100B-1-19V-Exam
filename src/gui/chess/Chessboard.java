@@ -13,23 +13,11 @@ import javafx.scene.layout.StackPane;
  */
 final class Chessboard extends StackPane {
     
-    // Fields
-    int size;
-    
     // Constructor
-    public Chessboard() {
-        
-        getChildren().add(new Board(getSize()));
-        getChildren().add(new Field());
-    }
-    
-    // Getters
-    public int getSize() {
-        return size;
-    }
-    
-    // Setters
-    public void setSize(int size) {
-        this.size = size;
+    public Chessboard(int size, Field field) {
+        setMaxWidth(size);
+        setMaxHeight(size);
+        getChildren().add(new Board(size));
+        getChildren().add(field);
     }
 }

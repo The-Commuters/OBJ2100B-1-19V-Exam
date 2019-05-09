@@ -43,6 +43,8 @@ public class Parser {
         Point start = determineStartLAN(oneMove);
         Point stop = determineStopLAN(oneMove);
         
+        System.out.println("parseLAN is being called!");
+        
         return new Move(start, stop, isThreateningChek, isThreateningChekMate, isCaptureing, drawIsOfferd, position, castle, result); 
     }
     
@@ -50,6 +52,8 @@ public class Parser {
     // Nf3 Nc6
     public static Move[] parseLANTurn(String move){
         ArrayList<Move> parsedMoves = new ArrayList<>();
+        
+        System.out.println("parseLANTurn is being called!");
         
         for (String oneMove: move.split(" ")){
             parsedMoves.add(parseLAN(oneMove));
@@ -65,6 +69,8 @@ public class Parser {
          Bb5 a6*/    
     public static Move[] parseLANArray(String[] score){
          ArrayList<Move> parsedMoves = new ArrayList<>();
+         
+        System.out.println("parseLANArray is being called!");
         
         for (String move: score){
             parsedMoves.addAll(new ArrayList<>(Arrays.asList(parseLANTurn(move))));
@@ -237,7 +243,7 @@ public class Parser {
     
     private static int letterToCordinate(char letter){
         int cordinate = (int)letter; // turn teh char into an int, a is 97
-        //System.out.println(cordinate);
+        System.out.println("number made in parser.letterToCordinate " + cordinate);
         
         cordinate = cordinate - 97; // not a, the lowest number shud be 0 and h the highest number 7
         
@@ -252,7 +258,7 @@ public class Parser {
     
     private static int numberToCordinate(int number){
         
-        System.out.println(number);
+        System.out.println("number being turned into a cordinate" + number);
         
         if (number > 0 || number < LETTERS.length-1){
             return -1;

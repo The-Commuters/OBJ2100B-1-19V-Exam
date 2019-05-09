@@ -40,6 +40,11 @@ public class Move {
         this.result = result;
     }
 
+    @Override
+    public String toString() {
+        return "Move{" + "startPoint=" + startPoint + ", endPoint=" + endPoint + ", isThreateningChek=" + isThreateningChek + ", isThreateningChekMate=" + isThreateningChekMate + ", isCapturing=" + isCapturing + ", drawIsOfferd=" + drawIsOfferd + ", promotion=" + promotion + ", castle=" + castle + ", result=" + result + '}';
+    }
+
     public Point getStartPoint() {
         return startPoint;
     }

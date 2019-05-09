@@ -30,7 +30,9 @@ public class ChessBoardModel {
         2. Nf3 Nc6
         3. Bb5 a6
     */
-    public static void parseSAN(String command){
+    
+    /*
+    public void parseSAN(String command){
         int piece = determineType(command.charAt(0));
         // chek for spetial cases from end notations (pawn transforms and 
         //
@@ -62,7 +64,8 @@ public class ChessBoardModel {
             // throw an exeption
         }
     }
-    
+*/
+    /*
     private int determineType(char firstLetter){
         int type = -1; // -1 being the error signal
         
@@ -89,12 +92,7 @@ public class ChessBoardModel {
         
         return -1;
     }
-    
-    private char determineLetter(String command){
-        // hvis der er bonne forandring
-        // hvis det er oppsagt
-    }
-    
+    */
     public void turnDone(){
         if (hwiteMove){
             hwiteMove = false;
@@ -151,7 +149,7 @@ public class ChessBoardModel {
             board[pieceVertical][pieceHorisontal] = null;
         }
         catch(IllegalMoveException ex1){
-            System.out.println(ex1.getMessage());
+            System.out.println("ChessBoardModel caut an exeption: " + ex1.getMessage());
         }
     }
     
@@ -162,7 +160,7 @@ public class ChessBoardModel {
     
     private int letterToCordinate(char letter){
         int cordinate = (int)letter;
-        System.out.println(cordinate);
+        System.out.println("OLD falute to comply, letter has ben turned into this number: " + cordinate);
         
         if (cordinate > 0 || cordinate < tool.LETTERS.length-1){
             return -1;
@@ -174,7 +172,7 @@ public class ChessBoardModel {
     
     private int numberToCordinate(int number){
         
-        System.out.println(number);
+        System.out.println("Board turns the folloing number into a coresponding cordinate: s" + number);
         
         if (number > 0 || number < tool.LETTERS.length-1){
             return -1;

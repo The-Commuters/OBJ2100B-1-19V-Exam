@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import static progeksamen.Admapp.tournamentList;
@@ -45,7 +46,7 @@ public class Tournament implements Serializable {
     }
     
     public void sortScoreBoard() {
-              Comparator c = Collections.reverseOrder();
+         Comparator c = Comparator.naturalOrder();
 
          Collections.sort(players, c);
     }
@@ -53,6 +54,19 @@ public class Tournament implements Serializable {
     public ArrayList<Player> getPlayers() {
         return players;
     }
+    
+     public String getLeaderBoard() {
+         
+         sortScoreBoard();
+         
+         String text ="";
+        for (Player p : players)
+            text += (players.indexOf(p)+1+".")+p.getName() + " "  + p.getScore()/2 + "\n";
+        
+        return text;
+    }
+     
+    
 
     public ArrayList<Game> getGames() {
         return games;

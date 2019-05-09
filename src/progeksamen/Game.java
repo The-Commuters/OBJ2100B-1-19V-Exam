@@ -174,7 +174,7 @@ public class Game implements Serializable{
                     // Gets the old score of the player.
                     double prevScore = tournament.getPlayers().get(index).getScore();
                     // Adds the new point to the players score.
-                    tournament.getPlayers().get(index).setScore(prevScore+1);
+                    tournament.getPlayers().get(index).setScore(prevScore+2);
                     // Sets the new tournament object back at the place where it was.
                     Data.tournaments.set(indexTournament, tournament);
                     
@@ -200,7 +200,7 @@ public class Game implements Serializable{
                     // Gets the old score of the player.
                     double prevScore = tournament.getPlayers().get(index).getScore();
                     // Adds the new point to the players score.
-                    tournament.getPlayers().get(index).setScore(prevScore+1);
+                    tournament.getPlayers().get(index).setScore(prevScore+2);
                     // Sets the new tournament object back at the place where it was.
                     Data.tournaments.set(indexTournament, tournament);
                     

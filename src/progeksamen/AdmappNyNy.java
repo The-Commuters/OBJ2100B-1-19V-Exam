@@ -34,7 +34,10 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -61,6 +64,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import static progeksamen.Admapp.tournamentList;
 import static progeksamen.Data.tournaments;
 
@@ -69,6 +73,7 @@ public class AdmappNyNy extends Application {
     Container container;
             Player playerName1;
           Player playerName2;
+     Dialog dialog;
     
     @Override
     public void start(Stage primaryStage) {
@@ -250,6 +255,9 @@ public class AdmappNyNy extends Application {
         Tools tools = new Tools();
         Menu menu = new Menu(crumb, tools);
         
+        Button test = new Button("test");
+        Button leaderBoardBtn = new Button("Show Leaderboard");
+        
         // Button for the new player-feature
         Button newPlayerBtn = new Button();
         newPlayerBtn.setText("New Player");
@@ -268,7 +276,7 @@ public class AdmappNyNy extends Application {
         
         Button newGameBtn = new Button("New game");
       
-        tools.getChildren().addAll(playerMenuPlayer1, playerMenuPlayer2, newGameBtn, newPlayerBtn, searchField);
+        tools.getChildren().addAll(leaderBoardBtn, playerMenuPlayer1, playerMenuPlayer2, newGameBtn, newPlayerBtn, searchField);
         BorderPane header = new BorderPane(menu, title, null , null, null);
         body.setTop(header);
         
@@ -290,6 +298,38 @@ public class AdmappNyNy extends Application {
                System.out.println(playerName2);
         });
         
+          //System.out.println(tournament.getPlayers().get(0).getScore());
+        
+           // Main
+//        test.setOnAction(e ->{
+//            
+//            System.out.println(tournament.getDetails());
+//            //tournament.getPlayers().get(0).setScore(7);
+//             System.out.println(tournament.getDetails());
+//          tournament.sortScoreBoard();
+//         System.out.print(tournament.getDetails());
+//          
+//         //tournament.getPlayers().get(0).reversed();
+//         
+//        });
+        
+         
+
+         dialog = new Dialog();
+        dialog.initModality(Modality.APPLICATION_MODAL); 
+        dialog.setTitle("Leaderboard");
+        
+        
+        //alert.initModality(Modality.APPLICATION_MODAL);
+         Window window = dialog.getDialogPane().getScene().getWindow();
+         
+          window.setOnCloseRequest(e -> dialog.close());   
+       
+         leaderBoardBtn.setOnAction(e ->{
+             dialog.setContentText(tournament.getLeaderBoard());
+          //System.out.print(tournament.getPlayers().get(0).compare(playerName1, playerName2));
+         dialog.showAndWait();
+        });
         
         // LIST INPUT
         ObservableList<Game> listItems = FXCollections.<Game>observableArrayList(tournament.getGames());

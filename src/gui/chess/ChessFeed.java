@@ -5,10 +5,17 @@
  */
 package gui.chess;
 
+import javafx.scene.layout.Pane;
+
 /**
  *
  * @author DavidNaist
  */
-public class ChessFeed {
+class ChessFeed extends Pane {
     
+    public ChessFeed(int size, String[] score, Field field) {
+        setMinWidth(size);
+        setMinHeight(size);
+        getStyleClass().add("chess-feed");
+    }
 }

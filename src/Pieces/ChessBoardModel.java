@@ -30,7 +30,7 @@ public class ChessBoardModel {
         2. Nf3 Nc6
         3. Bb5 a6
     */
-    public static void parseSAN(String command){
+    public void parseSAN(String command){
         int piece = determineType(command.charAt(0));
         // chek for spetial cases from end notations (pawn transforms and 
         //
@@ -93,6 +93,7 @@ public class ChessBoardModel {
     private char determineLetter(String command){
         // hvis der er bonne forandring
         // hvis det er oppsagt
+        return 'c';
     }
     
     public void turnDone(){

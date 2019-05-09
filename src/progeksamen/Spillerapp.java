@@ -3,6 +3,7 @@
  */
 package progeksamen;
 
+import gui.chess.ChessSimulator;
 import gui.components.Title;
 import gui.components.Body;
 import gui.components.Crumb;
@@ -11,48 +12,20 @@ import gui.components.Container;
 import gui.components.Page;
 import gui.components.Tools;
 import gui.tools.Back;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import static progeksamen.Admapp.tournamentList;
 
 public class Spillerapp extends Application {
     
@@ -81,6 +54,7 @@ public class Spillerapp extends Application {
         primaryStage.setScene(scene);
         primaryStage.setMinWidth(container.getMinWidth());
         primaryStage.setMinHeight(container.getMinHeight());
+        primaryStage.getIcons().add(new Image("gui/images/king-white.png"));
         primaryStage.show();
         
     }
@@ -103,7 +77,6 @@ public class Spillerapp extends Application {
         
         // LIST
         ListView<Tournament> list = new ListView<>(Data.getTournaments());
-        list.getItems().addAll();
         list.setCellFactory(new TournamentCellFactory());
         list.setOrientation(Orientation.VERTICAL);
         list.setFocusTraversable(false);
@@ -136,7 +109,6 @@ public class Spillerapp extends Application {
         
         // LIST
         ListView<Game> list = new ListView<>(FXCollections.<Game>observableArrayList(tournament.getGames()));
-        list.getItems().addAll();
         list.setCellFactory(new GameCellFactory());
         list.setOrientation(Orientation.VERTICAL);
         list.setFocusTraversable(false);
@@ -167,22 +139,11 @@ public class Spillerapp extends Application {
         ////////////////////////////////////////////////////////////////
         // Main
         
-        // CHESS
-        HBox chessboardContainer = new HBox();
+        // CHESS SIMULATOR
+        ChessSimulator chessSimulator = new ChessSimulator(320, game.getScore());
+        // CHESS SIMULATOR
         
-        // CHESSBOARD
-        
-        Chessboard chessboard = new Chessboard();
-        
-        // CHESSBOARD
-        
-        TextArea textarea = new TextArea("I am big gay gay, i love big long ducks, i am super super gay, ilove big long ducks");
-        textarea.setMaxSize(320, 320);
-        
-        //chessboardContainer.getChildren().addAll(chessboard, textarea);
-        // CHESS
-        
-        HBox centerHorizontal = new HBox(chessboardContainer, textarea);
+        HBox centerHorizontal = new HBox(chessSimulator);
         centerHorizontal.setAlignment(Pos.CENTER);
         
         VBox centerVertical = new VBox(centerHorizontal);

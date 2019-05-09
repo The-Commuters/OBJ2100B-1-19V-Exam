@@ -79,3 +79,7 @@ and open the template in the editor.
 .tool {
     -fx-background-color: transparent;
 }
+
+.chess-feed {
+    -fx-background-color: -fx-color-gray-200;
+}

@@ -1,203 +1,107 @@
-/*
- * Main for the Admin application.
+/**
+ * Main for the application that the administrators use,
+ * it should have more features that the application that
+ * are designed for the normal users. The admins can create
+ * touraments, players and games.
  */
 package progeksamen;
 
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+import gui.chess.ChessSimulator;
+import gui.components.Title;
+import gui.components.Body;
+import gui.components.Crumb;
+import gui.components.Menu;
+import gui.components.Container;
+import gui.components.Page;
+import gui.components.Tools;
+import gui.tools.Back;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
+import static progeksamen.Data.tournaments;
 
-public class Admapp extends Application implements Constants {
+public class Admapp extends Application {
     
-    // Current string for the Tournament, needed to find/create the .dat to store binary And the .txt.
-    public static String tournament = "Tournament";
-    
-    BorderPane root = new BorderPane();
-    
-    public static ArrayList<Tournament> tournamentList    = new ArrayList<Tournament>();
-    
-    /** Metodeforklaringer -- MÅ SLETTES SENERE --
-     * getTournament() collects the data from the "database"-file.
-     * saceTournament() Saves the data to the "database"-file. 
-     */
+    Container container;
+    Player playerName1;
+    Player playerName2;
+    Dialog dialog;
+    Button newUsers = new Button();
+    ComboBox<Player> playerMenuPlayer1 = new ComboBox<>();
+    ComboBox<Player> playerMenuPlayer2 = new ComboBox<>();
     
     @Override
     public void start(Stage primaryStage) {
-        
-        // The method that collects the tournaments-arraylist.
  
+        // The first page
+        Page tournamentPage = tournament();
         
-        Data.tempgetTournaments();
+        // Root & Home page
+        container = new Container(800, 600);
+        container.put(tournamentPage);
         
-        // Test's the method that saves the tournment-data.
-        // SaveTournament(playerList, gameList, resultList);
-       //Data.saveTournaments(tournamentList);
-       
-       
-       
-        Player player   = new Player("Harry");
-        Player player1  = new Player("Ron");
-        Player player2  = new Player("Hermoine"); 
-        
-        ArrayList<String> gameArraylist = new ArrayList<>();
-        gameArraylist.add("Number1");
-        gameArraylist.add("Number2");
-        gameArraylist.add("Number3");
-        
-        Date date = new Date();
-        
-        Result result1  = new Result(player1, player2, true);
-        Result result2  = new Result(player2, player1, true);
-        Result result3  = new Result(player, player1, false);
-        
-        Game game1      = new Game(player1, player2, result1, gameArraylist, date, date);
-        Game game2      = new Game(player2, player1, result1, gameArraylist, date, date);
-        Game game3      = new Game(player, player1, result1, gameArraylist, date, date);
-        
-        // The list's used to store data.
-        ArrayList<Player> playerList    = new ArrayList<Player>();
-        ArrayList<Game> gameList        = new ArrayList<Game>();
-       
-        playerList.add(player);  playerList.add(player1); playerList.add(player2);
-        gameList.add(game1);     gameList.add(game2);     gameList.add(game3);
-        
-        Tournament tournament1 = new Tournament("Team Nado: Vers 2", playerList, gameList);
-        Tournament tournament2 = new Tournament("Team Nado: Vers 3", playerList, gameList);
-        Tournament tournament3 = new Tournament("Team Nado: Vers 4", playerList, gameList);
-        
-        tournamentList.add(tournament1); tournamentList.add(tournament2); tournamentList.add(tournament3);
-       
-       
-       
-        //----------------------------------/Test of tournment---------------------------------
-        
-        //---- Save Button ----
-        Button saveBtn = new Button();
-        saveBtn.setText("Save");
-        
-        // Event that sav
-        saveBtn.setOnAction(( event) -> {
-            System.out.println("Your progress is saved with the save-button.");
-            //Data.saveTournaments(tournamentList);
-        });
-        root.setTop(saveBtn);
-        //---- Edit result Button ----
-        
-            //---To be removed---
-            Player playerTest1   = new Player("Harry");
-            Player playerTest2   = new Player("Ron");
-            Game gameTest        = new Game(playerTest1, playerTest2, result1, gameArraylist, date, date);
-            //-------------------
-            
-            
-        Button editResultBtn = new Button();
-        editResultBtn.setText("Edit Result");
-        editResultBtn.setOnAction(( event) -> {
-            //result1.handleGameResult(game1);
-        });
-        //root.setRight(editResultBtn);
-        //----/Edit result Button ---- 
-        
-        //----- Search for game ------
-        
-        TextField searchField = new TextField();
-        searchField.textProperty().addListener((obs, oldText, newText) -> {
-            //System.out.println("Text changed from "+oldText+" to "+newText);
-            ArrayList<Game> newGameList = new ArrayList<Game>();
-            Tournament tournamentSearchTest = tournamentList.get(1);
-            newGameList = tournamentSearchTest.search(newText);
-        });
-        
-        //-----------------------------
-           
-        Button newBtn = new Button();
-        newBtn.setText("New Tournament");
-        newBtn.setOnAction((ActionEvent event) -> {
-            String tournamentNameIn;
-            
-            tournamentNameIn = TextDialog("Enter tournament name", "Tournament Name", "Name can not be empty");
-            
-            Tournament test = new Tournament(tournamentNameIn, playerList, gameList);
-                 
-            tournamentList.add(test);
+        // Scene with a container object, and the CSS file.
+        Scene scene = new Scene(container);
+        scene.getStylesheets().add("progeksamen/main.css");
 
-            System.out.println(test.toString());
-        });
-        //root.setLeft(newBtn);
-        
-        Button newPlayerBtn = new Button();
-        newPlayerBtn.setText("New Player");
-        newPlayerBtn.setOnAction((ActionEvent event) -> {
-            String playerNameIn;
-            
-            playerNameIn = TextDialog("Enter player name", "Player Name", "Name can not be empty");
-            
-                playerList.add(new Player(playerNameIn));   
-                playerList.toString();
-           
-        });
-        
-        ComboBox<Player> playerMenu = new ComboBox<>();
-        
-        ObservableList playerComboList = FXCollections.observableList(getList());
-        
-        playerMenu.setItems(playerComboList);
-         
-                 
-        playerMenu.setOnAction(e -> {
-               Player player_int = playerMenu.getSelectionModel().getSelectedItem();
-        
-               System.out.println(player_int);
-        });
-           
-      
-        HBox hbox = new HBox();
-        hbox.getChildren().addAll(playerMenu, newPlayerBtn, newBtn, editResultBtn, saveBtn, searchField);
-
-        //root.setTop(playerMenu);
-        root.setTop(hbox);
-        
-        // Saves the lists on exit.
+         // Saves the list of  on exit.
         primaryStage.setOnHiding( event -> {
             System.out.println("Your progress have been saved on exit.");
-            //Data.saveTournaments(tournamentList);
-            
+            // Saves here to the "Database" where the array lies
+            Data.saveTournaments();
         });
- 
-        // Setter her opp scene, for å ha en måte å lukke applikasjonen enklere på.
-        Scene scene = new Scene(root, SCREEN_HEIGHT, SCREEN_WIDTH);
-        primaryStage.setTitle("Application!");
+
+        // PrimaryStage setup
+        primaryStage.setTitle("ChessX");
         primaryStage.setScene(scene);
+        primaryStage.setMinWidth(container.getMinWidth());
+        primaryStage.setMinHeight(container.getMinHeight());
+        primaryStage.getIcons().add(new Image("gui/images/king-white.png"));
         primaryStage.show();
         
     }
-    
+    /**
+     * This method will take in the 3 Strings from 
+     * the method caller and use them in the dialog 
+     * that will be shown to the use
+     * @param HeaderTxt
+     * @param tittle
+     * @param warning
+     * @return the users input in to the dialog
+     */
     public String TextDialog(String HeaderTxt, String tittle, String warning) {
 
         TextInputDialog textin = new TextInputDialog();
+                textin.setGraphic(null);
+        textin.setHeaderText(null);
+        
         textin.initStyle(StageStyle.UTILITY);
         textin.setHeaderText(HeaderTxt);
         textin.setTitle(HeaderTxt);
@@ -205,21 +109,336 @@ public class Admapp extends Application implements Constants {
         String text ="";
         if (result.isPresent()) {
             while (result.get().isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.WARNING, warning);
-            alert.showAndWait();
-            result = textin.showAndWait();
+                Alert alert = new Alert(Alert.AlertType.WARNING, warning);
+                alert.showAndWait();
+                result = textin.showAndWait();
             }
-            
             text = result.get();
         }
         return text;
     }
- 
-   public List<Player> getList(){
-      return tournamentList.get(0).getPlayers();
-  }
+    
+    /**
+     * The uppermost layer of the pages, the tournament is where one
+     * starts as one open up the the application, on this layer the
+     * user will be able to see the different tournaments.
+     * @return 
+     */
+    public Page tournament() {
+        Body body = new Body("Tournament");
+        
+        // Header
+        Title title = new Title(new Text(body.getName()));
+        Crumb crumb = new Crumb("Tournament");
+        Tools tools = new Tools();
+        Menu menu = new Menu(crumb, tools);
+        
+        // New tournament button
+        Button newTournBtn = new Button();
+        newTournBtn.setText("New Tournament");
    
-   
+        // Save button
+        Button saveBtn = new Button();
+        saveBtn.setText("Save");
+        
+        // Adds the elements to the tool-bar
+        tools.getChildren().addAll(saveBtn, newTournBtn);
+        
+        BorderPane header = new BorderPane(menu,title , null , null, null);
+        body.setTop(header);
+        
+        // LIST THAT COLLECTS THE Tournament OBJECTS
+        ListView<Tournament> list = new ListView<>(Data.getTournaments());
+        list.setCellFactory(new TournamentCellFactory());
+        list.setOrientation(Orientation.VERTICAL);
+        list.setFocusTraversable(false);
+        list.getSelectionModel().selectedItemProperty().addListener(this::chooseTournament);
+        list.getStyleClass().add("list");
+
+        // The button that adds a new tournament to the tournaments-list
+        newTournBtn.setOnAction((ActionEvent event) -> {
+            String tournamentNameIn = TextDialog("Enter tournament name", "Tournament Name", "Name can not be empty");
+            Tournament newTournament = new Tournament(tournamentNameIn);
+            Data.tournaments.add(newTournament);
+            ObservableList<Tournament> newTournaments = FXCollections.<Tournament>observableArrayList(tournaments);
+            list.setItems(newTournaments);
+            chooseTournament(newTournament,newTournament);
+            newUsers.fire();
+        });
+        
+        // Event that saves the current list of users.
+        saveBtn.setOnAction(( event) -> {
+            System.out.println("Your progress is saved with the save-button.");
+            Data.saveTournaments();
+        });
+        
+        // Places the main stackpane in the body.
+        StackPane main = new StackPane(list);
+        body.setCenter(main);
+        return new Page(body);
+    }
+    
+    /**
+     * The lobby is shown when someone presses one of the objects in the 
+     * list that are shown there, one can add a new user to the tournament.
+     * @param tournament
+     * @return 
+     */
+    public Page lobby(Tournament tournament) {
+        Body body = new Body(tournament.getName());
+        
+        // Header
+        Title title = new Title(new Text(body.getName()));
+        title.addButton(new Back(container));
+        Crumb crumb = new Crumb("Tournament", "Lobby");
+        Tools tools = new Tools();
+        Menu menu = new Menu(crumb, tools);
+       
+        // The button that shows the leaderboard.
+        Button leaderBoardBtn = new Button("Show Leaderboard");
+        
+        // Button that creates a new game-object.
+        Button newGameBtn = new Button("New game");
+        
+        // Button that opens the search dialog for the games.
+        Button searchBtn = new Button("Search");
+        
+        // Button for the new player-feature
+        newUsers.setText("New Player");
+        
+        // Places the elements into the tool-bar.
+        tools.getChildren().addAll(leaderBoardBtn, newGameBtn, newUsers, searchBtn);
+        BorderPane header = new BorderPane(menu, title, null , null, null);
+        body.setTop(header);
+        
+        // LIST INPUT FOR GAMELIST
+        ObservableList<Game> listGameItems = FXCollections.<Game>observableArrayList(tournament.getGames());
+        
+        // LIST FOR THE GAMES
+        ListView<Game> gameList = new ListView<>(listGameItems);
+        gameList.getItems().addAll();
+        gameList.setCellFactory(new GameCellFactory());
+        gameList.setOrientation(Orientation.VERTICAL);
+        gameList.setFocusTraversable(false);
+        gameList.getSelectionModel().selectedItemProperty().addListener(this::chooseGame);
+        gameList.getStyleClass().add("list");
+        
+        
+        // LISTENER FOR THE ADDING OF USERS IN DIALOGPANE
+        //////////////////////////////////////////////////////////////////////////////////////
+        // The dialogpane that pops up after the name for a new tournament have been written in.
+        newUsers.setOnAction((ActionEvent event) -> {
+            final Stage dialogStage = new Stage();
+            dialogStage.setWidth(600);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            TextField newUserField = new TextField();
+            Button addUser = new Button("Add a new user");
+            Button done = new Button("Done");
+            
+            //LIST THAT COLLECTS THE Player OBJECTS
+            ObservableList<Player> newPlayers = FXCollections.<Player>observableArrayList(tournament.getPlayers());
+            ListView<Player> playerList = new ListView<>(newPlayers);
+            playerList.setOrientation(Orientation.VERTICAL);
+            playerList.setFocusTraversable(false);
+            playerList.getStyleClass().add("list");
+
+            // Event that fire when the addUser-button is pressed, and adds the users to the tournament and updates lists.
+            addUser.setOnAction((ActionEvent e) -> {
+                Player player = new Player(newUserField.getText());
+                Data.tournaments.get(Data.tournaments.size() - 1).getPlayers().add(player);
+                Tournament newTournament = Data.tournaments.get(Data.tournaments.size() - 1);
+                ObservableList<Player> updatedPlayerlist = FXCollections.<Player>observableArrayList(newTournament.getPlayers());
+                playerList.setItems(updatedPlayerlist);
+                playerMenuPlayer1.setItems(updatedPlayerlist);
+                playerMenuPlayer2.setItems(updatedPlayerlist);
+            });
+            
+            // Event that fires when the done-button is pressed.
+            done.setOnAction((ActionEvent e) -> {
+                dialogStage.close();
+            });
+            
+            // Adds the elements to the new page.
+            VBox vBox = new VBox();
+            vBox.getChildren().addAll(newUserField, addUser, playerList, done);
+            vBox.setPadding(new Insets(20, 20, 20, 20));
+            vBox.setSpacing(10);
+            dialogStage.setScene(new Scene(vBox));
+            dialogStage.show();
+        });      
+             
+        
+        // LISTENER FOR THE ADDING OF GAMES IN DIALOGPANE
+        ////////////////////////////////////////////////////////////////////////////////////
+        // This opens a dialogStage where the Admin can place two players and then press the button to create a game.
+        newGameBtn.setOnAction((ActionEvent event) -> {
+            final Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            
+            // The comboboxes where the admin chooses the to players.
+            Button addGame = new Button("Create Game");
+            Label addGameLabel = new Label("Choose two players");
+
+            // Sets the max and min width of the player 
+            playerMenuPlayer1.setMaxWidth(200);
+            playerMenuPlayer2.setMaxWidth(200);
+            playerMenuPlayer1.setMinWidth(300);
+            playerMenuPlayer2.setMinWidth(300);
+            
+            // Adds the game to the list's of other games.
+            addGame.setOnAction(e -> {
+                int index = Data.tournaments.indexOf(tournament); 
+                tournament.getGames().add(new Game(playerName1, playerName2));
+                Data.tournaments.set(index, tournament);
+                ObservableList<Game> games = FXCollections.<Game>observableArrayList(tournament.getGames());
+                gameList.setItems(games);
+                dialogStage.close();
+            });
+           
+            // sets the list of players aas items in hte comboboxes.
+            ObservableList<Player> playerLists = FXCollections.<Player>observableArrayList(tournament.getPlayers());
+            playerMenuPlayer1.setItems(playerLists);
+            playerMenuPlayer2.setItems(playerLists);
+            
+            // Places the new selected item in playerName1 and playerName2.
+            playerMenuPlayer1.setOnAction(e -> {
+                  playerName1 = playerMenuPlayer1.getSelectionModel().getSelectedItem();
+                  System.out.println(playerName1);
+            });
+            playerMenuPlayer2.setOnAction(e -> {
+                  playerName2 = playerMenuPlayer2.getSelectionModel().getSelectedItem();
+                  System.out.println(playerName2);
+            });
+            
+            // Adds the elements to the new page.
+            VBox vBox = new VBox(addGameLabel, playerMenuPlayer1, playerMenuPlayer2, addGame);
+            vBox.setPadding(new Insets(20, 20, 20, 20));
+            vBox.setSpacing(10);
+            vBox.getChildren().addAll();
+            dialogStage.setScene(new Scene(vBox));
+            dialogStage.show();
+        });
+        
+        
+        // LISTENER FOR OPENING THE SEARCH-DIALOGPANE
+        //////////////////////////////////////////////////////////////////////////////////////
+        // The dialogpane that pops up after the name for a new tournament have been written in.
+        searchBtn.setOnAction((ActionEvent event) -> {
+            final Stage dialogStage = new Stage();
+            dialogStage.setWidth(600);
+            
+            // This is the textfield used to search the tournament for games.
+            TextField searchField = new TextField();
+            searchField.setMaxWidth(600);
+            
+            // LIST INPUT FOR GAMELIST
+            ObservableList<Game> searchListItems = FXCollections.<Game>observableArrayList(tournament.getGames());
+
+            // List of games, placed in the search-dialog.
+            ListView<Game> searchList = new ListView<>(searchListItems);
+            searchList.getItems().addAll();
+            searchList.setCellFactory(new GameCellFactory());
+            searchList.setOrientation(Orientation.VERTICAL);
+            searchList.setFocusTraversable(false);
+            searchList.getSelectionModel().selectedItemProperty().addListener(this::chooseGame);
+            searchList.getStyleClass().add("list");
+            
+            // LIST FOR SEARCHING TROUGH        
+            searchList.setOrientation(Orientation.VERTICAL);
+            searchList.setFocusTraversable(false);
+            searchList.getStyleClass().add("list");
+            Button done = new Button("Done");
+         
+            // USED for the search function, listens to the textfield searchField.
+            searchField.textProperty().addListener((obs, oldText, newText) -> {
+                String[] stringArray = newText.split("");
+                ArrayList<Game> newGameList = new ArrayList<Game>();
+                Tournament tournamentSearchTest = tournament;
+                for (String character : stringArray) 
+                    newGameList = tournamentSearchTest.search(character);
+                ObservableList<Game> games = FXCollections.<Game>observableArrayList(newGameList);
+                searchListItems.setAll(games);
+            });
+        
+            // Event that fires when the done-button is pressed.
+            done.setOnAction((ActionEvent e) -> {
+                dialogStage.close();
+            });
+
+            // Adds the elements to the new page.
+            VBox vBox = new VBox(searchField, searchList, done);
+            vBox.getChildren().addAll();
+            vBox.setPadding(new Insets(20, 20, 20, 20));
+            vBox.setSpacing(10);
+            dialogStage.setScene(new Scene(vBox));
+            dialogStage.show();
+        });
+        
+        // The dialog-window that shows of the dialog window.
+        dialog = new Dialog();
+        dialog.initModality(Modality.APPLICATION_MODAL); 
+        dialog.setTitle("Leaderboard");        //alert.initModality(Modality.APPLICATION_MODAL);
+        Window window = dialog.getDialogPane().getScene().getWindow();
+        window.setOnCloseRequest(e -> dialog.close());
+        
+        // Places the strings on the leaderboard.
+        leaderBoardBtn.setOnAction(e ->{
+            dialog.setContentText(tournament.getLeaderBoard());
+            dialog.showAndWait();
+        });
+
+        // The stackpane that the list with the games is placed on.
+        StackPane main = new StackPane(gameList);
+        body.setCenter(main);
+        return new Page(body);
+    }
+    
+    /**
+     * The innermost layer of the GUI, here the users can watch the 
+     * @param game
+     * @return 
+     */
+    public Page game(Game game) {
+        Body body = new Body("Game");
+
+        // Header
+        Title title = new Title(new Text(game.getPlayer1().getName() + " VS " + game.getPlayer2().getName()));
+        title.addButton(new Back(container));
+        Crumb crumb = new Crumb("Tournament", "Lobby", "Game");
+        Tools tools = new Tools();
+        Menu menu = new Menu(crumb, tools);
+       
+        // The button that lets you edit or add a new result to a game.
+        Button editResultBtn = new Button();
+        editResultBtn.setText("Edit Result");
+        editResultBtn.setOnAction(( event) -> {
+            game.handleGameResult(game);
+        });
+        
+        // Things are added to the tool-bar and the header.
+        tools.getChildren().addAll(editResultBtn);
+        BorderPane header = new BorderPane(menu, title, null, null, null);
+        body.setTop(header);
+        
+
+        // CHESS SIMULATOR
+        ChessSimulator chessSimulator = new ChessSimulator(320, game.getScore());
+        // CHESS SIMULATOR
+        
+        HBox centerHorizontal = new HBox(chessSimulator);
+        centerHorizontal.setAlignment(Pos.CENTER);
+       
+        VBox centerVertical = new VBox(centerHorizontal);
+        centerVertical.setAlignment(Pos.CENTER);
+        
+        StackPane main = new StackPane(centerVertical);
+        body.setCenter(main);
+        
+        
+        return new Page(body);
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -227,4 +446,37 @@ public class Admapp extends Application implements Constants {
         launch(args);
     }
     
+    /**
+     * Used to move the user of the application between the pages when they presses
+     * one one of the list-elements.
+     * @param observable
+     * @param previousTournament
+     * @param currentTournament 
+     */
+    public void chooseTournament(ObservableValue<? extends Tournament> observable, Tournament previousTournament, Tournament currentTournament) {
+        System.out.println("Moved from " + previousTournament + "page, to " + currentTournament + "page");
+        container.put(lobby(currentTournament));
+    }
+    
+    /**
+     * Same as the one above it, but it is used to move between the pages without using
+     * a list with an observablelist.
+     * @param previousTournament
+     * @param currentTournament 
+     */
+    public void chooseTournament(Tournament previousTournament, Tournament currentTournament) {
+        System.out.println("Moved from " + previousTournament + "page, to " + currentTournament + "page");
+        container.put(lobby(currentTournament));
+    }
+    /**
+     * The same as the two methods above, but this will move the user of the application 
+     * to one of the game-pages when they press one of the items in the game-list.
+     * @param observable
+     * @param previousGame
+     * @param currentGame 
+     */
+    public void chooseGame(ObservableValue<? extends Game> observable, Game previousGame, Game currentGame) {
+        System.out.println("Moved from " + previousGame + "page, to " + currentGame + "page");
+        container.put(game(currentGame));
+    }
 }

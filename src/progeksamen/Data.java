@@ -20,8 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import static progeksamen.Admapp.tournament;
-import static progeksamen.Admapp.tournamentList;
+
 
 /**
  *
@@ -31,6 +30,7 @@ public class Data {
     
     // The list of tounaments is stored in when gotten from the database or saved.
     public static ArrayList<Tournament> tournaments = new ArrayList<Tournament>();
+    public static Tournament tournament;
     
     /**
      * This method is the one that saves the Arraylist's into the file

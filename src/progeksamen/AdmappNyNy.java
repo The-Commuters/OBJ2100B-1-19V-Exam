@@ -69,6 +69,7 @@ public class AdmappNyNy extends Application {
     Container container;
             Player playerName1;
           Player playerName2;
+           Button newUsers = new Button();
     
     @Override
     public void start(Stage primaryStage) {
@@ -152,10 +153,7 @@ public class AdmappNyNy extends Application {
         // New tournament button
         Button newTournBtn = new Button();
         newTournBtn.setText("New Tournament");
-        
-        
-        Button newUsers = new Button();
-        
+   
         // Save button -
         Button saveBtn = new Button();
         saveBtn.setText("Save");
@@ -176,47 +174,7 @@ public class AdmappNyNy extends Application {
         list.getSelectionModel().selectedItemProperty().addListener(this::chooseTournament);
         list.getStyleClass().add("list");
         
-        
-        //LISTENERS
-        //The dialogpane that pops up after the name for a new tournament have been written in.
-        newUsers.setOnAction((ActionEvent event) -> {
-            final Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            
-            Tournament LastTournament = Data.tournaments.get(Data.tournaments.size() - 1);
-            
-            TextField newUserField = new TextField();
-            Button addUser = new Button("Add a new user");
-            Button done = new Button("Done");
-            
-            //LIST
-            ObservableList<Player> newPlayers = FXCollections.<Player>observableArrayList(LastTournament.getPlayers());
-            ListView<Player> playerList = new ListView<>(newPlayers);
-            playerList.setOrientation(Orientation.VERTICAL);
-            playerList.setFocusTraversable(false);
-            playerList.getStyleClass().add("list");
-            HBox hBox = new HBox(playerList);
-            
-            // Event that fire when the addUser-button is pressed.
-            addUser.setOnAction((ActionEvent e) -> {
-                Player player = new Player(newUserField.getText());
-                Data.tournaments.get(Data.tournaments.size() - 1).getPlayers().add(player);
-                Tournament newTournament = Data.tournaments.get(Data.tournaments.size() - 1);
-                ObservableList<Player> newPlayers2 = FXCollections.<Player>observableArrayList(newTournament.getPlayers());
-                //ListView<Tournament> list = new ListView<>(Data.getTournaments());
-                playerList.setItems(newPlayers2);
-            });
-            
-            // Event that fires when the done-button is pressed.
-            done.setOnAction((ActionEvent e) -> {
-                dialogStage.close();
-            });
-            
-            VBox vBox = new VBox();
-            vBox.getChildren().addAll(newUserField, addUser, playerList, done);
-            dialogStage.setScene(new Scene(vBox));
-            dialogStage.show();
-        });
+      
 
         // The button that adds a new tournament to the tournaments-list
         newTournBtn.setOnAction((ActionEvent event) -> {
@@ -225,6 +183,7 @@ public class AdmappNyNy extends Application {
             Data.tournaments.add(newTournament);
             ObservableList<Tournament> newTournaments = FXCollections.<Tournament>observableArrayList(tournaments);
             list.setItems(newTournaments);
+            chooseTournament(newTournament,newTournament);
             newUsers.fire();
         });
         
@@ -251,12 +210,13 @@ public class AdmappNyNy extends Application {
         Menu menu = new Menu(crumb, tools);
         
         // Button for the new player-feature
-        Button newPlayerBtn = new Button();
-        newPlayerBtn.setText("New Player");
-        
+        newUsers.setText("New Player");
+ 
+        // The comboboxes where the admin chooses the to players.
         ComboBox<Player> playerMenuPlayer1 = new ComboBox<>();
         ComboBox<Player> playerMenuPlayer2 = new ComboBox<>();
         
+        // Sets the max and min width of the player 
         playerMenuPlayer1.setMaxWidth(130);
         playerMenuPlayer2.setMaxWidth(130);
         playerMenuPlayer1.setMinWidth(130);
@@ -266,30 +226,12 @@ public class AdmappNyNy extends Application {
         TextField searchField = new TextField();
         searchField.setMaxWidth(60);
         
+        // Button that creates a new game-object.
         Button newGameBtn = new Button("New game");
       
-        tools.getChildren().addAll(playerMenuPlayer1, playerMenuPlayer2, newGameBtn, newPlayerBtn, searchField);
+        tools.getChildren().addAll(playerMenuPlayer1, playerMenuPlayer2, newGameBtn, newUsers, searchField);
         BorderPane header = new BorderPane(menu, title, null , null, null);
         body.setTop(header);
-        
-        ////////////////////////////////////////////////////////////////
-        // Main
-         
-         ObservableList<Player> playerLists = FXCollections.<Player>observableArrayList(tournament.getPlayers());
-        
-         playerMenuPlayer1.setItems(playerLists);
-         playerMenuPlayer2.setItems(playerLists);
-         
-        playerMenuPlayer1.setOnAction(e -> {
-               playerName1 = playerMenuPlayer1.getSelectionModel().getSelectedItem();
-               System.out.println(playerName1);
-        });
-        
-        playerMenuPlayer2.setOnAction(e -> {
-               playerName2 = playerMenuPlayer2.getSelectionModel().getSelectedItem();
-               System.out.println(playerName2);
-        });
-        
         
         // LIST INPUT
         ObservableList<Game> listItems = FXCollections.<Game>observableArrayList(tournament.getGames());
@@ -303,7 +245,60 @@ public class AdmappNyNy extends Application {
         list.getSelectionModel().selectedItemProperty().addListener(this::chooseGame);
         list.getStyleClass().add("list");
         
-        // LISTENER
+        // LISTENERs
+        //The dialogpane that pops up after the name for a new tournament have been written in.
+        newUsers.setOnAction((ActionEvent event) -> {
+            final Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            TextField newUserField = new TextField();
+            Button addUser = new Button("Add a new user");
+            Button done = new Button("Done");
+            
+            //LIST
+            ObservableList<Player> newPlayers = FXCollections.<Player>observableArrayList(tournament.getPlayers());
+            ListView<Player> playerList = new ListView<>(newPlayers);
+            playerList.setOrientation(Orientation.VERTICAL);
+            playerList.setFocusTraversable(false);
+            playerList.getStyleClass().add("list");
+            HBox hBox = new HBox(playerList);
+            
+            // Event that fire when the addUser-button is pressed.
+            addUser.setOnAction((ActionEvent e) -> {
+                Player player = new Player(newUserField.getText());
+                Data.tournaments.get(Data.tournaments.size() - 1).getPlayers().add(player);
+                Tournament newTournament = Data.tournaments.get(Data.tournaments.size() - 1);
+                ObservableList<Player> updatedPlayerlist = FXCollections.<Player>observableArrayList(newTournament.getPlayers());                //ListView<Tournament> list = new ListView<>(Data.getTournaments());
+                playerList.setItems(updatedPlayerlist);
+                playerMenuPlayer1.setItems(updatedPlayerlist);
+                playerMenuPlayer2.setItems(updatedPlayerlist);
+            });
+            
+            // Event that fires when the done-button is pressed.
+            done.setOnAction((ActionEvent e) -> {
+                dialogStage.close();
+            });
+            
+            // Adds the elements to the new page.
+            VBox vBox = new VBox();
+            vBox.getChildren().addAll(newUserField, addUser, playerList, done);
+            dialogStage.setScene(new Scene(vBox));
+            dialogStage.show();
+        });
+        
+         ObservableList<Player> playerLists = FXCollections.<Player>observableArrayList(tournament.getPlayers());
+         playerMenuPlayer1.setItems(playerLists);
+         playerMenuPlayer2.setItems(playerLists);
+         
+        playerMenuPlayer1.setOnAction(e -> {
+               playerName1 = playerMenuPlayer1.getSelectionModel().getSelectedItem();
+               System.out.println(playerName1);
+        });
+        
+        playerMenuPlayer2.setOnAction(e -> {
+               playerName2 = playerMenuPlayer2.getSelectionModel().getSelectedItem();
+               System.out.println(playerName2);
+        });
+        
         newGameBtn.setOnAction(e -> {
            //Data.tournaments.get(0).getGames().add(new Game(playerName1, playerName2));
             int index = Data.tournaments.indexOf(tournament); 
@@ -324,19 +319,6 @@ public class AdmappNyNy extends Application {
                 newGameList = tournamentSearchTest.search(character);
             ObservableList<Game> games = FXCollections.<Game>observableArrayList(newGameList);
             listItems.setAll(games);
-        });
-        
-        // When the new player button is pressed, then this process starts.
-        newPlayerBtn.setOnAction((ActionEvent event) -> {
-            int index = Data.tournaments.indexOf(tournament);
-            String playerNameIn;
-            playerNameIn = TextDialog("Enter player name", "Player Name", "Name can not be empty");
-            tournament.getPlayers().add(new Player(playerNameIn));
-            Data.tournaments.set(index, tournament);
-            ObservableList<Player> players = FXCollections.<Player>observableArrayList(tournament.getPlayers());
-            playerMenuPlayer1.setItems(players);
-            playerMenuPlayer2.setItems(players);
-            
         });
         
         StackPane main = new StackPane(list);
@@ -401,6 +383,11 @@ public class AdmappNyNy extends Application {
     }
     
     public void chooseTournament(ObservableValue<? extends Tournament> observable, Tournament previousTournament, Tournament currentTournament) {
+        System.out.println("Moved from " + previousTournament + "page, to " + currentTournament + "page");
+        container.put(lobby(currentTournament));
+    }
+    
+       public void chooseTournament(Tournament previousTournament, Tournament currentTournament) {
         System.out.println("Moved from " + previousTournament + "page, to " + currentTournament + "page");
         container.put(lobby(currentTournament));
     }

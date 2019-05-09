@@ -52,7 +52,7 @@ public class Player implements Serializable, Comparator<Player>, Comparable<Play
     }
     
     public String getPlayer(){
-       return this.getId() + this.getName() + this.getScore();
+       return this.getId() + this.getName() + this.getScore()/2;
     }
     
     public void setScore(double score){
@@ -62,7 +62,7 @@ public class Player implements Serializable, Comparator<Player>, Comparable<Play
     @Override
     public String toString(){
     
-        return "ID: " + getId() + " Name: " + getName() + " Score: " + getScore(); 
+        return "Name: " + getName() + " Score: " + getScore()/2; 
     }
     
     public String getWinner(Player p) {

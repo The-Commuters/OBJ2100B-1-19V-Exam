@@ -442,12 +442,13 @@ public class Admapp extends Application {
                 moves = Parser.parseLANArray(moveInput.getText());
                 ChessBoardModel boardBehind = new ChessBoardModel();
                 
+                // Validering ble tatt ut på grunn av tidspress.
                 for (Move move : moves) {
-                    boardBehind.move(move);
+                    //boardBehind.move(move);
                 }
                 
                 game.addMove(moveInput.getText());
-               moveShow.appendText(moveInput.getText());
+               moveShow.appendText(moveInput.getText() + " ");
             }
         });
         

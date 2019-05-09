@@ -62,7 +62,7 @@ public class Player implements Serializable, Comparator<Player>, Comparable<Play
     @Override
     public String toString(){
     
-        return "Name: " + getName() + " Score: " + getScore()/2; 
+        return "Name: " + getName(); 
     }
     
     public String getWinner(Player p) {

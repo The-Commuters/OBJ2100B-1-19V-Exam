@@ -12,18 +12,23 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
 import javafx.stage.StageStyle;
 
-/**
- *
- * @author Markus Fenes
- */
+    
 public class TextDialog extends Dialog {
     
     // Constants
    private Optional<ButtonType> result;
-   String out;
+   private String out;
 
     // Constructors
-    
+   
+   
+   /** This constuctor will take in the 3 Strings from 
+     * the method caller and use them in the dialog 
+     * that will be shown to the use
+     * @param HeaderTxt
+     * @param tittle
+     * @param warning
+     */ 
     public TextDialog(String HeaderTxt, String tittle, String warning){
         super();
          

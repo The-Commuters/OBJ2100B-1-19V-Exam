@@ -7,8 +7,10 @@ package gui.chess;
 
 import Pieces.Move;
 import Pieces.Parser;
+import gui.chess.pieces.Piece;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Objects;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.SequentialTransition;
@@ -24,26 +26,24 @@ import javafx.util.Duration;
 public class ChessSimulator extends HBox {
     
     // Methods
-    Point[] oldPos = {new Point(0, 1), new Point(1, 6)}; 
-    Point[] newPos = {new Point(0, 2), new Point(1, 5)};
+    Point[] oldPos = {new Point(0, 1), new Point(0, 6), new Point(0, 2), new Point(0, 5), new Point(0, 3)}; 
+    Point[] newPos = {new Point(0, 2), new Point(0, 5), new Point(0, 3), new Point(0, 4), new Point(0, 4)};
     
     // Constructor
-    public ChessSimulator(int size, ArrayList<String> san) {
-        String[] sanArray = new String[san.size()];
-        sanArray = san.toArray(sanArray);
+    public ChessSimulator(int size, ArrayList<String> lan) {
+        String[] lanArray = new String[lan.size()];
+        lanArray = lan.toArray(lanArray);
         // Timeline timeline = makeTimeline(Parser.parseSANArray(sanArray));
         
         
         
         Field field = new Field(size);
         SequentialTransition chessSim = makeSequentialTransition(field, oldPos, newPos);
-        chessSim.setCycleCount(Timeline.INDEFINITE);
-        chessSim.setAutoReverse(true);
-        chessSim.play();
-        
+        // chessSim.setCycleCount(Timeline.INDEFINITE);
+        // chessSim.setAutoReverse(true);     
         
         Chessboard chessboard = new Chessboard(size, field);
-        ChessFeed chessFeed = new ChessFeed(size, sanArray, field);
+        ChessFeed chessFeed = new ChessFeed(size, lanArray, chessSim);
         
         
         getChildren().addAll(chessboard, chessFeed);
@@ -56,9 +56,9 @@ public class ChessSimulator extends HBox {
         
         for (int i = 0; i < oldPos.length; i++) {
             
+            ArrayList<KeyFrame> keyFrames = new ArrayList<>();
             
-            // WORKS
-            ImageView[][] pieceGridCopy = field.getPieceGrid();
+            ArrayList<Piece> pieceArray = field.getPieceArray();
             
             Point[][] positionGridCopy = field.getPositionGrid();
             
@@ -68,29 +68,48 @@ public class ChessSimulator extends HBox {
             int newPositionX = (int)positionGridCopy[(int)newPos[i].getX()][(int)newPos[i].getY()].getX();
             int newPositionY = (int)positionGridCopy[(int)newPos[i].getX()][(int)newPos[i].getY()].getY();
             
-            // ImageView piece = pieceGridCopy[(int)oldPos[i].getY()][(int)oldPos[i].getX()];
-            ImageView piece = new ImageView();
+            // Find tracker
+            Piece piece = new Piece();
+            for (Piece p: pieceArray) {
+                boolean hasSameX = p.getTracker().getX() == oldPositionX;
+                boolean hasSameY = p.getTracker().getY() == oldPositionY;
+                
+                if (hasSameX && hasSameY) {
+                    piece = p;
+                }
+            }
             
-            
+            // Set Keyvalues
             KeyValue moveX = new KeyValue(piece.xProperty(), newPositionX);
             KeyValue moveY = new KeyValue(piece.yProperty(), newPositionY);
+ 
+            // Add Movement to timelines
+            keyFrames.add(new KeyFrame(Duration.millis(500), moveX, moveY));
             
-            KeyFrame keyFrame  = new KeyFrame(Duration.millis(500), moveX, moveY);
             
-            Timeline timeline = new Timeline(keyFrame);
+            // Check for Collision
             
-            // timeline.setCycleCount(Timeline.INDEFINITE); 
-            // timeline.setAutoReverse(true); 
-            // timeline.setRate(1);
+            for (Piece captive: pieceArray) {
+                boolean hasSameX = captive.getTracker().getX() == newPositionX;
+                boolean hasSameY = captive.getTracker().getY() == newPositionY;
+                
+                if (hasSameX && hasSameY) {
+                    // Add Capture to timelines
+                    KeyValue capture = new KeyValue(captive.opacityProperty(), 0);
+                    keyFrames.add(new KeyFrame(Duration.millis(500), capture));
+                }
+            }
             
-            timelines.add(timeline);
-            // WORKS
+            // Update Tracker
+            piece.setTracker(new Point(newPositionX, newPositionY));
             
-            // ??
-            // field.setPieceGrid(pieceGridCopy);
+            // Add move
+            KeyFrame[] keyFrameArray = new KeyFrame[keyFrames.size()];
+            keyFrameArray = keyFrames.toArray(keyFrameArray);
+            timelines.add(new Timeline(keyFrameArray));
+ 
         }
-        
-        
+         
         Timeline[] timelinesArray = new Timeline[timelines.size()];
         timelinesArray = timelines.toArray(timelinesArray);
         SequentialTransition chessSim = new SequentialTransition(timelinesArray);

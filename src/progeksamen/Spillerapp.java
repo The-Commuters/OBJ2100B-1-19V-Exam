@@ -166,11 +166,9 @@ public class Spillerapp extends Application {
         ////////////////////////////////////////////////////////////////
         // Main
         
-        // CHESS
-        
+        // CHESS SIMULATOR
         ChessSimulator chessSimulator = new ChessSimulator(320, game.getScore());
-
-        // CHESS
+        // CHESS SIMULATOR
         
         HBox centerHorizontal = new HBox(chessSimulator);
         centerHorizontal.setAlignment(Pos.CENTER);

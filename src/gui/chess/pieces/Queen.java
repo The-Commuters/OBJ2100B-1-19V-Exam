@@ -6,13 +6,12 @@
 package gui.chess.pieces;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  *
  * @author DavidNaist
  */
-public class Queen extends ImageView {
+public class Queen extends Piece {
     
     // Constructors
     public Queen(int size, boolean isBlack) {

@@ -9,6 +9,7 @@ import gui.chess.pieces.Bishop;
 import gui.chess.pieces.King;
 import gui.chess.pieces.Knight;
 import gui.chess.pieces.Pawn;
+import gui.chess.pieces.Piece;
 import gui.chess.pieces.Queen;
 import gui.chess.pieces.Rook;
 import java.awt.Point;
@@ -29,12 +30,11 @@ import javafx.scene.shape.Circle;
  *
  * @author DavidNaist
  */
-class Field extends Pane {
+final class Field extends Pane {
     
     // Fields
     private Point[][] positionGrid;
-    private ImageView[][] pieceGrid;
-    private ArrayList<ImageView> pieceArray;
+    private ArrayList<Piece> pieceArray;
             
     // Constants
     private final int GRID_SIZE = 8;
@@ -44,9 +44,10 @@ class Field extends Pane {
     public Field(int size) {
         super();
         
-        this.pieceGrid = new ImageView[size][size];
-        this.positionGrid = getPositionGrid(GRID_SIZE, size, size);
-        initGrids(positionGrid, pieceGrid);
+        this.positionGrid = newPointGrid(GRID_SIZE, size, size);
+        this.pieceArray = new ArrayList<>();
+        initGrids(positionGrid, pieceArray);
+        initTrackers(pieceArray);
         
 
     }
@@ -55,26 +56,14 @@ class Field extends Pane {
     public Point[][] getPositionGrid() {
         return positionGrid;
     }
-
-    public ImageView[][] getPieceGrid() {
-        return pieceGrid;
-    }
     
-    public ArrayList<ImageView> getPieceArray() {
+    public ArrayList<Piece> getPieceArray() {
         return pieceArray;
     }
     
-    
-    // Setters
-    public void setPieceGrid(ImageView[][] pieceGrid) {
-        this.pieceGrid = pieceGrid;
-    }
-    
-    
-    
     // Methods
-    private void initGrids(Point[][] positionGrid, ImageView[][] pieceGrid) {
-        ImageView piece = new ImageView();
+    private void initGrids(Point[][] positionGrid, ArrayList<Piece> pieceArray) {
+        Piece piece;
         
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
@@ -88,7 +77,7 @@ class Field extends Pane {
                         case 5: piece = new Bishop(PIECE_SIZE, i == 0); break;
                         case 6: piece = new Knight(PIECE_SIZE, i == 0); break;
                         case 7: piece = new Rook(PIECE_SIZE, i == 0); break;
-                        default: piece = new ImageView();
+                        default: piece = new Piece();
                     }
                     
                     // Add to position
@@ -96,7 +85,6 @@ class Field extends Pane {
                     piece.setY(positionGrid[i][j].getX());
                     getChildren().add(piece);
                     
-                    pieceGrid[i][j] = piece;
                     pieceArray.add(piece);
                 }
                 
@@ -106,7 +94,6 @@ class Field extends Pane {
                     piece.setY(positionGrid[i][j].getX());
                     getChildren().add(piece);
                     
-                    pieceGrid[i][j] = piece;
                     pieceArray.add(piece);
                 }
                 
@@ -120,21 +107,20 @@ class Field extends Pane {
                         case 5: piece = new Bishop(PIECE_SIZE, i == 0); break;
                         case 6: piece = new Knight(PIECE_SIZE, i == 0); break;
                         case 7: piece = new Rook(PIECE_SIZE, i == 0); break;
-                        default: piece = new ImageView();
+                        default: piece = new Piece();
                     }
                     
                     piece.setX(positionGrid[i][j].getY());
                     piece.setY(positionGrid[i][j].getX());
                     getChildren().add(piece);
                     
-                    pieceGrid[i][j] = piece;
                     pieceArray.add(piece);
                 }
             }
         }
     }
     
-    private Point[][] getPositionGrid(int size, int parentWidth, int parentHeight) {
+    private Point[][] newPointGrid(int size, int parentWidth, int parentHeight) {
         int[][] row = new int[size][size];
         
         for (int i = 0; i < size; i++) {
@@ -162,33 +148,11 @@ class Field extends Pane {
         return grid;
     }
     
-    public void move(Point oldPos, Point newPos) {
-        ImageView[][] pieceGridCopy = getPieceGrid();
-        Point[][] positionGridCopy = getPositionGrid();
-        
-        // Henter ut piece
-        ImageView piece = pieceGridCopy[(int)oldPos.getX()][(int)oldPos.getY()];
-        
-        
-        // Check for capture
-        ImageView captive = pieceGridCopy[(int)newPos.getY()][(int)newPos.getX()];
-        if (captive != null) {
-            // Her kan vi gjøre hva du vill med captive
-            captive.setVisible(false);
+    public void initTrackers(ArrayList<Piece> pieceArray) {
+        for (Piece piece: pieceArray) {
+            piece.setTracker(new Point((int)piece.getX(), (int)piece.getY()));
+            
         }
-        
-        // Flytter piece grafisk
-        Point newGridPosition = positionGridCopy[(int)newPos.getX()][(int)newPos.getY()];
-        piece.setX(newGridPosition.getX());
-        piece.setY(newGridPosition.getY());
-        
-        // Oppdaterer gridpos
-        pieceGridCopy[(int)newPos.getX()][(int)newPos.getX()] = piece;
-        pieceGridCopy[(int)oldPos.getX()][(int)oldPos.getY()] = null;
-        
-        
-        
-        setPieceGrid(pieceGridCopy);
     }
     
 }

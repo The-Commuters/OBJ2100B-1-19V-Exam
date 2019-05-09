@@ -5,6 +5,8 @@
  */
 package gui.chess;
 
+import javafx.animation.SequentialTransition;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
 /**
@@ -13,9 +15,16 @@ import javafx.scene.layout.Pane;
  */
 class ChessFeed extends Pane {
     
-    public ChessFeed(int size, String[] score, Field field) {
+    public ChessFeed(int size, String[] score, SequentialTransition chessSim) {
         setMinWidth(size);
         setMinHeight(size);
         getStyleClass().add("chess-feed");
+        
+        Button play = new Button("Play");
+        play.setOnAction((e) -> {
+            chessSim.play();
+        });
+        getChildren().add(play);
+        
     }
 }

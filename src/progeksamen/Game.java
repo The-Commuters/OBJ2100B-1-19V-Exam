@@ -5,6 +5,7 @@
  */
 package progeksamen;
 
+import Pieces.Move;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +22,7 @@ public class Game implements Serializable{
     private ArrayList<String> score = new ArrayList<String>();
     private Date startDate = new Date();
     private Date startTime = new Date();
+    private Move[] parsedMoves;
     
     public Game () {}
 
@@ -282,7 +284,7 @@ public class Game implements Serializable{
     public Player getPlayer2() {
         return player2;
     }
-
+    
     /**
      * @param player2 the player2 to set
      */
@@ -352,6 +354,10 @@ public class Game implements Serializable{
     
     public void setGameState(boolean state) {
         this.completed = state;
+    }
+    
+    public Move[] getParsedMoves() {
+        return parsedMoves;
     }
 }
  

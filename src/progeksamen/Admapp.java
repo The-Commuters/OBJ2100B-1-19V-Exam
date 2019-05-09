@@ -6,6 +6,9 @@
  */
 package progeksamen;
 
+import Pieces.ChessBoardModel;
+import Pieces.Move;
+import Pieces.Parser;
 import gui.chess.ChessSimulator;
 import gui.components.Title;
 import gui.components.Body;
@@ -33,9 +36,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -420,15 +425,33 @@ public class Admapp extends Application {
         BorderPane header = new BorderPane(menu, title, null, null, null);
         body.setTop(header);
         
-
-        // CHESS SIMULATOR
-        ChessSimulator chessSimulator = new ChessSimulator(320, game.getScore());
-        // CHESS SIMULATOR
+        // Input from administator under a match.
         
-        HBox centerHorizontal = new HBox(chessSimulator);
+        TextField moveInput = new TextField();
+        TextArea moveShow = new TextArea();
+        for(String move : game.getScore())
+            moveShow.appendText(move + " ");
+        
+        moveInput.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.ENTER){
+               
+                Move[] moves;
+                moves = Parser.parseLANArray(moveInput.getText());
+                ChessBoardModel boardBehind = new ChessBoardModel();
+                
+                for (Move move : moves) {
+                    boardBehind.move(move);
+                }
+                
+                game.addMove(moveInput.getText());
+               moveShow.appendText(moveInput.getText());
+            }
+        });
+        
+        HBox centerHorizontal = new HBox();
         centerHorizontal.setAlignment(Pos.CENTER);
        
-        VBox centerVertical = new VBox(centerHorizontal);
+        VBox centerVertical = new VBox(moveShow, moveInput);
         centerVertical.setAlignment(Pos.CENTER);
         
         StackPane main = new StackPane(centerVertical);

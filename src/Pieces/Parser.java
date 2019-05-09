@@ -28,7 +28,7 @@ public class Parser {
     
     
     //Nf3
-    private static Move parseLAN(String oneMove){
+    public static Move parseLAN(String oneMove){
         
         //code here
         
@@ -66,8 +66,9 @@ public class Parser {
     
      /*    e4 e5
          Nf3 Nc6
-         Bb5 a6*/    
-    public static Move[] parseLANArray(String[] score){
+         Bb5 a6*/
+    // e4-e5, e5-e3, 
+    public static Move[] parseLANArray(String... score){
          ArrayList<Move> parsedMoves = new ArrayList<>();
          
         //System.out.println("parseLANArray is being called!");

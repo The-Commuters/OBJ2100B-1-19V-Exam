@@ -30,7 +30,7 @@ public class Data {
     
     // The list of tounaments is stored in when gotten from the database or saved.
     public static ArrayList<Tournament> tournaments = new ArrayList<Tournament>();
-    public static Tournament tournament;
+    public static String tournament = "tournament";
     
     /**
      * This method is the one that saves the Arraylist's into the file
@@ -89,7 +89,7 @@ public class Data {
         
         //tempgetTournaments();
         
-        File file = new File("Tournament.dat");
+        File file = new File(tournament + ".dat");
         
         if(!file.isFile() && !file.canRead()) {
             try {
@@ -101,7 +101,7 @@ public class Data {
 
         try {
             // create an ObjectInputStream for the file we created before
-            ObjectInputStream input = new ObjectInputStream(new FileInputStream("Tournament.dat"));
+            ObjectInputStream input = new ObjectInputStream(new FileInputStream(tournament + ".dat"));
 
             // Collects the player's from the storage-file.
             try{
